@@ -133,6 +133,7 @@ function makestyle() {
 	else if (styleselect.value == "link") {
 		style = document.createElement("a");
 		style.href = prompt("Enter a URL. Example: http://www.google.com");
+		style.target = "_blank";
 	}
 
 	if (style)
