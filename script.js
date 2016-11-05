@@ -130,6 +130,10 @@ function makestyle() {
 		style = document.createElement("span");
 		style.className += "type-text";
 	}
+	else if (styleselect.value == "link") {
+		style = document.createElement("a");
+		style.href = prompt("Enter a URL. Example: http://www.google.com");
+	}
 
 	if (style)
 		surroundSelection(style);
