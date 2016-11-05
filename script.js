@@ -1,25 +1,8 @@
-var button = document.getElementById("greenbutton");
 var stylebtn = document.getElementById("stylebutton");
-/*
-var boldbtn = document.getElementById("boldbutton");
-var italicbtn = document.getElementById("italicbutton");
-var highlightbtn = document.getElementById("highlightbutton");
-var typebtn = document.getElementById("typebutton");
-*/
 var codebtn = document.getElementById("codebutton");
 var pbtn = document.getElementById("paragraphbutton");
 var hbtn = document.getElementById("headlinebutton");
-/*
-var h1btn = document.getElementById("h1button");
-var h2btn = document.getElementById("h2button");
-var h3btn = document.getElementById("h3button");
-*/
 var listbtn = document.getElementById("listbutton");
-/*
-var ulbtn = document.getElementById("ulbutton");
-var olbtn = document.getElementById("olbutton");
-var ilbtn = document.getElementById("ilbutton");
-*/
 var imgbtn = document.getElementById("imagebutton");
 var sbsimgbtn = document.getElementById("sidebysideimagebutton");
 var toolboxbtn = document.getElementById("toolboxbutton");
@@ -30,28 +13,11 @@ var savebtn = document.getElementById("savebutton");
 var loadbtn = document.getElementById("loadbutton");
 var loadfile = document.getElementById("loadfile");
 
-button.addEventListener("click", makegreen);
 stylebtn.addEventListener("click", makestyle);
-/*
-boldbtn.addEventListener("click", makebold);
-italicbtn.addEventListener("click", makeitalic);
-highlightbtn.addEventListener("click", makehighlight);
-typebtn.addEventListener("click", maketype);
-*/
 codebtn.addEventListener("click", makecodeblock);
 pbtn.addEventListener("click", makep);
 hbtn.addEventListener("click", makeh);
-/*
-h1btn.addEventListener("click", makeh1);
-h2btn.addEventListener("click", makeh2);
-h3btn.addEventListener("click", makeh3);
-*/
 listbtn.addEventListener("click", makelist);
-/*
-ulbtn.addEventListener("click", makeul);
-olbtn.addEventListener("click", makeol);
-ilbtn.addEventListener("click", makeil);
-*/
 imgbtn.addEventListener("click", makeimg);
 sbsimgbtn.addEventListener("click", makesidebysideimg);
 toolboxbtn.addEventListener("click", maketoolbox);
@@ -101,10 +67,7 @@ function save() {
 	}
 	html.appendChild(newhead);
 	html.appendChild(body);
-	//filename = filename.replace(/\s+/g, '');
-	//filename += ".html";
 	var blob = new Blob(["<!DOCTYPE html>", html.innerHTML], {type: "text/plain;charset=utf-8"});
-	//saveAs(blob, filename);
 	saveAs(blob, "manual.html");
 }
 
@@ -129,7 +92,6 @@ function maketable() {
 		table.appendChild(row);
 	}
 	var sel = window.getSelection();
-	//var text = sel.toString();
 	var text = sel.anchorNode.textContent;
 	var anchor = sel.anchorNode;
 	var element = anchor.parentNode;
@@ -288,8 +250,6 @@ function makesidebysideimg() {
 	}
 	var p = document.createElement("p");
 	var sel = window.getSelection();
-	//var text = sel.toString();
-	//var text = sel.anchorNode.textContent;
 	p.textContent = "optional caption goes here";
 	div.appendChild(p);
 	var anchor = sel.anchorNode;
@@ -317,8 +277,6 @@ function makeimg() {
 		if (bordersel.value != "")
 			div.className += " " + bordersel.value;
 		var p = document.createElement("p");
-		//var text = sel.toString();
-		//var text = sel.anchorNode.textContent;
 		p.textContent = "optional caption goes here";
 		img.src = imgname;
 		div.appendChild(img);
@@ -346,25 +304,6 @@ function makeimg() {
 	}
 }
 
-/*
-function makeimg() {
-	var output = document.getElementById("output");
-	var file = loadfile.files[0];
-	var fr = new FileReader();
-	fr.onload = function() {
-		var dataURL = fr.result;
-		//console.log(dataURL);
-		output.src = dataURL;
-		//html.innerHTML = text;
-		//loaded.appendChild(html);
-		//var loadedbody = loaded.children[0].children[1];
-		//editor.innerHTML = loadedbody.innerHTML;
-		//loaded.innerHTML = "";
-	}
-	fr.readAsDataURL(file);
-}
-*/
-
 function makelist() {
 	var editor = document.getElementById("editor");
 	var listsel = document.getElementById("listselect");
@@ -378,11 +317,10 @@ function makelist() {
 	var li = document.createElement("li");
 	var p = document.createElement("p");
 	var sel = window.getSelection();
-	//var text = sel.toString();
 	var text = sel.anchorNode.textContent;
 	p.textContent = text;
 	li.appendChild(p);
-	list.appendChild(li);//
+	list.appendChild(li);
 	var anchor = sel.anchorNode;
 	var element = anchor.parentNode;
 	var parent = element.parentNode;
@@ -390,70 +328,8 @@ function makelist() {
 		element = parent;
 		parent = element.parentNode;
 	}
-	parent.replaceChild(list, element);//
+	parent.replaceChild(list, element);
 }
-
-/*
-function makeil() {
-	var editor = document.getElementById("editor");
-	var il = document.createElement("ol");
-	il.className += "instruction-list";
-	var li = document.createElement("li");
-	var p = document.createElement("p");
-	var sel = window.getSelection();
-	//var text = sel.toString();
-	var text = sel.anchorNode.textContent;
-	p.textContent = text;
-	li.appendChild(p);
-	il.appendChild(li);
-	var anchor = sel.anchorNode;
-	var element = anchor.parentNode;
-	var parent = element.parentNode;
-	while (parent != editor && parent.nodeName != "OL" && parent.nodeName != "UL") {
-		element = parent;
-		parent = element.parentNode;
-	}
-	parent.replaceChild(il, element);
-}
-
-function makeul() {
-	var editor = document.getElementById("editor");
-	var ul = document.createElement("ul");
-	var li = document.createElement("li");
-	var sel = window.getSelection();
-	//var text = sel.toString();
-	var text = sel.anchorNode.textContent;
-	li.textContent = text;
-	ul.appendChild(li);
-	var anchor = sel.anchorNode;
-	var element = anchor.parentNode;
-	var parent = element.parentNode;
-	while (parent != editor && parent.nodeName != "OL" && parent.nodeName != "UL") {
-		element = parent;
-		parent = element.parentNode;
-	}
-	parent.replaceChild(ul, element);
-}
-
-function makeol() {
-	var editor = document.getElementById("editor");
-	var ol = document.createElement("ol");
-	var li = document.createElement("li");
-	var sel = window.getSelection();
-	//var text = sel.toString();
-	var text = sel.anchorNode.textContent;
-	li.textContent = text;
-	ol.appendChild(li);
-	var anchor = sel.anchorNode;
-	var element = anchor.parentNode;
-	var parent = element.parentNode;
-	while (parent != editor && parent.nodeName != "OL" && parent.nodeName != "UL") {
-		element = parent;
-		parent = element.parentNode;
-	}
-	parent.replaceChild(ol, element);
-}
-*/
 
 function makeh() {
 	var editor = document.getElementById("editor");
@@ -479,64 +355,10 @@ function makeh() {
 	parent.replaceChild(h, element);
 }
 
-/*
-function makeh1() {
-	var editor = document.getElementById("editor");
-	var h1 = document.createElement("H1");
-	var sel = window.getSelection();
-	//var text = sel.toString();
-	var text = sel.anchorNode.textContent;
-	h1.textContent = text;
-	var anchor = sel.anchorNode;
-	var element = anchor.parentNode;
-	var parent = element.parentNode;
-	while (parent != editor) {
-		element = parent;
-		parent = element.parentNode;
-	}
-	parent.replaceChild(h1, element);
-}
-
-function makeh2() {
-	var editor = document.getElementById("editor");
-	var h2 = document.createElement("H2");
-	var sel = window.getSelection();
-	//var text = sel.toString();
-	var text = sel.anchorNode.textContent;
-	h2.textContent = text;
-	var anchor = sel.anchorNode;
-	var element = anchor.parentNode;
-	var parent = element.parentNode;
-	while (parent != editor) {
-		element = parent;
-		parent = element.parentNode;
-	}
-	parent.replaceChild(h2, element);
-}
-
-function makeh3() {
-	var editor = document.getElementById("editor");
-	var h3 = document.createElement("H3");
-	var sel = window.getSelection();
-	//var text = sel.toString();
-	var text = sel.anchorNode.textContent;
-	h3.textContent = text;
-	var anchor = sel.anchorNode;
-	var element = anchor.parentNode;
-	var parent = element.parentNode;
-	while (parent != editor) {
-		element = parent;
-		parent = element.parentNode;
-	}
-	parent.replaceChild(h3, element);
-}
-*/
-
 function makep() {
 	var editor = document.getElementById("editor");
 	var p = document.createElement("P");
 	var sel = window.getSelection();
-	//var text = sel.toString();
 	var text = sel.anchorNode.textContent;
 	p.textContent = text;
 	var anchor = sel.anchorNode;
@@ -554,7 +376,6 @@ function makecodeblock() {
 	var pre = document.createElement("PRE");
 	var code = document.createElement("CODE");
 	var sel = window.getSelection();
-	//var text = sel.toString();
 	var text = sel.anchorNode.textContent;
 	code.textContent = text;
 	code.className += "hljs";
@@ -567,48 +388,4 @@ function makecodeblock() {
 		parent = element.parentNode;
 	}
 	parent.replaceChild(pre, element);
-	//sel.deleteFromDocument();
-	//range = sel.getRangeAt(0);
-	//range.deleteContents();
-	//range.remove();
-	//range.insertNode(code);
-}
-
-function makegreen() {
-	var span = document.createElement("SPAN");
-	sel = window.getSelection();
-	//text = sel.toString();
-	var text = sel.anchorNode.textContent;
-	span.textContent = text;
-	span.className += "green";
-	range = sel.getRangeAt(0);
-	range.deleteContents();
-	range.insertNode(span);
-	//node = window.getSelection().anchorNode;
-	//node.insertBefore();
-	/*
-	if (sel.getRangeAt && sel.rangeCount) {
-		range = sel.getRangeAt(0);
-		data = range.startContainer.data;
-		range.deleteContents();
-		var el = document.createElement("span");
-		el.innerHTML = data;
-		var frag = document.createDocumentFragment(), node, lastNode;
-		while ( (node = el.firstChild) ) {
-			lastNode = frag.appendChild(node);
-		}
-		var firstNode = frag.firstChild;
-		range.insertNode(frag);
-
-		if (lastNode) {
-			range = range.cloneRange();
-			range.setStartAfter(lastNode);
-			range.collapse(true);
-			sel.removeAllRanges();
-			sel.addRange(range);
-		}
-
-		//console.log(window.getSelection().anchorNode.data);
-	}
-	*/
 }
