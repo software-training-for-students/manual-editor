@@ -1,0 +1,44 @@
+/*html,body {
+	height: 100%;
+	width: 100%;
+}*/
+
+#editor {
+	/*height: 95%;
+	width: 100%;
+	overflow: scroll;*/
+	border: 1px solid black;
+	word-wrap: break-word;
+}
+
+#buttons {
+	position: fixed;
+	top:0;
+	left:0;
+}
+
+#buttons button {
+	width: 6em;
+	height: 3em;
+	margin-bottom: 0.4em;
+	display: block;
+}
+
+label {
+	margin-left: 0.4em;
+	font-size: 0.8em;
+}
+
+#rows, #cols {
+	width: 1em;
+}
+
+.sel {
+	margin-bottom: 0.4em;
+	margin-left: 0.4em;
+	display: block;
+}
+
+.green {
+	color: green;
+}
