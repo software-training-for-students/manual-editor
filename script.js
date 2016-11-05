@@ -163,7 +163,7 @@ function makesidebarnote() {
 }
 
 function makekeyboardshortcut() {
-	var imgname = window.prompt("Enter the images sources relative to the manual.html file, separated by only commas. Example: keyboard-icons/icon-control,keyboard-icons/icon-alt");
+	var imgname = window.prompt("Enter the images sources relative to the manual.html file, separated by only commas. Example: keyboard-icons/icon-control.svg,keyboard-icons/icon-alt.svg");
 	if (imgname == null)
 		return;
 	var imgnames = imgname.split(",");
