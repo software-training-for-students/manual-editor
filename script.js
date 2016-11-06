@@ -96,7 +96,7 @@ function maketable() {
 	var anchor = sel.anchorNode;
 	var element = anchor.parentNode;
 	var parent = element.parentNode;
-	while (parent != editor) {
+	while (parent != editor && parent.nodeName != "OL" && parent.nodeName != "UL") {
 		element = parent;
 		parent = element.parentNode;
 	}
@@ -160,7 +160,7 @@ function makesidebarnote() {
 	var anchor = sel.anchorNode;
 	var element = anchor.parentNode;
 	var parent = element.parentNode;
-	while (parent != editor) {
+	while (parent != editor && parent.nodeName != "OL" && parent.nodeName != "UL") {
 		element = parent;
 		parent = element.parentNode;
 	}
@@ -192,7 +192,7 @@ function makekeyboardshortcut() {
 	var anchor = sel.anchorNode;
 	var element = anchor.parentNode;
 	var parent = element.parentNode;
-	while (parent != editor) {
+	while (parent != editor && parent.nodeName != "OL" && parent.nodeName != "UL") {
 		element = parent;
 		parent = element.parentNode;
 	}
@@ -227,7 +227,7 @@ function maketoolbox() {
 	var anchor = sel.anchorNode;
 	var element = anchor.parentNode;
 	var parent = element.parentNode;
-	while (parent != editor) {
+	while (parent != editor && parent.nodeName != "OL" && parent.nodeName != "UL") {
 		element = parent;
 		parent = element.parentNode;
 	}
@@ -260,7 +260,7 @@ function makesidebysideimg() {
 	var anchor = sel.anchorNode;
 	var element = anchor.parentNode;
 	var parent = element.parentNode;
-	while (parent != editor) {
+	while (parent != editor && parent.nodeName != "OL" && parent.nodeName != "UL") {
 		element = parent;
 		parent = element.parentNode;
 	}
@@ -289,7 +289,7 @@ function makeimg() {
 		var anchor = sel.anchorNode;
 		var element = anchor.parentNode;
 		var parent = element.parentNode;
-		while (parent != editor) {
+		while (parent != editor && parent.nodeName != "OL" && parent.nodeName != "UL") {
 			element = parent;
 			parent = element.parentNode;
 		}
@@ -301,7 +301,7 @@ function makeimg() {
 		var anchor = sel.anchorNode;
 		var element = anchor.parentNode;
 		var parent = element.parentNode;
-		while (parent != editor) {
+		while (parent != editor && parent.nodeName != "OL" && parent.nodeName != "UL") {
 			element = parent;
 			parent = element.parentNode;
 		}
@@ -353,7 +353,7 @@ function makeh() {
 	var anchor = sel.anchorNode;
 	var element = anchor.parentNode;
 	var parent = element.parentNode;
-	while (parent != editor) {
+	while (parent != editor && parent.nodeName != "OL" && parent.nodeName != "UL") {
 		element = parent;
 		parent = element.parentNode;
 	}
@@ -369,7 +369,7 @@ function makep() {
 	var anchor = sel.anchorNode;
 	var element = anchor.parentNode;
 	var parent = element.parentNode;
-	while (parent != editor) {
+	while (parent != editor && parent.nodeName != "OL" && parent.nodeName != "UL") {
 		element = parent;
 		parent = element.parentNode;
 	}
@@ -388,7 +388,7 @@ function makecodeblock() {
 	var anchor = sel.anchorNode;
 	var element = anchor.parentNode;
 	var parent = element.parentNode;
-	while (parent != editor) {
+	while (parent != editor && parent.nodeName != "OL" && parent.nodeName != "UL") {
 		element = parent;
 		parent = element.parentNode;
 	}
