@@ -1,7 +1,10 @@
 # STS Manual Editor
 This editor can be used to speed up the manual editing process.
+
 The editor should be used in Google Chrome.
+
 Below are steps that can help you use the tool properly.
+
 ## Usage
 * Before editing, load up an existing manual or manual template by choosing a file (bottom of tools on left side), and clicking load.
 * To format an entire block of text, select any of the text in that block, or put your typing cursor at any point on the line, and click on the respective button to format the block.
