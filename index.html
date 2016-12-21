@@ -1,103 +1,108 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Editor</title>
-		<link href="style.css" rel="stylesheet">
-		<!-- page title -->
-		<!--<title>css1</title>-->
-
-		<!-- meta tags -->
-		<meta charset="utf-8">
-		<meta name="description" content="Software manual provided by Software Training for Students at the University of Wisconsin.">
-
-		<!-- link to main stylesheet -->
-		<link rel="stylesheet" type="text/css" href="http://software-training-for-students.github.io/manual-master-files/stylesheet.css">
-
-		<!-- link to code highlight js file -->
-		<script src="http://software-training-for-students.github.io/manual-master-files/html-css-javascript-highlight.js"></script>
-		<script>
-				hljs.initHighlightingOnLoad();
-		</script>
-
-		<!-- link to jQuery hosted by Google -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-
-		<!-- link to main js functions file -->
-		<script src="http://software-training-for-students.github.io/manual-master-files/primary-functions.js"></script>
-
-		<!-- link to Google Fonts -->
-		<link href='https://fonts.googleapis.com/css?family=Source+Code+Pro|Ubuntu:400,300italic,300,400italic,500,500italic,700,700italic|Lora:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
-
-	</head>
-	<body>
-		<div id="buttons">
-			<button id="stylebutton">style</button>
-			<select id="styleselect" class="sel">
-				<option value="bold">bold</option>
-				<option value="italic">italic</option>
-				<option value="highlight">highlight</option>
-				<option value="type">type</option>
-				<option value="link">link</option>
-			</select>
-			<button id="paragraphbutton">paragraph</button>
-			<button id="codebutton">code block</button>
-			<button id="headlinebutton">headline</button>
-			<select id="headlineselect" class="sel">
-				<option value="h1">h1</option>
-				<option value="h2">h2</option>
-				<option value="h3">h3</option>
-			</select>
-			<button id="listbutton">list</button>
-			<select id="listselect" class="sel">
-				<option value="ul">unordered list</option>
-				<option value="ol">ordered list</option>
-				<option value="il">instruction list</option>
-			</select>
-			<button id="imagebutton">image</button>
-			<select id="imageselect" class="sel">
-				<option value="centered-image-tiny">centered-image-tiny</option>
-				<option value="centered-image-small">centered-image-small</option>
-				<option value="centered-image-medium">centered-image-medium</option>
-				<option value="centered-image-large">centered-image-large</option>
-				<option value="full-width-image">full-width-image</option>
-				<option value="side-image-small">side-image-small</option>
-				<option value="side-image-medium">side-image-medium</option>
-				<option value="side-image-large">side-image-large</option>
-				<option value="sidebar-icon">sidebar-icon</option>
-			</select>
-			<select id="borderselect" class="sel">
-				<option value="">no border</option>
-				<option value="border">border</option>
-			</select>
-			<button id="sidebysideimagebutton">side by side image</button>
-			<select id="sidebysideimageselect" class="sel">
-				<option value="sidebyside-image-small">sidebyside-image-small</option>
-				<option value="sidebyside-image-large">sidebyside-image-large</option>
-			</select>
-			<select id="sidebysideborderselect" class="sel">
-				<option value="">no border</option>
-				<option value="border">border</option>
-			</select>
-			<button id="toolboxbutton">toolbox</button>
-			<button id="sidebarnotebutton">sidebar note</button>
-			<button id="keyboardshortcutbutton">keyboard shortcut</button>
-			<button id="tablebutton">table</button>
-			<label for="rows">Rows</label>
-			<input type="text" id="rows"><br>
-			<label for="cols">Cols</label>
-			<input type="text" id="cols">
-			<button id="savebutton">save</button>
-			<button id="loadbutton">load</button>
-			<input type="file" id="loadfile">
-		</div>
-		<div id="editor" contenteditable="true">
-		</div>
-
-		<div id="loaded">
-		</div>
-
-		<script type="text/javascript" src="FileSaver.js"></script>
-		<script type="text/javascript" src="script.js"></script>
-
-	</body>
+    <head>
+        <title>Editor</title>
+        <link href="style.css" rel="stylesheet">
+        <!-- page title -->
+        <!--<title>css1</title>-->
+        <!-- meta tags -->
+        <meta charset="utf-8">
+        <meta name="description" content="Software manual provided by Software Training for Students at the University of Wisconsin.">
+        <!-- link to main stylesheet -->
+        <link rel="stylesheet" type="text/css" href="http://software-training-for-students.github.io/manual-master-files/stylesheet.css">
+        <!-- link to code highlight js file -->
+        <script src="http://software-training-for-students.github.io/manual-master-files/html-css-javascript-highlight.js"></script>
+        <script>
+            hljs.initHighlightingOnLoad();
+        </script>
+        <!-- link to jQuery hosted by Google -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <!-- link to main js functions file -->
+        <script src="http://software-training-for-students.github.io/manual-master-files/primary-functions.js"></script>
+        <!-- link to Google Fonts -->
+        <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro|Ubuntu:400,300italic,300,400italic,500,500italic,700,700italic|Lora:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+    </head>
+    <body>
+        <div id="buttons">
+            <section>
+                <h2>Character Styles</h2>
+                <button id="stylebutton">style</button>
+                <select id="styleselect" class="sel">
+                    <option value="bold">bold</option>
+                    <option value="italic">italic</option>
+                    <option value="highlight">highlight</option>
+                    <option value="type">type</option>
+                    <option value="link">link</option>
+                </select>
+                <button id="paragraphbutton">paragraph</button>
+                <button id="headlinebutton">heading</button>
+                <select id="headlineselect" class="sel">
+                    <option value="h1">h1</option>
+                    <option value="h2">h2</option>
+                    <option value="h3">h3</option>
+                </select>
+            </section>
+            <section>
+                <h2>Lists/Tables</h2>
+                <button id="listbutton">list</button>
+                <select id="listselect" class="sel">
+                    <option value="ul">unordered list</option>
+                    <option value="ol">ordered list</option>
+                    <option value="il">instruction list</option>
+                </select>
+                <button id="tablebutton">table</button>
+                <label for="rows">Rows</label>
+                <input type="text" id="rows"><br>
+                <label for="cols">Cols</label>
+                <input type="text" id="cols">
+            </section>
+            <section>
+                <h2>Images</h2>
+                <button id="imagebutton">image</button>
+                <select id="imageselect" class="sel">
+                    <option value="centered-image-tiny">centered-image-tiny</option>
+                    <option value="centered-image-small">centered-image-small</option>
+                    <option value="centered-image-medium">centered-image-medium</option>
+                    <option value="centered-image-large">centered-image-large</option>
+                    <option value="full-width-image">full-width-image</option>
+                    <option value="side-image-small">side-image-small</option>
+                    <option value="side-image-medium">side-image-medium</option>
+                    <option value="side-image-large">side-image-large</option>
+                    <option value="sidebar-icon">sidebar-icon</option>
+                </select>
+                <select id="borderselect" class="sel">
+                    <option value="">no border</option>
+                    <option value="border">border</option>
+                </select>
+                <button id="sidebysideimagebutton">side by side image</button>
+                <select id="sidebysideimageselect" class="sel">
+                    <option value="sidebyside-image-small">sidebyside-image-small</option>
+                    <option value="sidebyside-image-large">sidebyside-image-large</option>
+                </select>
+                <select id="sidebysideborderselect" class="sel">
+                    <option value="">no border</option>
+                    <option value="border">border</option>
+                </select>
+            </section>
+            <section>
+                <h2>Objects</h2>
+                <button id="toolboxbutton">toolbox</button>
+                <button id="sidebarnotebutton">sidebar note</button>
+                <button id="keyboardshortcutbutton">keyboard shortcut</button>
+                <button id="codebutton">code block</button>
+            </section>
+            <section>
+                <h2>Saving/Loading</h2>
+                <button id="savebutton">save</button>
+                <button id="loadbutton">load</button>
+                <input type="file" id="loadfile">
+            </section>
+        </div>
+        <div id="editor" contenteditable="true">
+        </div>
+        <div id="loaded">
+        </div>
+        <script type="text/javascript" src="FileSaver.js"></script>
+        <script type="text/javascript" src="script.js"></script>
+    </body>
 </html>
