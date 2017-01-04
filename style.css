@@ -14,8 +14,10 @@
 #buttons {
 	position: fixed;
 	width: 12em;
-	top:0;
-	left:1em;
+	top: 0;
+	bottom: 0;
+	left: 1em;
+	overflow-y: scroll;
 }
 
 #buttons button {
