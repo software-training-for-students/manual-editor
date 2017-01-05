@@ -65,3 +65,11 @@ label {
 .green {
 	color: green;
 }
+
+#buttons .disabled {
+	background-color: #DDD;
+}
+
+#buttons .disabled:hover {
+	background-color: #DDD;
+}

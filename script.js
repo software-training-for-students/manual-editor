@@ -12,6 +12,10 @@ var keyboardscbtn = document.getElementById("keyboardshortcutbutton");
 var savebtn = document.getElementById("savebutton");
 var loadbtn = document.getElementById("loadbutton");
 var loadfile = document.getElementById("loadfile");
+var addscriptbtn = document.getElementById("addscriptbutton");
+var hlbtn = document.getElementById("hlbutton");
+var codesel = document.getElementById("codeselect");
+var head = document.getElementsByTagName("head")[0];
 
 stylebtn.addEventListener("click", makestyle);
 codebtn.addEventListener("click", makecodeblock);
@@ -26,6 +30,55 @@ sidebarnotebtn.addEventListener("click", makesidebarnote);
 keyboardscbtn.addEventListener("click", makekeyboardshortcut);
 savebtn.addEventListener("click", save);
 loadbtn.addEventListener("click", load);
+addscriptbtn.addEventListener("click", addscript);
+hlbtn.addEventListener("click", highlightall);
+
+function addscript() {
+	if (addscriptbtn.className == "removescript") {
+		$(".hlscript").remove();
+		addscriptbtn.innerText = "add script";
+		addscriptbtn.removeAttribute("class");
+		hlbtn.disabled = true;
+		hlbtn.setAttribute("class", "disabled");
+		removehighlighting();
+	}
+	else {
+		var filename = "http://software-training-for-students.github.io/manual-master-files/" + codesel.value + "-highlight.js"
+		var hlscript = document.createElement("script");
+		hlscript.setAttribute("type", "text/javascript");
+		hlscript.setAttribute("src", filename);
+		hlscript.setAttribute("class", "hlscript");
+		var initscript = document.createElement("script");
+		initscript.innerHTML = "hljs.initHighlightingOnLoad();";
+		initscript.setAttribute("class", "hlscript");
+		head.appendChild(hlscript);
+		head.appendChild(initscript);
+		hlbtn.disabled = false;
+		hlbtn.removeAttribute("class");
+		addscriptbtn.innerText = "remove script";
+		addscriptbtn.setAttribute("class", "removescript");
+	}
+}
+
+function removehighlighting() {
+	codeelements = $("code");
+	for (var i=0; i<codeelements.length; i++) {
+		var elem = codeelements[i];
+		elem.removeAttribute("class");
+		var jqelem = $(elem);
+		jqelem.find("span").each(function(index) {
+			var text = $(this).text();//get span content
+			$(this).replaceWith(text);//replace all span with just content
+		});
+	}
+}
+
+function highlightall() {
+	removehighlighting();
+	$('pre code').each(function(i, block) {
+		hljs.highlightBlock(block);
+	});
+}
 
 function load() {
 	var html = document.createElement("HTML");
@@ -47,26 +100,46 @@ function load() {
 function save() {
 	var editor = document.getElementById("editor");
 	//var filename = document.getElementsByTagName("H1")[0].innerHTML;
-	var head = document.getElementsByTagName("HEAD")[0]
+	var head = document.getElementsByTagName("HEAD")[0];
 	var newhead = document.createElement("HEAD");
 	var body = document.createElement("BODY");
 	var html = document.createElement("HTML");
 	var date = document.getElementById("current-date");
 	var about = document.getElementById("about-page");
 	var outline = document.getElementById("outline");
+	var name = $("#coverpage-title h1").text();
+	/*
+	var scripts = document.getElementsByClassName("hlscript");
+	for (var i=0; i<=scripts.length; i++) {
+		scripts[i].removeAttribute("class");
+	}
+	*/
+	removehighlighting();
 	date.innerHTML = "";
 	about.innerHTML = "";
 	outline.innerHTML = "";
 	body.innerHTML = editor.innerHTML;
 	for (var i in head.children) {
 		child = head.children[i];
-		if (child.nodeType == 1)
-			newhead.appendChild(child.cloneNode(true));
+		if (child.nodeType == 1) {
+			if (child.className == "hlscript") {
+				var clone = child.cloneNode(true);
+				clone.removeAttribute("class");
+				newhead.appendChild(clone);
+			}
+			else {
+				var clone = child.cloneNode(true);
+				if (clone.nodeName == "TITLE")
+					clone.innerText = name;
+				newhead.appendChild(clone);
+			}
+		}
 	}
 	html.appendChild(newhead);
 	html.appendChild(body);
 	var blob = new Blob(["<!DOCTYPE html>", html.innerHTML], {type: "text/plain;charset=utf-8"});
 	saveAs(blob, "manual.html");
+
 }
 
 function maketable() {
