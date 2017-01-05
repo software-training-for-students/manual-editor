@@ -35,7 +35,6 @@ function load() {
 	var fr = new FileReader();
 	fr.onload = function() {
 		var text = fr.result;
-		console.log(text);
 		html.innerHTML = text;
 		loaded.appendChild(html);
 		var loadedbody = loaded.children[0].children[1];
@@ -61,7 +60,6 @@ function save() {
 	body.innerHTML = editor.innerHTML;
 	for (var i in head.children) {
 		child = head.children[i];
-		console.log(child);
 		if (child.nodeType == 1)
 			newhead.appendChild(child.cloneNode(true));
 	}
@@ -76,8 +74,6 @@ function maketable() {
 	var rows = parseInt(document.getElementById("rows").value);
 	var cols = parseInt(document.getElementById("cols").value);
 	var table = document.createElement("table");
-	console.log(rows);
-	console.log(cols);
 	for (i=0; i<rows; ++i) {
 		var row = document.createElement("tr");
 		for (j=0; j<cols; ++j) {
