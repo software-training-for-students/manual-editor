@@ -452,7 +452,7 @@ function makecodeblock() {
 	var sel = window.getSelection();
 	var text = sel.anchorNode.textContent;
 	code.textContent = text;
-	code.className += "hljs";
+	//code.className += "hljs";
 	pre.appendChild(code);
 	var anchor = sel.anchorNode;
 	var element = anchor.parentNode;
