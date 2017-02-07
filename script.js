@@ -402,7 +402,10 @@ function makelist() {
 		element = parent;
 		parent = element.parentNode;
 	}
-	parent.replaceChild(list, element);
+	if (parent != editor)
+		element.previousSibling.appendChild(list);
+	else
+		parent.replaceChild(list, element);
 }
 
 function makeh() {
