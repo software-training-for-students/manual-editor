@@ -17,14 +17,14 @@ export type SideBySideImageCssClass =
 
 export interface SingleImageProps {
     className : SingleImageCssClass;
-    border : boolean;
+    border? : boolean;
     source : string;
     caption? : string;
 }
 
 export interface SideBySideImageProps {
     className : SideBySideImageCssClass;
-    border : boolean;
+    border? : boolean;
     leftSource : string;
     rightSource : string;
     caption? : string;

@@ -5,7 +5,7 @@ export interface CoverPageProps {
     date : Date;
 }
 
-export class CoverPageDescription extends React.Component<CoverPageProps, void> {
+export default class CoverPageDescription extends React.Component<CoverPageProps, void> {
     public render() {
         return (
         <div id="coverpage-description">

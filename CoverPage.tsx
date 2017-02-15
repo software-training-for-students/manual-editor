@@ -1,6 +1,6 @@
 import * as React from "react";
-import * as CoverPageDescription from "./CoverPageDescription";
-import * as PageBreak from "./PageBreak";
+import CoverPageDescription from "./CoverPageDescription";
+import PageBreak from "./PageBreak";
 
 export interface CoverPageProps {
     title : string;
@@ -8,7 +8,7 @@ export interface CoverPageProps {
     date : Date;
 }
 
-export class CoverPage extends React.Component<CoverPageProps, void> {
+export default class CoverPage extends React.Component<CoverPageProps, void> {
     public render() {
         return (
             <div>
@@ -16,8 +16,8 @@ export class CoverPage extends React.Component<CoverPageProps, void> {
                     <h1>{this.props.title}</h1>
                     <h2>{this.props.subtitle}</h2>
                 </div>
-                <CoverPageDescription.CoverPageDescription date={this.props.date} />
-                <PageBreak.PageBreak />
+                <CoverPageDescription date={this.props.date} />
+                <PageBreak />
             </div>
         );
     }
