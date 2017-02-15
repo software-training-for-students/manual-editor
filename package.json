@@ -1,0 +1,29 @@
+{
+  "name": "sts-manual-editor",
+  "version": "0.0.0",
+  "description": "Editor for STS Manuals (React/Typescript based)",
+  "main": "app.js",
+  "scripts": {
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/software-training-for-students/manual-editor"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/software-training-for-students/manual-editor/issues"
+  },
+  "homepage": "https://github.com/software-training-for-students/manual-editor",
+  "devDependencies": {
+    "ts-loader": "^2.0.0",
+    "typescript": "^2.1.6",
+    "typings": "^2.1.0",
+    "webpack": "^2.2.1"
+  },
+  "dependencies": {
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2"
+  }
+}
