@@ -6,7 +6,7 @@ export class AboutPage extends React.Component<void, void> {
     public render() {
         return (
             <div>           
-                <h1 class="no-top-margin">About Software Training for Students</h1>
+                <h1 className="no-top-margin">About Software Training for Students</h1>
                 <div id="about-page">
                     <p>Software Training for Students is an organization on campus that provides free software training to all students and faculty. Our services include custom workshops, open-enrollment classes, one-on-one project help, and access to Lynda.com. For more information on the Software Training for Students (STS) program, visit our website at <strong><a href="http://wisc.edu/sts">wisc.edu/sts</a></strong>.</p>
                     <Image.SingleImage className="full-width-image" source="http://software-training-for-students.github.io/manual-master-files/sts-services.png" border={false} />
