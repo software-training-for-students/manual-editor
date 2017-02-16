@@ -36,17 +36,15 @@ export function mapStateToProps(state : DocumentView<Props>, props : Props) : Pa
     };
 }
 
-export function mapDispatcherToProps(dispatcher : Redux.Dispatch<Document>) : Partial<Props> {
-    return {
-        setEditMode : (id : number, mode : boolean) => dispatcher({
+export var dispatcherToPropsMap = {
+        setEditMode : (id : number, mode : boolean) => ({
             type: "setEditMode",
             editMode: mode === undefined ? true : !mode,
             itemId : id
         } as SetEditModeAction),
-        onEdited : (id : number, newText : string) => dispatcher({
+        onEdited : (id : number, newText : string) => ({
             type : "edited",
             text : newText,
             itemId : id
         } as OnEditedAction)
-    }
-}
+    };
