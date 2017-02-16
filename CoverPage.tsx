@@ -1,6 +1,7 @@
 import * as React from "react";
 import CoverPageDescription from "./CoverPageDescription";
 import PageBreak from "./PageBreak";
+import EditableHeaders from "./EditableHeaders";
 
 export interface CoverPageProps {
     title : string;
@@ -13,8 +14,8 @@ export default class CoverPage extends React.Component<CoverPageProps, void> {
         return (
             <div>
                 <div id="coverpage-title">
-                    <h1>{this.props.title}</h1>
-                    <h2>{this.props.subtitle}</h2>
+                    <EditableHeaders.H1 text={this.props.title} itemId={1} />
+                    <EditableHeaders.H2 text={this.props.subtitle} itemId={2} />
                 </div>
                 <CoverPageDescription date={this.props.date} />
                 <PageBreak />
