@@ -2,7 +2,7 @@ var path = require("path");
 
 var config = {
   entry: ["./app.tsx"],
-
+  devtool: "source-map",
   /*
    * The combination of path and filename tells Webpack what name to give to
    * the final bundled JavaScript file and where to store this file.
