@@ -5,15 +5,17 @@ import {Document} from "./DocumentStore";
 
 abstract class HeadingBase extends EditableText.Component<EditableText.Props, void> {
     protected toggleEditMode = () => {
-        this.props.setEditMode(this.props.itemId, this.props.editMode);
+        if(this.props.setEditMode)
+            this.props.setEditMode(this.props.itemId, this.props.editMode || false);
     }
 
     protected updateText = (event : any) => {
-        this.props.onEdited(this.props.itemId, event.target.value);
+        if(this.props.onEdited)
+            this.props.onEdited(this.props.itemId, event.target.value);
     }
 
     private componentDidUpdate() {
-        var input = this.refs["input"] as HTMLElement;
+        var input = this.refs["editor"] as HTMLElement;
         if(input) {
             input.focus();
         }
@@ -26,7 +28,7 @@ class H1 extends HeadingBase {
     }
 
     public renderEditable() {
-        return <input ref="input" onBlur={this.toggleEditMode} onChange={this.updateText}
+        return <input ref="editor" onBlur={this.toggleEditMode} onChange={this.updateText}
          className="h1Edit" type="text" size={40} value={this.props.text} />
     }
 }
@@ -37,7 +39,7 @@ class H2 extends HeadingBase {
     }
 
     public renderEditable() {
-        return <input ref="input" onBlur={this.toggleEditMode} onChange={this.updateText}
+        return <input ref="editor" onBlur={this.toggleEditMode} onChange={this.updateText}
          className="h2Edit" type="text" size={40} value={this.props.text} />
     }
 }
@@ -48,7 +50,7 @@ class H3 extends HeadingBase {
     }
 
     public renderEditable() {
-        return <input ref="input" onBlur={this.toggleEditMode} onChange={this.updateText}
+        return <input ref="editor" onBlur={this.toggleEditMode} onChange={this.updateText}
          className="h3Edit" type="text" size={40} value={this.props.text} />
     }
 }
