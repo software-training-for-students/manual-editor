@@ -4,25 +4,25 @@ import * as DocumentStore from "./DocumentStore";
 import * as EditableText from "./EditableText";
 
 var setEditMode : Redux.Reducer<DocumentStore.DocumentView<EditableText.Props>> =
- (state : DocumentStore.DocumentView<EditableText.Props>, action : EditableText.SetEditModeAction) => {
+ (state : DocumentStore.DocumentView<EditableText.Props> = DocumentStore.initialState, action : EditableText.SetEditModeAction) => {
     if(action.type == "setEditMode") {
         var newState : DocumentStore.DocumentView<EditableText.Props> = { ... state };
         newState[action.itemId] = newState[action.itemId] || {itemId : action.itemId};
         newState[action.itemId].editMode = action.editMode;
         return newState;
     }
-    return state === undefined ? {} : state;
+    return state;
  }
 
  var onEdited : Redux.Reducer<DocumentStore.DocumentView<EditableText.Props>> =
- (state : DocumentStore.DocumentView<EditableText.Props>, action : EditableText.OnEditedAction) => {
+ (state : DocumentStore.DocumentView<EditableText.Props> = DocumentStore.initialState, action : EditableText.OnEditedAction) => {
      if(action.type == "edited") {
          var newState : DocumentStore.DocumentView<EditableText.Props> = { ... state};
          newState[action.itemId] = newState[action.itemId] || {itemId : action.itemId};
          newState[action.itemId].text = action.text;
          return newState;
      }
-     return state === undefined ? {} : state;
+     return state;
  }
 
  var editReducers = (document : DocumentStore.Document, action : Redux.Action) => {

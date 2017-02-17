@@ -14,3 +14,16 @@ export interface DocumentView<TProps> {
 }
 
 export interface Document extends DocumentView<any> {}
+
+export var initialState : Document = {
+    1 : {
+        itemId : 1,
+        text : "Empty Manual Template",
+        editMode : false
+    },
+    2 : {
+        itemId : 2,
+        text : "Small Tagline Description Here",
+        editMode : false
+    }
+}

@@ -3,59 +3,53 @@ import * as Redux from "react-redux";
 import * as EditableText from "./EditableText";
 import {Document} from "./DocumentStore";
 
-class H1 extends EditableText.Component<EditableText.Props, void> {
+abstract class HeadingBase extends EditableText.Component<EditableText.Props, void> {
+    protected toggleEditMode = () => {
+        this.props.setEditMode(this.props.itemId, this.props.editMode);
+    }
+
+    protected updateText = (event : any) => {
+        this.props.onEdited(this.props.itemId, event.target.value);
+    }
+
+    private componentDidUpdate() {
+        var input = this.refs["input"] as HTMLElement;
+        if(input) {
+            input.focus();
+        }
+    }
+}
+
+class H1 extends HeadingBase {
     public renderStatic() {
         return <h1 onClick={this.toggleEditMode}>{this.props.text}</h1>
     }
 
     public renderEditable() {
-        return <input onBlur={this.toggleEditMode} onChange={this.updateText}
+        return <input ref="input" onBlur={this.toggleEditMode} onChange={this.updateText}
          className="h1Edit" type="text" size={40} value={this.props.text} />
-    }
-
-    private toggleEditMode = () => {
-        this.props.setEditMode(this.props.itemId, this.props.editMode);
-    }
-
-    private updateText = (event : any) => {
-        this.props.onEdited(this.props.itemId, event.target.value);
     }
 }
 
-class H2 extends EditableText.Component<EditableText.Props, void> {
+class H2 extends HeadingBase {
     public renderStatic() {
         return <h2 onClick={this.toggleEditMode}>{this.props.text}</h2>
     }
 
     public renderEditable() {
-        return <input onBlur={this.toggleEditMode} onChange={this.updateText}
+        return <input ref="input" onBlur={this.toggleEditMode} onChange={this.updateText}
          className="h2Edit" type="text" size={40} value={this.props.text} />
-    }
-
-    private toggleEditMode = () => {
-        this.props.setEditMode(this.props.itemId, this.props.editMode);
-    }
-
-    private updateText = (event : any) => {
-        this.props.onEdited(this.props.itemId, event.target.value);
     }
 }
 
-class H3 extends EditableText.Component<EditableText.Props, void> {
+class H3 extends HeadingBase {
     public renderStatic() {
         return <h3 onClick={this.toggleEditMode}>{this.props.text}</h3>
     }
 
     public renderEditable() {
-        return <input className="h3Edit" type="text" size={40} value={this.props.text} />
-    }
-
-    private toggleEditMode = () => {
-        this.props.setEditMode(this.props.itemId, this.props.editMode);
-    }
-
-    private updateText = (event : any) => {
-        this.props.onEdited(this.props.itemId, event.target.value);
+        return <input ref="input" onBlur={this.toggleEditMode} onChange={this.updateText}
+         className="h3Edit" type="text" size={40} value={this.props.text} />
     }
 }
 
