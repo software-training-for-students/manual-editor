@@ -9,8 +9,18 @@
     "target": "ES5",
     "sourceMap": true,
     "strictNullChecks": true,
-    "alwaysStrict": true
+    "alwaysStrict": true,
+    "baseUrl": "node_modules",
+    "paths": {
+      "redux" : ["redux/redux", "redux/dist/redux"]
+    }
   },
+  "include": [
+    "components",
+    "reducers",
+    "actions",
+    "."
+  ],
   "exclude": [
     "node_modules"
   ]

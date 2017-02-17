@@ -3,9 +3,9 @@ import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
 import * as ReactRedux from "react-redux";
 import {Document, initialState} from "./DocumentStore";
-import CoverPage from "./CoverPage";
-import AboutPage from "./AboutPage";
-import EditReducers from "./EditReducers";
+import CoverPage from "./components/CoverPage";
+import AboutPage from "./components/AboutPage";
+import EditReducers from "./reducers/EditReducers";
 
 const store = Redux.createStore<Document>(EditReducers, initialState);
 

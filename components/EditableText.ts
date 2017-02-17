@@ -1,22 +1,13 @@
 import * as React from "react";
 import * as Redux from "react-redux";
-import {Editable, DocumentView, ActionBase} from "./DocumentStore";
+import {Editable, DocumentView} from "../DocumentStore";
+import * as EditActions from '../actions/EditActions';
 
 export interface Props extends Editable {
     text? : string;
     editMode? : boolean;
     setEditMode?: (id:number, mode : boolean) => void;
     onEdited?: (id:number, newText : string) => void;
-}
-
-export interface SetEditModeAction extends ActionBase {
-    type : "setEditMode";
-    editMode : boolean;
-}
-
-export interface OnEditedAction extends ActionBase {
-    type : "edited";
-    text : string;
 }
 
 export abstract class Component<TProps extends Props, TState> extends React.Component<TProps, TState> {
@@ -38,6 +29,11 @@ export abstract class Component<TProps extends Props, TState> extends React.Comp
         if(props.onEdited)
             props.onEdited(props.itemId, event.target.value);
     }
+
+    protected getTextLength = () => {
+        var props : Props = this.props;
+        return props.text === undefined ? 0 : props.text.length;
+    }
 }
 
 export function mapStateToProps(state : DocumentView<Props> | undefined, props : Props) : Partial<Props> {
@@ -49,15 +45,15 @@ export function mapStateToProps(state : DocumentView<Props> | undefined, props :
     };
 }
 
-export var dispatcherToPropsMap = {
+export var mapActionsToProps = {
         setEditMode : (id : number, mode : boolean) => ({
             type: "setEditMode",
             editMode: !mode,
             itemId : id
-        } as SetEditModeAction),
+        } as EditActions.SetEditModeAction),
         onEdited : (id : number, newText : string) => ({
             type : "edited",
             text : newText,
             itemId : id
-        } as OnEditedAction)
+        } as EditActions.OnEditedAction)
     };
