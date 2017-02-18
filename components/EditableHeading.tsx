@@ -16,8 +16,8 @@ const EditableHeading : React.StatelessComponent<Props> = (props : Props) => {
         value : props.value
     };
 
-    const toggleIsEditing = () => props.setIsEditing !== undefined && props.setIsEditing(props.itemId, !props.editing);
-    const updateText = (text : string) => props.onEdited !== undefined && props.onEdited(props.itemId, text);
+    const toggleIsEditing = () => props.setIsEditing !== undefined ? props.setIsEditing(props.itemId, !props.editing) : void 0;
+    const updateText = (text : string) => props.onEdited !== undefined ? props.onEdited(props.itemId, text) : void 0;
 
     return <EditableText editing = {props.editing === undefined ? false : props.editing}
         inputComponentClass = {SingleLineEditor} 
