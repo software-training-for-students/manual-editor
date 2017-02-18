@@ -1,14 +1,16 @@
 import * as React from "react";
 import * as ReactRedux from "react-redux";
-import EditableText from "./EditableText";
+import EditableContent from "./EditableContent";
 import SingleLineEditor from "./SingleLineEditor";
 import * as Heading from "./Heading";
-import {EditableProps, InteractiveEditable, createEditableStateToPropsMapper, mapBaseActionsToProps} from "../DocumentStore";
+import {EditableProps, InteractiveEditableProps, createEditableStateToPropsMapper, mapBaseActionsToProps} from "../DocumentStore";
 import {connect} from "react-redux";
 
-interface Props extends InteractiveEditable<string> {
+interface Props extends InteractiveEditableProps<string> {
     level : 1 | 2 | 3 | 4 | 5 | 6;
 }
+
+class EditableText extends EditableContent<string> {}
 
 const EditableHeading : React.StatelessComponent<Props> = (props : Props) => {
     var headingProps : Heading.Props = {
@@ -22,9 +24,9 @@ const EditableHeading : React.StatelessComponent<Props> = (props : Props) => {
         inputComponentClass = {SingleLineEditor} 
         staticComponentClass={Heading.Component}
         staticProps = {headingProps}
-        text={props.value}
+        value={props.value}
         toggleIsEditing = {toggleIsEditing}
-        updateText = {updateText} />
+        updateValue = {updateText} />
 }
 
 function mapHeadingStateToProps(itemState : Props, updatedBaseProps: Partial<EditableProps<any>>) {

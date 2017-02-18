@@ -6,7 +6,7 @@ export interface EditableProps<T> {
     value? : T;
 }
 
-export interface InteractiveEditable<T> extends EditableProps<T> {
+export interface InteractiveEditableProps<T> extends EditableProps<T> {
     setIsEditing?: (id:number, mode : boolean) => void;
     onEdited?: (id:number, newValue : T) => void;
 }
