@@ -43,9 +43,7 @@ function mapItemStateToDefaultProps(state : EditableProps<any>) : Partial<Editab
 export function createEditableStateToPropsMapper<TProps extends EditableProps<any>>(
     mapItemStateToAdditionalProps : (itemState : TProps, updatedBaseProps: Partial<EditableProps<any>>) => Partial<TProps>) {
     
-    return (state : Document = initialState, oldProps : TProps) : Partial<TProps> => {       
-        if(state === undefined)
-            return oldProps;
+    return (state : Document = initialState, oldProps : TProps) : Partial<TProps> => {
         const itemState = state[oldProps.itemId] as TProps;
         if(itemState) {
             const updatedBaseProps = mapItemStateToDefaultProps(itemState);
