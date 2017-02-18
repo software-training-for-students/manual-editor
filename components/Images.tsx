@@ -33,7 +33,7 @@ export interface SideBySideImageProps {
 export class SingleImage extends React.Component<SingleImageProps, void> {
     public render() {
         return (
-        <div className={this.props.className + (this.props.border ? "border" : "")}>
+        <div className={this.props.className + (this.props.border ? " border" : "")}>
             <img src={this.props.source} />
             <p>{this.props.caption}</p>
          </div>);
@@ -43,7 +43,7 @@ export class SingleImage extends React.Component<SingleImageProps, void> {
 export class SideBySideImages extends React.Component<SideBySideImageProps, void> {
     public render() {
         return (
-        <div className={this.props.className + (this.props.border ? "border" : "")}>
+        <div className={this.props.className + (this.props.border ? " border" : "")}>
             <img src={this.props.leftSource} />
             <img src={this.props.rightSource} />
             <p>{this.props.caption}</p>
