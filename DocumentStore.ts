@@ -16,34 +16,43 @@ export interface DocumentView<TProps extends EditableProps<any>> {
     [itemId : number] : TProps;
 }
 
-export interface Document extends DocumentView<EditableProps<any>> {}
+export interface Document extends DocumentView<EditableProps<any> & any> {}
 
 export var initialState : Document = {
     1 : {
         itemId : 1,
         value : "Empty Manual Template",
-        editing : false
+        editing : false,
+        level : 1
     },
     2 : {
         itemId : 2,
         value : "Small Tagline Description Here",
-        editing : false
+        editing : false,
+        level : 2
     }
 }
 
+function mapItemStateToDefaultProps(state : EditableProps<any>) : Partial<EditableProps<any>> {
+    return {
+        editing : state.editing,
+        value : state.value
+    };
+}
 
-export function mapBaseStateToProps<TProps extends EditableProps<any>>(state : Document = initialState, oldProps : TProps) {
-    if(state === undefined)
-        return oldProps;
-    const itemState = state[oldProps.itemId];
-    if(itemState) {
-        const updatedProps : Partial<EditableProps<any>> = {
-            editing : itemState.editing,
-            value : itemState.value
+export function createEditableStateToPropsMapper<TProps extends EditableProps<any>>(
+    mapItemStateToAdditionalProps : (itemState : TProps, updatedBaseProps: Partial<EditableProps<any>>) => Partial<TProps>) {
+    
+    return (state : Document = initialState, oldProps : TProps) : Partial<TProps> => {       
+        if(state === undefined)
+            return oldProps;
+        const itemState = state[oldProps.itemId] as TProps;
+        if(itemState) {
+            const updatedBaseProps = mapItemStateToDefaultProps(itemState);
+            return mapItemStateToAdditionalProps(itemState, updatedBaseProps);
         }
-        return updatedProps;
-    }
-    return oldProps;
+        return oldProps;
+    };
 }
 
 export const mapBaseActionsToProps = {

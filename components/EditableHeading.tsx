@@ -3,7 +3,7 @@ import * as ReactRedux from "react-redux";
 import EditableText from "./EditableText";
 import SingleLineEditor from "./SingleLineEditor";
 import * as Heading from "./Heading";
-import {InteractiveEditable, mapBaseStateToProps, mapBaseActionsToProps} from "../DocumentStore";
+import {EditableProps, InteractiveEditable, createEditableStateToPropsMapper, mapBaseActionsToProps} from "../DocumentStore";
 import {connect} from "react-redux";
 
 interface Props extends InteractiveEditable<string> {
@@ -28,4 +28,11 @@ const EditableHeading : React.StatelessComponent<Props> = (props : Props) => {
         updateText = {updateText} />
 }
 
-export default connect(mapBaseStateToProps, mapBaseActionsToProps)(EditableHeading);
+function mapHeadingStateToProps(itemState : Props, updatedBaseProps: Partial<EditableProps<any>>) {
+    return {
+        ... updatedBaseProps,
+        level : itemState.level
+    }
+}
+
+export default connect(createEditableStateToPropsMapper(mapHeadingStateToProps), mapBaseActionsToProps)(EditableHeading);
