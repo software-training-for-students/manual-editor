@@ -12,18 +12,17 @@ interface Props extends InteractiveEditable<string> {
 
 const EditableHeading : React.StatelessComponent<Props> = (props : Props) => {
     var headingProps : Heading.Props = {
-        level : props.level,
-        value : props.value
+        level : props.level
     };
 
     const toggleIsEditing = () => props.setIsEditing !== undefined ? props.setIsEditing(props.itemId, !props.editing) : void 0;
     const updateText = (text : string) => props.onEdited !== undefined ? props.onEdited(props.itemId, text) : void 0;
 
-    return <EditableText editing = {props.editing === undefined ? false : props.editing}
+    return <EditableText editing = {props.editing}
         inputComponentClass = {SingleLineEditor} 
         staticComponentClass={Heading.Component}
         staticProps = {headingProps}
-        text={props.value === undefined ? "" : props.value}
+        text={props.value}
         toggleIsEditing = {toggleIsEditing}
         updateText = {updateText} />
 }

@@ -3,8 +3,8 @@ import * as Redux from "react-redux";
 import {InteractiveEditable, DocumentView} from "../DocumentStore";
 
 interface Props {
-    editing : boolean;
-    text : string;
+    editing? : boolean;
+    text? : string;
     inputProps? : any;
     staticProps? : any;
     inputComponentClass : string | React.StatelessComponent<any> | React.ComponentClass<any>;
@@ -24,7 +24,7 @@ const EditableText : React.StatelessComponent<Props> = (props : Props) => {
             autoFocus
             onBlur = {toggleIsEditing}
             onChange = {onInputChange}
-            value = {props.text}
+            value = {props.text || ""}
             {... props.inputProps}
         />
     }
@@ -32,6 +32,7 @@ const EditableText : React.StatelessComponent<Props> = (props : Props) => {
         var StaticComponent = props.staticComponentClass;
         return <StaticComponent
             onClick = {toggleIsEditing}
+            value = {props.text}
             {... props.staticProps} />
     }
 };
