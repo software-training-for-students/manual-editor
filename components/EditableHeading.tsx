@@ -3,7 +3,7 @@ import * as ReactRedux from "react-redux";
 import EditableContent from "./EditableContent";
 import SingleLineEditor from "./SingleLineEditor";
 import * as Heading from "./Heading";
-import {EditableProps, InteractiveEditableProps, createEditableStateToPropsMapper, mapBaseActionsToProps} from "../DocumentStore";
+import {EditableProps, InteractiveEditableProps, createEditableStateToPropsMapper, mapBaseActionsToProps, getCommonInteractiveEditableProps} from "../DocumentStore";
 import {connect} from "react-redux";
 import ElementTypes from "../ElementTypes";
 
@@ -18,16 +18,14 @@ const EditableHeading : React.StatelessComponent<Props> = (props : Props) => {
         level : props.level
     };
 
-    const toggleIsEditing = () => props.setIsEditing !== undefined ? props.setIsEditing(props.itemId, !props.editing) : void 0;
-    const updateText = (text : string) => props.onEdited !== undefined ? props.onEdited(props.itemId, text) : void 0;
-
+    const {toggleIsEditing, updateValue} = getCommonInteractiveEditableProps(props);
     return <EditableText editing = {props.editing}
         inputComponentClass = {SingleLineEditor} 
         staticComponentClass={Heading.Component}
         staticProps = {headingProps}
         value={props.value}
         toggleIsEditing = {toggleIsEditing}
-        updateValue = {updateText} />
+        updateValue = {updateValue} />
 }
 
 function mapHeadingStateToProps(itemState : Props, updatedBaseProps: Partial<EditableProps<any>>) {

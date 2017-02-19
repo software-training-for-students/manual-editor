@@ -8,15 +8,24 @@ interface ImageEditorProps<TImageProps> {
     onComplete : () => void
 }
 
-export const SingleImageEditor : React.StatelessComponent<ImageEditorProps<SingleImageProps>> =
-     (props:ImageEditorProps<SingleImageProps>) => {
-    const onSourceChanged = (event : React.ChangeEvent<HTMLInputElement>) => props.onValueChange !== undefined ?
-         props.onValueChange({... props.value, source : event.target.value}) : void 0;
+function getCommonImageEditorCallbacks(props:ImageEditorProps<SingleImageProps | SideBySideImageProps>) {
     const onBorderChanged = (event : React.ChangeEvent<HTMLInputElement>) => props.onValueChange !== undefined ?
          props.onValueChange({... props.value, border : event.target.checked}) : void 0;
 
     const onCaptionChanged = (event : React.ChangeEvent<HTMLInputElement>) => props.onValueChange !== undefined ?
          props.onValueChange({... props.value, caption : event.target.value as string}) : void 0;
+    return {
+        onBorderChanged,
+        onCaptionChanged
+    }
+}
+
+export const SingleImageEditor : React.StatelessComponent<ImageEditorProps<SingleImageProps>> =
+     (props:ImageEditorProps<SingleImageProps>) => {
+    const onSourceChanged = (event : React.ChangeEvent<HTMLInputElement>) => props.onValueChange !== undefined ?
+         props.onValueChange({... props.value, source : event.target.value}) : void 0;
+    
+    const {onBorderChanged, onCaptionChanged} = getCommonImageEditorCallbacks(props);
          
     const onCssClassChanged = (event : React.ChangeEvent<HTMLSelectElement>) => props.onValueChange !== undefined ?
          props.onValueChange({... props.value, className : event.target.value as SingleImageCssClass}) : void 0;

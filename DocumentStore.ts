@@ -11,6 +11,15 @@ export interface InteractiveEditableProps<T> extends EditableProps<T> {
     onEdited?: (id:number, newValue : T) => void;
 }
 
+export function getCommonInteractiveEditableProps<T>(props : InteractiveEditableProps<T>) {
+    const toggleIsEditing = () => props.setIsEditing !== undefined ? props.setIsEditing(props.itemId, !props.editing) : void 0;
+    const updateValue = (value : T) => props.onEdited !== undefined ? props.onEdited(props.itemId, value) : void 0;
+    return {
+        toggleIsEditing,
+        updateValue
+    }
+}
+
 export interface ItemOrdering {
         itemId: number;
         elementType : string;
@@ -68,8 +77,13 @@ function mapItemStateToDefaultProps(state : EditableProps<any>) : Partial<Editab
     };
 }
 
+function mapItemStateToAdditionalPropsDefault<TProps extends EditableProps<any>>(itemState : any, updatedBaseProps: Partial<EditableProps<any>>) : Partial<TProps> {
+    return {... itemState, ... updatedBaseProps}
+}
+
 export function createEditableStateToPropsMapper<TProps extends EditableProps<any>>(
-    mapItemStateToAdditionalProps : (itemState : TProps, updatedBaseProps: Partial<EditableProps<any>>) => Partial<TProps>) {
+    mapItemStateToAdditionalProps : (itemState : TProps, updatedBaseProps: Partial<EditableProps<any>>) => Partial<TProps>
+     = mapItemStateToAdditionalPropsDefault) {
     
     return (state : Document = initialState, oldProps : TProps) : Partial<TProps> => {
         const itemState = state[oldProps.itemId] as TProps;
