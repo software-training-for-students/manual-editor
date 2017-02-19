@@ -35,7 +35,7 @@ export const SingleImageEditor : React.StatelessComponent<ImageEditorProps<Singl
     <div onClick={props.onClick}>
         <section>
             <label>Image Source</label>
-            <input type = "text" onChange={onSourceChanged} value={imageProps.source} />
+            <input type = "url" onChange={onSourceChanged} value={imageProps.source} size={80} />
         </section>
         <section>
             <input type="checkbox" onChange={onBorderChanged} checked={imageProps.border} />

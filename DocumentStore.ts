@@ -11,9 +11,16 @@ export interface InteractiveEditableProps<T> extends EditableProps<T> {
     onEdited?: (id:number, newValue : T) => void;
 }
 
+export interface ItemOrdering {
+        itemId: number;
+        elementType : string;
+}
+
 // Redux mapping and reducing functions can use this interface to get strongly typed data.
 export interface DocumentView<TProps extends EditableProps<any>> {
     [itemId : number] : TProps;
+    nextItemId : number;
+    elementOrdering : ItemOrdering[];
 }
 
 export interface Document extends DocumentView<EditableProps<any> & any> {}
@@ -40,7 +47,18 @@ export var initialState : Document = {
             border : false,
             className : "centered-image-large"
         }
-    }
+    },
+    4 : {
+        itemId : 4,
+        editing : false,
+        value : "Test Header",
+        level : 1
+    },
+    nextItemId : 4,
+    elementOrdering : [
+        {itemId: 3, elementType: "SingleImage"},
+        {itemId: 4, elementType: "Heading"}
+        ]
 }
 
 function mapItemStateToDefaultProps(state : EditableProps<any>) : Partial<EditableProps<any>> {

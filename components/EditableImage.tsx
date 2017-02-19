@@ -4,6 +4,7 @@ import * as Images from "./Images";
 import * as ImageEditor from "./ImageEditor";
 import EditableContent from "./EditableContent";
 import {EditableProps, InteractiveEditableProps, createEditableStateToPropsMapper, mapBaseActionsToProps} from "../DocumentStore";
+import ElementTypes from "../ElementTypes";
 
 class EditableSingleImageContainer extends EditableContent<Images.SingleImageProps> {}
 

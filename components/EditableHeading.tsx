@@ -5,6 +5,7 @@ import SingleLineEditor from "./SingleLineEditor";
 import * as Heading from "./Heading";
 import {EditableProps, InteractiveEditableProps, createEditableStateToPropsMapper, mapBaseActionsToProps} from "../DocumentStore";
 import {connect} from "react-redux";
+import ElementTypes from "../ElementTypes";
 
 interface Props extends InteractiveEditableProps<string> {
     level : 1 | 2 | 3 | 4 | 5 | 6;
@@ -35,5 +36,7 @@ function mapHeadingStateToProps(itemState : Props, updatedBaseProps: Partial<Edi
         level : itemState.level
     }
 }
+
+
 
 export default connect(createEditableStateToPropsMapper(mapHeadingStateToProps), mapBaseActionsToProps)(EditableHeading);

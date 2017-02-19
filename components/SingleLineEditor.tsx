@@ -13,7 +13,12 @@ const SingleLineEditor : React.StatelessComponent<EditorProps> = (props : Editor
     const textLength = props.value.length;
     var {onComplete, onChange, onValueChange, ...rest} = props;
     return <input type="text" size={Math.max(minInputSize, textLength) + extraInputSpace}
-     onBlur={onComplete} onChange={(event) => onValueChange !== undefined ? onValueChange(event.target.value) : void 0}
+     onBlur={onComplete} onChange={(event) => {
+         onValueChange(event.target.value);
+         if(onChange !== undefined) {
+             onChange(event);
+         }
+     }}
      {...rest} />
 }
 
