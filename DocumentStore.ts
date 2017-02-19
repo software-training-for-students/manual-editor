@@ -30,6 +30,16 @@ export var initialState : Document = {
         value : "Small Tagline Description Here",
         editing : false,
         level : 2
+    },
+    3 : {
+        itemId : 3,
+        editing : false,
+        value : {
+            source : "http://software-training-for-students.github.io/manual-master-files/sts-services.png",
+            caption : "Caption",
+            border : false,
+            className : "centered-image-large"
+        }
     }
 }
 

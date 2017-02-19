@@ -7,6 +7,8 @@ import CoverPage from "./components/CoverPage";
 import AboutPage from "./components/AboutPage";
 import BaseReducers from "./reducers/BaseReducers";
 
+import * as EditableImages from "./components/EditableImage";
+
 const store = Redux.createStore<Document>(BaseReducers);
 
 ReactDOM.render(
@@ -14,6 +16,7 @@ ReactDOM.render(
     <div>
         <CoverPage date={new Date()} />
         <AboutPage />
+        <EditableImages.default.EditableSingleImage itemId={3} />
     </div>
 </ReactRedux.Provider>,
 document.getElementById("root"));

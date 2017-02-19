@@ -9,7 +9,10 @@ var config = {
    */
   output: {
     path: path.resolve(__dirname, "build"),
-    filename: "bundle.js"
+    filename: "bundle.js",
+    devtoolModuleFilenameTemplate: function(info){
+      return "file:///"+info.absoluteResourcePath;
+    }
   },
 
   resolve: {

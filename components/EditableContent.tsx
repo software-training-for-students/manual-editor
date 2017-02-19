@@ -3,8 +3,8 @@ import * as Redux from "react-redux";
 import {InteractiveEditableProps, DocumentView} from "../DocumentStore";
 
 interface Props<T> {
-    editing? : boolean;
-    value? : T;
+    editing : boolean | undefined;
+    value : T | undefined;
     inputProps? : any;
     staticProps? : any;
     inputComponentClass : string | React.StatelessComponent<any> | React.ComponentClass<any>;
@@ -14,18 +14,19 @@ interface Props<T> {
 }
 
 class EditableContent<T> extends React.Component<Props<T> , void> {
-    private toggleIsEditing = () => this.props.toggleIsEditing();
+    private toggleIsEditing = () => 
+        this.props.toggleIsEditing();
 
-    private onInputChange = (event : any) =>
-     this.props.updateValue(event.target.value);
+    private onValueChanged = (value : T) =>
+     this.props.updateValue(value);
 
     public render() {
         if(this.props.editing) {
             var InputComponent = this.props.inputComponentClass;
             return <InputComponent
                 autoFocus
-                onBlur = {this.toggleIsEditing}
-                onChange = {this.onInputChange}
+                onComplete = {this.toggleIsEditing}
+                onValueChange = {this.onValueChanged}
                 value = {this.props.value}
                 {... this.props.inputProps}
             />
