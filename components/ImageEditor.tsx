@@ -4,7 +4,6 @@ import {SingleImageProps, SingleImageCssClass, SideBySideImageProps} from "./Ima
 interface ImageEditorProps<TImageProps> {
     value : TImageProps | undefined
     onValueChange? : (newProps: TImageProps) => void;
-    onClick?: React.EventHandler<React.SyntheticEvent<HTMLElement>>
     onComplete : () => void
 }
 
@@ -41,7 +40,7 @@ export const SingleImageEditor : React.StatelessComponent<ImageEditorProps<Singl
     }
 
     return (
-    <div onClick={props.onClick}>
+    <div className={"image-editor"}>
         <section>
             <label>Image Source</label>
             <input type = "url" onChange={onSourceChanged} value={imageProps.source} size={80} />
@@ -68,7 +67,6 @@ export const SingleImageEditor : React.StatelessComponent<ImageEditorProps<Singl
                 <option value="sidebar-icon" >Sidebar Icon</option>
             </select>
         </section>
-        <button onClick={onSubmitClicked}>Save</button>
     </div>
     );
         

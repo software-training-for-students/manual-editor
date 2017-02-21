@@ -8,6 +8,11 @@ var setIsEditing : Redux.Reducer<Document> =
     if(action.type == "setIsEditing") {
         var newState : Document = { ... state };
         newState[action.itemId] = newState[action.itemId] || {itemId : action.itemId};
+        for(let itemId in newState) {
+            if(newState[itemId].editing) {
+                newState[itemId].editing = false;
+            }
+        }
         newState[action.itemId].editing = action.editing;
         return newState;
     }

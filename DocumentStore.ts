@@ -51,6 +51,13 @@ export var initialState : Document = {
         ]
 }
 
+function addElementToEndOfDocument(document : Document, elementType : string, elementState: EditableProps<any>) {
+    var itemId = document.nextItemId;
+    document[itemId] = {... elementState, editing : true};
+    document.elementOrdering.push({itemId, elementType});
+}
+
+
 function mapItemStateToDefaultProps(state : EditableProps<any>) : Partial<EditableProps<any>> {
     return {
         editing : state.editing,
