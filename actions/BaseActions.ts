@@ -10,7 +10,7 @@ export interface SetIsEditing extends ActionBase {
 }
 
 export interface OnEdited extends ActionBase {
-    type : "edited";
+    type : "onEdited";
     value : string;
 }
 

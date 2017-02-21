@@ -1,6 +1,4 @@
 import * as React from "react";
-import * as Redux from "react-redux";
-import {InteractiveEditableProps, DocumentView} from "../DocumentStore";
 
 interface Props<T> {
     editing : boolean | undefined;

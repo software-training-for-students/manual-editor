@@ -1,24 +1,5 @@
+import { EditableProps, EditableActionsMap, InteractiveEditableProps } from './EditableBase';
 import * as BaseActions from './actions/BaseActions';
-
-export interface EditableProps<T> {
-    itemId : number;
-    editing? : boolean;
-    value? : T;
-}
-
-export interface InteractiveEditableProps<T> extends EditableProps<T> {
-    setIsEditing?: (id:number, mode : boolean) => void;
-    onEdited?: (id:number, newValue : T) => void;
-}
-
-export function getCommonInteractiveEditableProps<T>(props : InteractiveEditableProps<T>) {
-    const toggleIsEditing = () => props.setIsEditing !== undefined ? props.setIsEditing(props.itemId, !props.editing) : void 0;
-    const updateValue = (value : T) => props.onEdited !== undefined ? props.onEdited(props.itemId, value) : void 0;
-    return {
-        toggleIsEditing,
-        updateValue
-    }
-}
 
 export interface ItemOrdering {
         itemId: number;
@@ -95,14 +76,14 @@ export function createEditableStateToPropsMapper<TProps extends EditableProps<an
     };
 }
 
-export const mapBaseActionsToProps = {
+export const mapBaseActionsToProps : EditableActionsMap<InteractiveEditableProps<any>> = {
     setIsEditing : (id : number, isEditing : boolean) => (<BaseActions.SetIsEditing>{
         type : "setIsEditing",
         editing : isEditing,
         itemId : id
     }),
     onEdited: (id : number, newValue : any) => (<BaseActions.OnEdited>{
-        type : "edited",
+        type : "onEdited",
         value : newValue,
         itemId : id
     })

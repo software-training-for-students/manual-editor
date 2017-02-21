@@ -16,7 +16,7 @@ var setIsEditing : Redux.Reducer<Document> =
 
  var onEdited : Redux.Reducer<Document> =
  (state : Document = initialState, action : BaseActions.OnEdited) => {
-     if(action.type == "edited") {
+     if(action.type == "onEdited") {
          var newState : Document = { ... state};
          newState[action.itemId] = newState[action.itemId] || {itemId : action.itemId};
          newState[action.itemId].value = action.value;
