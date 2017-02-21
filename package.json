@@ -26,6 +26,7 @@
     "webpack": "^2.2.1"
   },
   "dependencies": {
+    "@aneves/react-flyout": "^0.1.16",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.2"

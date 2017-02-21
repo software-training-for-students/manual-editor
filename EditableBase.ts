@@ -1,4 +1,4 @@
-import { ActionBase } from './actions/BaseActions';
+import { EditActionBase } from './actions/BaseEditActions';
 
 export interface EditableProps<T> {
     itemId : number;

@@ -1,5 +1,5 @@
-import { EditableProps, EditableActionsMap, InteractiveEditableProps } from './EditableBase';
-import * as BaseActions from './actions/BaseActions';
+import { EditableProps, EditableActionsMap, InteractiveEditableProps } from '../EditableBase';
+import * as BaseActions from '../actions/BaseEditActions';
 
 export interface ItemOrdering {
         itemId: number;

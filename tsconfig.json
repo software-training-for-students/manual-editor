@@ -12,7 +12,8 @@
     "alwaysStrict": true,
     "baseUrl": "node_modules",
     "paths": {
-      "redux" : ["redux/redux", "redux/dist/redux"]
+      "redux" : ["redux/redux", "redux/dist/redux"],
+      "@aneves/react-flyout" : ["@aneves/react-flyout", "../type-definitions/@aneves/react-flyout"]
     }
   },
   "include": [

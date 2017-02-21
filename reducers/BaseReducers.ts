@@ -1,7 +1,7 @@
 import * as Redux from "redux";
 import * as ReactRedux from "react-redux";
-import {Document, initialState} from "../DocumentStore";
-import * as BaseActions from "../actions/BaseActions";
+import {Document, initialState} from "../stores/Document";
+import * as BaseActions from "../actions/BaseEditActions";
 
 var setIsEditing : Redux.Reducer<Document> =
  (state : Document = initialState, action : BaseActions.SetIsEditing) => {
