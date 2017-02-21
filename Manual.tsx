@@ -1,11 +1,12 @@
 import * as React from "react";
 import CoverPage from "./components/CoverPage";
 import AboutPage from "./components/AboutPage";
-import * as Store from "./DocumentStore";
+import {ItemOrdering} from "./DocumentStore";
+import {Store} from "./Store";
 import ElementTypes from "./ElementTypes";
 import {connect} from "react-redux";
 
-class Manual extends React.Component<{items: Store.ItemOrdering[]}, void> {
+class Manual extends React.Component<{items: ItemOrdering[]}, void> {
     public render() {
         return (
             <div>
@@ -24,9 +25,9 @@ class Manual extends React.Component<{items: Store.ItemOrdering[]}, void> {
     }
 }
 
-function mapStateToProps(state : Store.Document) : {items : Store.ItemOrdering[]} {
+function mapStateToProps(state : Store) : {items : ItemOrdering[]} {
     return {
-        items: state.elementOrdering
+        items: state.document.elementOrdering
     }
 }
 
