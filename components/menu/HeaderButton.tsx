@@ -1,9 +1,9 @@
 import * as React from "react";
 import {connect} from "react-redux";
-import Flyout from "../containers/Flyout";
-import * as FlyoutActions from "../actions/FlyoutActions";
-import {AddToDocument} from "../actions/BaseEditActions";
-import {Store} from "../stores";
+import Flyout from "../../containers/Flyout";
+import * as FlyoutActions from "../../actions/FlyoutActions";
+import {AddToDocument} from "../../actions/BaseEditActions";
+import {Store} from "../../stores";
 
 interface Props {
     toggleFlyout : (flyoutId : string) => void;
@@ -14,7 +14,7 @@ interface Props {
         
 }
 
-class HeaderControl extends React.Component<Props, void> {
+class HeaderButton extends React.Component<Props, void> {
     public render() {
         return (
         <div className="has-flyout">
@@ -49,4 +49,4 @@ var mapActionsToProps = ({
         } as AddToDocument)
 });
 
-export default connect(mapStateToProps, mapActionsToProps)(HeaderControl);
+export default connect(mapStateToProps, mapActionsToProps)(HeaderButton);

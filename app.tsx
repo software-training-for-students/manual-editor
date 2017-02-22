@@ -6,8 +6,7 @@ import {Store} from "./stores";
 import BaseReducers from "./reducers/BaseReducers";
 import FlyoutReducers from "./reducers/FlyoutReducers";
 import Manual from "./Manual";
-
-import HeaderControl from "./components/HeaderControl";
+import Menu from "./Menu";
 
 const store = Redux.createStore<Store>(Redux.combineReducers<Store>({
     document : BaseReducers,
@@ -18,7 +17,7 @@ const store = Redux.createStore<Store>(Redux.combineReducers<Store>({
 ReactDOM.render(
 <ReactRedux.Provider store={store}>
     <div>
-    <HeaderControl />
+    <Menu />
     <Manual />
     </div>
 </ReactRedux.Provider>,
