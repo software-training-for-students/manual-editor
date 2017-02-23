@@ -1,31 +1,51 @@
 import * as React from "react";
 import {connect} from "react-redux";
-import Flyout from "../../containers/Flyout";
-import * as FlyoutActions from "../../actions/FlyoutActions";
+import MenuItem from "../MenuItem";
 import {AddToDocument} from "../../actions/BaseEditActions";
 import {Store} from "../../stores";
 
 interface Props {
-    toggleFlyout : (flyoutId : string) => void;
     onCreateHeader : (componentTypeName : string,
         defaultProps : any,
         ordering: "before" | "after" | "end",
         relativeToItem? : number) => void;
-        
+    headingLevel : 1 | 2 | 3 | 4 | 5 | 6;
+    headingText : string;
 }
 
 class HeaderButton extends React.Component<Props, void> {
     public render() {
         return (
-        <div className="has-flyout">
-            <button data-flyout-id="create-heading" onClick={e => this.props.toggleFlyout("create-heading")}>Create Heading</button>
-            <Flyout id="create-heading" options={{
-                align: "right middle"
-            }}>
-            <div>Hi!</div>
-            </Flyout>
-        </div>
+        <MenuItem menuItemId="headings" menuItemText="Headings"
+            confirmationText="Create Heading"
+            onCreate={this.onCreate}>
+            <section>
+                <label htmlFor="newHeadingLevel">Heading Level</label>
+                <select onChange={this.levelChanged} value={this.props.headingLevel}>
+                    <option value={1}>Section Heading</option>
+                    <option value={2}>Subsection Heading</option>
+                    <option value={3}>Sub-Subsection Heading</option>
+                    <option value={4}>Paragraph Heading</option>
+                    <option value={5}>Sub-paragraph Heading</option>
+                </select>
+            </section>
+            <section>
+                <input placeholder="Heading Text" value={this.props.headingText} onChange={this.textChanged} />
+            </section>
+        </MenuItem>
         );
+    }
+
+    private onCreate = () => {
+
+    }
+
+    private levelChanged = () => {
+
+    }
+
+    private textChanged = () => {
+
     }
 }
 
@@ -34,10 +54,6 @@ function mapStateToProps(state : Store) {
 }
 
 var mapActionsToProps = ({
-    toggleFlyout : (id : string) => ({
-        type : "flyout-toggle",
-        id : id
-    } as FlyoutActions.FlyoutToggle),
     onCreateHeader : (componentTypeName : string,
         defaultProps : any,
         ordering: "before" | "after" | "end",
