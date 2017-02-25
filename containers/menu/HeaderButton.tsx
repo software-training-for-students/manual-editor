@@ -1,6 +1,6 @@
 import * as React from "react";
 import {connect} from "react-redux";
-import MenuItem from "components/MenuItem";
+import MenuItem from "containers/MenuItem";
 import {AddToDocument} from "actions/BaseEditActions";
 import {Store} from "stores";
 

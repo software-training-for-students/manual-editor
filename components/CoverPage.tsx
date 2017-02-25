@@ -1,7 +1,7 @@
 import * as React from "react";
 import CoverPageDescription from "./CoverPageDescription";
 import PageBreak from "./PageBreak";
-import EditableHeading from "./editors/EditableHeading";
+import EditableHeading from "containers/editors/EditableHeading";
 
 export interface CoverPageProps {
     date : Date;

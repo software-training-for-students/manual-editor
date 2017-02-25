@@ -1,5 +1,5 @@
 import * as React from "react";
-import {SingleImageProps, SingleImageCssClass, SideBySideImageProps} from "../Images";
+import {SingleImageProps, SingleImageCssClass, SideBySideImageProps} from "components/Images";
 
 interface ImageEditorProps<TImageProps> {
     value : TImageProps | undefined
