@@ -26,7 +26,12 @@ var config = {
       containers : srcPath("containers"),
       stores : srcPath("stores"),
       actions : srcPath("actions"),
-      reducers : srcPath("reducers")
+      reducers : srcPath("reducers"),
+      Menu : srcPath("Menu"),
+      Manual : srcPath("Manual"),
+      ElementTypes : srcPath("ElementTypes"),
+      EditableBase : srcPath("EditableBase"),
+      DocumentMappers : srcPath("DocumentMappers")
     }
   },
 

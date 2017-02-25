@@ -1,6 +1,6 @@
 import { Store } from 'stores';
 import {connect, Dispatch} from 'react-redux';
-import {FlyoutToggle, FlyoutOptions} from "actions/FlyoutActions";
+import {FlyoutToggle} from "actions/FlyoutActions";
 import {Props} from "@aneves/react-flyout";
 import FlyoutWrapper from '@aneves/react-flyout';
 

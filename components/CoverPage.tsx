@@ -7,17 +7,17 @@ export interface CoverPageProps {
     date : Date;
 }
 
-export default class CoverPage extends React.Component<CoverPageProps, void> {
-    public render() {
-        return (
-            <div>
-                <div id="coverpage-title">
-                    <EditableHeading itemId={1} level={1} />
-                    <EditableHeading itemId={2} level={2} />
-                </div>
-                <CoverPageDescription date={this.props.date} />
-                <PageBreak />
+const CoverPage = (props : CoverPageProps) => {
+    return (
+        <div>
+            <div id="coverpage-title">
+                <EditableHeading itemId={1} level={1} />
+                <EditableHeading itemId={2} level={2} />
             </div>
-        );
-    }
+            <CoverPageDescription date={props.date} />
+            <PageBreak />
+        </div>
+    );
 }
+
+export default CoverPage;
