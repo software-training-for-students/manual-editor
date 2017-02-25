@@ -3,10 +3,10 @@ import * as ReactRedux from "react-redux";
 import EditableContent from "./EditableContent";
 import SingleLineEditor from "./SingleLineEditor";
 import * as Heading from "../Heading";
-import {EditableProps, InteractiveEditableProps, getCommonInteractiveEditableProps} from "../../EditableBase";
-import {createEditableStateToPropsMapper, mapBaseActionsToProps} from "../../DocumentMappers";
+import {EditableProps, InteractiveEditableProps, getCommonInteractiveEditableProps} from "EditableBase";
+import {createEditableStateToPropsMapper, mapBaseActionsToProps} from "DocumentMappers";
 import {connect} from "react-redux";
-import ElementTypes from "../../ElementTypes";
+import ElementTypes from "ElementTypes";
 
 interface Props extends InteractiveEditableProps<string> {
     level : 1 | 2 | 3 | 4 | 5 | 6;

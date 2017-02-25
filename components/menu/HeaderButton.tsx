@@ -1,8 +1,8 @@
 import * as React from "react";
 import {connect} from "react-redux";
-import MenuItem from "../MenuItem";
-import {AddToDocument} from "../../actions/BaseEditActions";
-import {Store} from "../../stores";
+import MenuItem from "components/MenuItem";
+import {AddToDocument} from "actions/BaseEditActions";
+import {Store} from "stores";
 
 interface Props {
     onCreateHeader : (componentTypeName : string,

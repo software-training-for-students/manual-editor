@@ -1,8 +1,8 @@
 import * as React from "react";
 import {connect} from "react-redux";
-import Flyout from "../containers/Flyout";
-import {FlyoutToggle} from "../actions/FlyoutActions";
-import {Store} from "../stores";
+import Flyout from "containers/Flyout";
+import {FlyoutToggle} from "actions/FlyoutActions";
+import {Store} from "stores";
 
 interface Props {
     menuItemId : string;

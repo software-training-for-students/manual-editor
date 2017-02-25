@@ -1,9 +1,9 @@
 import * as React from "react";
-import CoverPage from "./components/CoverPage";
-import AboutPage from "./components/AboutPage";
-import {ItemOrdering} from "./stores/Document";
-import {Store} from "./stores";
-import ElementTypes from "./ElementTypes";
+import CoverPage from "components/CoverPage";
+import AboutPage from "components/AboutPage";
+import {ItemOrdering} from "stores/Document";
+import {Store} from "stores";
+import ElementTypes from "ElementTypes";
 import {connect} from "react-redux";
 
 class Manual extends React.Component<{items: ItemOrdering[]}, void> {

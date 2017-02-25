@@ -2,10 +2,10 @@ import * as React from "react";
 import {connect} from "react-redux";
 import * as Images from "../Images";
 import * as ImageEditor from "./ImageEditor";
-import {EditableProps, InteractiveEditableProps, getCommonInteractiveEditableProps} from "../../EditableBase";
+import {EditableProps, InteractiveEditableProps, getCommonInteractiveEditableProps} from "EditableBase";
 import EditableContent from "./EditableContent";
-import {createEditableStateToPropsMapper, mapBaseActionsToProps} from "../../DocumentMappers";
-import ElementTypes from "../../ElementTypes";
+import {createEditableStateToPropsMapper, mapBaseActionsToProps} from "DocumentMappers";
+import ElementTypes from "ElementTypes";
 
 class EditableSingleImageContainer extends EditableContent<Images.SingleImageProps> {}
 

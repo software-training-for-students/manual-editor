@@ -1,5 +1,9 @@
 var path = require("path");
 
+function srcPath(subdir) {
+  return path.join(__dirname, subdir);
+}
+
 var config = {
   entry: ["./app.tsx"],
   devtool: "source-map",
@@ -16,7 +20,14 @@ var config = {
   },
 
   resolve: {
-    extensions: [".ts", ".tsx", ".js"]
+    extensions: [".ts", ".tsx", ".js"],
+    alias: {
+      components : srcPath("components"),
+      containers : srcPath("containers"),
+      stores : srcPath("stores"),
+      actions : srcPath("actions"),
+      reducers : srcPath("reducers")
+    }
   },
 
   module: {

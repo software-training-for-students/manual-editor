@@ -10,18 +10,17 @@
     "sourceMap": true,
     "strictNullChecks": true,
     "alwaysStrict": true,
-    "baseUrl": "node_modules",
+    "baseUrl": ".",
     "paths": {
-      "redux" : ["redux/redux", "redux/dist/redux"],
-      "@aneves/react-flyout" : ["@aneves/react-flyout", "../type-definitions/@aneves/react-flyout"]
+      "redux" : ["node_modules/redux/redux", "node_modules/redux/dist/redux"],
+      "@aneves/react-flyout" : ["node_modules/@aneves/react-flyout", "type-definitions/@aneves/react-flyout"],
+      "components" : ["components/*"],
+      "containers/*" : ["containers/*"],
+      "stores/*" : ["stores/*"],
+      "actions/*" : ["actions/*"],
+      "reducers/*" : ["reducers/*"]
     }
   },
-  "include": [
-    "components",
-    "reducers",
-    "actions",
-    "."
-  ],
   "exclude": [
     "node_modules"
   ]

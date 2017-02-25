@@ -1,7 +1,7 @@
-import { EditableProps, InteractiveEditableProps, EditableActionsMap } from './EditableBase';
-import * as BaseActions from "./actions/BaseEditActions";
-import { Document, DocumentView } from './stores/Document';
-import {Store, initialState} from "./stores";
+import { EditableProps, InteractiveEditableProps, EditableActionsMap } from 'EditableBase';
+import * as BaseActions from "actions/BaseEditActions";
+import { Document, DocumentView } from 'stores/Document';
+import {Store, initialState} from "stores";
 
 function mapItemStateToDefaultProps(state : EditableProps<any>) : Partial<EditableProps<any>> {
     return {

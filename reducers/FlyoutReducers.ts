@@ -1,7 +1,7 @@
-import * as FlyoutActions from "../actions/FlyoutActions";
-import {FlyoutStore} from "../stores/Flyout";
+import * as FlyoutActions from "actions/FlyoutActions";
+import {FlyoutStore} from "stores/Flyout";
 
-export default function(state : FlyoutStore, action : FlyoutActions.FlyoutToggle | FlyoutActions.FlyoutOptions) {
+export default function(state : FlyoutStore, action : FlyoutActions.FlyoutToggle) {
     if(action.type === "flyout-toggle") {
        let s : boolean;
        if(!state.id || state.id === action.id) { // first toggle / same flyout : toggle
@@ -16,11 +16,5 @@ export default function(state : FlyoutStore, action : FlyoutActions.FlyoutToggle
            id : action.id,
            open : s
        }
-    }
-    else {
-        return {
-            ... state,
-            options : action.options
-        }
     }
 }
