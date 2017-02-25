@@ -2,17 +2,19 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as Redux from "redux";
 import * as ReactRedux from "react-redux";
+import * as ReduxDevTools from "redux-devtools-extension";
 import {Store} from "stores";
-import BaseReducers from "reducers/BaseReducers";
+import DocumentReducers from "reducers/DocumentReducers";
+import MenuReducers from "reducers/MenuReducers";
 import FlyoutReducers from "reducers/FlyoutReducers";
 import Manual from "Manual";
 import Menu from "Menu";
 
 const store = Redux.createStore<Store>(Redux.combineReducers<Store>({
-    document : BaseReducers,
-    menu : (state : any) => {return state || {};},
+    document : DocumentReducers,
+    menu : MenuReducers,
     flyout : FlyoutReducers
-}));
+}), ReduxDevTools.devToolsEnhancer<Store>({}));
 
 ReactDOM.render(
 <ReactRedux.Provider store={store}>

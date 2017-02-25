@@ -38,21 +38,15 @@ export var initialState : Document = {
             className : "centered-image-large"
         }
     },
-    4 : {
-        itemId : 4,
-        editing : false,
-        value : "Test Header",
-        level : 1
-    },
     nextItemId : 4,
     elementOrdering : [
-        {itemId: 3, elementType: "SingleImage"},
-        {itemId: 4, elementType: "Heading"}
+        {itemId: 3, elementType: "SingleImage"}
         ]
 }
 
-function addElementToEndOfDocument(document : Document, elementType : string, elementState: EditableProps<any>) {
+export function addElementToEndOfDocument(document : Document, elementType : string, elementState: EditableProps<any>) {
     var itemId = document.nextItemId;
     document[itemId] = {... elementState, editing : true};
+    document.nextItemId++;
     document.elementOrdering.push({itemId, elementType});
 }

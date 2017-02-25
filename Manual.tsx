@@ -27,7 +27,7 @@ class Manual extends React.Component<{items: ItemOrdering[]}, void> {
 
 function mapStateToProps(state : Store) : {items : ItemOrdering[]} {
     return {
-        items: state.document.elementOrdering
+        items: state.document.elementOrdering.slice()
     }
 }
 

@@ -1,6 +1,6 @@
 import * as Redux from "redux";
 import * as ReactRedux from "react-redux";
-import {Document, initialState} from "stores/Document";
+import {Document, initialState, addElementToEndOfDocument} from "stores/Document";
 import * as BaseActions from "actions/BaseEditActions";
 
 var setIsEditing : Redux.Reducer<Document> =
@@ -30,9 +30,22 @@ var setIsEditing : Redux.Reducer<Document> =
      return state;
  }
 
+ var onAddDocument : Redux.Reducer<Document> =
+ (state : Document = initialState, action: BaseActions.AddToDocument) => {
+     if(action.type == "addToDocument") {
+        var newState : Document = {... state};
+        if(action.ordering == "end") {
+            addElementToEndOfDocument(newState, action.componentTypeName, action.defaultProps);
+        }
+        return newState;
+     }
+     return state;
+ }
+
  var editReducers = (document : Document, action : Redux.Action) => {
      var newDoc = setIsEditing(document, action);
      newDoc = onEdited(newDoc, action);
+     newDoc = onAddDocument(newDoc, action);
      return newDoc;
  };
 

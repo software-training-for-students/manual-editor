@@ -1,7 +1,7 @@
 import * as FlyoutActions from "actions/FlyoutActions";
-import {FlyoutStore} from "stores/Flyout";
+import {FlyoutStore, initialState} from "stores/Flyout";
 
-export default function(state : FlyoutStore, action : FlyoutActions.FlyoutToggle) {
+export default function(state : FlyoutStore = initialState, action : FlyoutActions.FlyoutToggle) {
     if(action.type === "flyout-toggle") {
        let s : boolean;
        if(!state.id || state.id === action.id) { // first toggle / same flyout : toggle
@@ -17,4 +17,5 @@ export default function(state : FlyoutStore, action : FlyoutActions.FlyoutToggle
            open : s
        }
     }
+    return state;
 }
