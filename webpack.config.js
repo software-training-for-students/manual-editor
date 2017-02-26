@@ -31,7 +31,8 @@ var config = {
       Manual : srcPath("Manual"),
       ElementTypes : srcPath("ElementTypes"),
       EditableBase : srcPath("EditableBase"),
-      DocumentMappers : srcPath("DocumentMappers")
+      DocumentMappers : srcPath("DocumentMappers"),
+      AutoUnfocusEditor : srcPath("AutoUnfocusEditor")
     }
   },
 

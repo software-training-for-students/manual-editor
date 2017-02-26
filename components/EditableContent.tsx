@@ -15,6 +15,11 @@ class EditableContent<T> extends React.Component<Props<T> , void> {
     private toggleIsEditing = () => 
         this.props.toggleIsEditing();
 
+    private onStaticClicked = (e : React.SyntheticEvent<HTMLElement>) => {
+        e.stopPropagation();
+        this.toggleIsEditing();
+    }
+
     private onValueChanged = (value : T) =>
      this.props.updateValue(value);
 
@@ -32,7 +37,7 @@ class EditableContent<T> extends React.Component<Props<T> , void> {
         else {
             var StaticComponent = this.props.staticComponentClass;
             return <StaticComponent
-                onClick = {this.toggleIsEditing}
+                onClick = {this.onStaticClicked}
                 value = {this.props.value}
                 {... this.props.staticProps} />
         }

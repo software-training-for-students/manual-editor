@@ -45,6 +45,10 @@ export var initialState : Document = {
 }
 
 export function addElementToEndOfDocument(document : Document, elementType : string, elementState: EditableProps<any>) {
+    for(var i = 0; i < document.nextItemId ; ++i) {
+        if(document[i])
+            document[i].editing = false;
+    }
     var itemId = document.nextItemId;
     document[itemId] = {... elementState, editing : true};
     document.nextItemId++;

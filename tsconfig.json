@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "typescript.tsdk" : "./node_modules/typescript/lib",
     "jsx": "react",
     "module": "commonjs",
     "noImplicitAny": true,
