@@ -9,7 +9,7 @@ import {connect} from "react-redux";
 class Manual extends React.Component<{items: ItemOrdering[]}, void> {
     public render() {
         return (
-            <div>
+            <div id="manual">
                 <CoverPage date={new Date()} />
                 <AboutPage />
                 {

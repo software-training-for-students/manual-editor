@@ -8,7 +8,7 @@ import {Store, initialState} from "stores";
 type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
 
 interface Props {
-    onCreateHeader? : (componentTypeName : string,
+    onCreate? : (componentTypeName : string,
         defaultProps : any,
         ordering: "before" | "after" | "end") => void;
     levelChanged? : (newLevel : HeadingLevel) => void;
@@ -42,8 +42,8 @@ class HeadingButton extends React.Component<Props, void> {
     }
 
     private onCreate = (ordering : "before" | "after" | "end") => {
-        if(this.props.onCreateHeader)
-            this.props.onCreateHeader("Heading", {
+        if(this.props.onCreate)
+            this.props.onCreate("Heading", {
                 value : this.props.headingText,
                 level : this.props.headingLevel
             },
@@ -69,7 +69,7 @@ function mapStateToProps(state : Store = initialState) : Props {
 }
 
 var mapActionsToProps = ({
-    onCreateHeader : (componentTypeName : string,
+    onCreate : (componentTypeName : string,
         defaultProps : any,
         ordering: "before" | "after" | "end") => ({
             type : "addToDocument",

@@ -21,9 +21,9 @@ class MenuItem extends React.Component<Props, void> {
         return (
             <div className="has-flyout">
                 <button data-flyout-id={this.props.menuItemId} onClick={this.toggleFlyout}>{this.props.menuItemText}</button>
-                <Flyout id={this.props.menuItemId} options={{align: "right middle"}}>
+                <Flyout id={this.props.menuItemId} options={{align: "bottom middle"}}>
                     <div>
-                        <span>{this.props.menuItemHeading}</span>
+                        <header>{this.props.menuItemHeading}</header>
                         {this.props.children}
                         <div className="create-buttons">
                         <button disabled={!this.props.enableRelativeInsert || !this.props.insertEnabled}
