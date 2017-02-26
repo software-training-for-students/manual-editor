@@ -1,6 +1,6 @@
 import * as Redux from "redux";
 import * as ReactRedux from "react-redux";
-import {Document, initialState, addElementToEndOfDocument} from "stores/Document";
+import {Document, initialState, addElementToEndOfDocument, addElementRelativeToCurrentlyActiveElement} from "stores/Document";
 import * as BaseActions from "actions/BaseEditActions";
 
 var setIsEditing : Redux.Reducer<Document> =
@@ -36,6 +36,9 @@ var setIsEditing : Redux.Reducer<Document> =
         var newState : Document = {... state};
         if(action.ordering == "end") {
             addElementToEndOfDocument(newState, action.componentTypeName, action.defaultProps);
+        }
+        else {
+            addElementRelativeToCurrentlyActiveElement(newState, action.componentTypeName, action.defaultProps, action.ordering);
         }
         return newState;
      }

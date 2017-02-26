@@ -4,12 +4,16 @@ import Flyout from "containers/Flyout";
 import {FlyoutToggle} from "actions/FlyoutActions";
 import {Store} from "stores";
 
+type Ordering = "before" | "after" | "end";
+
 interface Props {
     menuItemId : string;
     menuItemText: string;
-    confirmationText : string;
-    onCreate : () => void;
-    toggleFlyout? : (flyoutId : string) => void
+    menuItemHeading : string;
+    onCreate : (location : Ordering) => void;
+    toggleFlyout? : (flyoutId : string) => void;
+    enableRelativeInsert? : boolean | undefined;
+    insertEnabled : boolean;
 }
 
 class MenuItem extends React.Component<Props, void> {
@@ -19,8 +23,15 @@ class MenuItem extends React.Component<Props, void> {
                 <button data-flyout-id={this.props.menuItemId} onClick={this.toggleFlyout}>{this.props.menuItemText}</button>
                 <Flyout id={this.props.menuItemId} options={{align: "right middle"}}>
                     <div>
+                        <span>{this.props.menuItemHeading}</span>
                         {this.props.children}
-                        <button onClick={this.onCreate}>{this.props.confirmationText}</button>
+                        <div className="create-buttons">
+                        <button disabled={!this.props.enableRelativeInsert || !this.props.insertEnabled}
+                             value="before" onClick={this.onCreate}>{"Insert Before Current Element"}</button>
+                        <button disabled={!this.props.enableRelativeInsert || !this.props.insertEnabled}
+                             value="after" onClick={this.onCreate}>{"Insert After Current Element"}</button>
+                        <button disabled={!this.props.insertEnabled} value="end" onClick={this.onCreate}>{"Insert At End"}</button>
+                        </div>
                     </div>
                 </Flyout>
             </div>
@@ -33,12 +44,20 @@ class MenuItem extends React.Component<Props, void> {
     }
 
     private onCreate = (e: React.SyntheticEvent<HTMLButtonElement>) => {
-        this.props.onCreate();
+        this.props.onCreate(e.currentTarget.value as Ordering);
     }
 }
 
 function mapStateToProps(state : Store, props : Props) : Props {
-    return {... props};
+    let enableRelativeInsert : boolean = false;
+     // Start at 3 because item ids 1 and 2 are the title and subtitle, which are special ids
+    for(let i = 3; i < state.document.nextItemId; ++i) {
+        if(state.document[i] && state.document[i].editing) {
+            enableRelativeInsert = true;
+            break;
+        }
+    }
+    return {... props, enableRelativeInsert};
 }
 
 var mapActionsToProps = ({

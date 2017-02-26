@@ -10,8 +10,7 @@ type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
 interface Props {
     onCreateHeader? : (componentTypeName : string,
         defaultProps : any,
-        ordering: "before" | "after" | "end",
-        relativeToItem? : number) => void;
+        ordering: "before" | "after" | "end") => void;
     levelChanged? : (newLevel : HeadingLevel) => void;
     textChanged? : (text : string) => void;
 
@@ -23,10 +22,10 @@ class HeadingButton extends React.Component<Props, void> {
     public render() {
         return (
         <MenuItem menuItemId="headings" menuItemText="Headings"
-            confirmationText="Create Heading"
-            onCreate={this.onCreate}>
+            menuItemHeading="Create Heading"
+            onCreate={this.onCreate}
+            insertEnabled={this.props.headingText.length !== 0}>
             <section>
-                <label htmlFor="newHeadingLevel">Heading Level</label>
                 <select onChange={this.levelChanged} value={this.props.headingLevel}>
                     <option value={1}>Section Heading</option>
                     <option value={2}>Subsection Heading</option>
@@ -42,13 +41,13 @@ class HeadingButton extends React.Component<Props, void> {
         );
     }
 
-    private onCreate = () => {
+    private onCreate = (ordering : "before" | "after" | "end") => {
         if(this.props.onCreateHeader)
             this.props.onCreateHeader("Heading", {
                 value : this.props.headingText,
-                level : this.props.headingLevel,
+                level : this.props.headingLevel
             },
-            "end");
+            ordering);
     }
 
     private levelChanged = (e : React.ChangeEvent<HTMLSelectElement>) => {
@@ -72,12 +71,10 @@ function mapStateToProps(state : Store = initialState) : Props {
 var mapActionsToProps = ({
     onCreateHeader : (componentTypeName : string,
         defaultProps : any,
-        ordering: "before" | "after" | "end",
-        relativeToItem? : number) => ({
+        ordering: "before" | "after" | "end") => ({
             type : "addToDocument",
             componentTypeName,
             ordering,
-            relativeToItem,
             defaultProps
         } as AddToDocument),
     levelChanged : (newLevel : HeadingLevel) => ({

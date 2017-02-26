@@ -18,7 +18,6 @@ export interface AddToDocument extends Action {
     type : "addToDocument";
     componentTypeName : string;
     ordering: "before" | "after" | "end";
-    relativeToItem? : number;
     defaultProps : any;
 }
 
