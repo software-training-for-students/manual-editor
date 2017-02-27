@@ -1,5 +1,5 @@
 import {Action} from "redux";
-import {SingleImageProps} from "components/Images";
+import {SingleImageProps, SideBySideImageProps} from "components/Images";
 
 export interface UpdateHeadingText extends Action {
     type : "update-heading-text";
@@ -14,4 +14,9 @@ export interface UpdateHeadingLevel extends Action {
 export interface UpdateSingleImageProps extends Action {
     type : "update-single-image-props";
     props : SingleImageProps;
+}
+
+export interface UpdateSideBySideImageProps extends Action {
+    type : "update-sidebyside-image-props";
+    props : SideBySideImageProps;
 }

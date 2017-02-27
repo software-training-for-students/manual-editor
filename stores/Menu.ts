@@ -1,4 +1,4 @@
-import { SingleImageProps } from 'components/Images';
+import { SingleImageProps, SideBySideImageProps } from 'components/Images';
 
 export interface HeadingStore {
         level : 1 | 2 | 3 | 4 | 5 | 6;
@@ -8,6 +8,7 @@ export interface HeadingStore {
 export interface MenuStore {
     heading : HeadingStore;
     singleImage : SingleImageProps;
+    sideBySideImage : SideBySideImageProps;
 }
 
 export var initialState : MenuStore = {
@@ -18,6 +19,13 @@ export var initialState : MenuStore = {
     singleImage : {
         source : "",
         className: "full-width-image",
+        caption : "",
+        border : false
+    },
+    sideBySideImage : {
+        leftSource : "",
+        rightSource : "",
+        className : "sidebyside-image-large",
         caption : "",
         border : false
     }

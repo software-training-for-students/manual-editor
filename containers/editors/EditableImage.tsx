@@ -8,6 +8,7 @@ import {createEditableStateToPropsMapper, mapBaseActionsToProps} from "DocumentM
 import ElementTypes from "ElementTypes";
 
 class EditableSingleImageContainer extends EditableContent<Images.SingleImageProps> {}
+class EditableSideBySideImageContainer extends EditableContent<Images.SideBySideImageProps> {}
 
 const EditableSingleImage = (props : InteractiveEditableProps<Images.SingleImageProps>) => {
 
@@ -24,6 +25,22 @@ const EditableSingleImage = (props : InteractiveEditableProps<Images.SingleImage
         value = {props.value} />
 }
 
+const EditableSideBySideImage = (props : InteractiveEditableProps<Images.SideBySideImageProps>) => {
+    const {toggleIsEditing, updateValue} = getCommonInteractiveEditableProps(props);
+    
+    return <EditableSideBySideImageContainer
+        editing={props.editing}
+        inputComponentClass={ImageEditor.SideBySideImageEditor}
+        staticComponentClass={Images.SideBySideImages}
+        inputProps = {props.value}
+        staticProps = {props.value}
+        toggleIsEditing={toggleIsEditing}
+        updateValue = {updateValue}
+        value ={props.value} />
+}
+
+
 export default {
-    EditableSingleImage : connect(createEditableStateToPropsMapper(), mapBaseActionsToProps)(EditableSingleImage)
+    EditableSingleImage : connect(createEditableStateToPropsMapper(), mapBaseActionsToProps)(EditableSingleImage),
+    EditableSideBySideImage : connect(createEditableStateToPropsMapper(), mapBaseActionsToProps)(EditableSideBySideImage)
 }

@@ -1,5 +1,5 @@
 import * as React from "react";
-import {SingleImageProps, SingleImageCssClass, SideBySideImageProps} from "components/Images";
+import {SingleImageProps, SingleImageCssClass, SideBySideImageProps, SideBySideImageCssClass} from "components/Images";
 import AutoUnfocusEditor from "AutoUnfocusEditor";
 
 interface ImageEditorProps<TImageProps> {
@@ -72,6 +72,74 @@ class SingleImageEditor extends React.Component<ImageEditorProps<SingleImageProp
     }
 }
 
+class SideBySideImageEditor extends React.Component<ImageEditorProps<SideBySideImageProps>, void> {
+
+    private onLeftSourceChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if(this.props.onValueChange)
+            this.props.onValueChange({... this.props.value, leftSource : event.target.value});
+    }
+
+    private onRightSourceChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if(this.props.onValueChange)
+            this.props.onValueChange({... this.props.value, rightSource : event.target.value});
+    }
+    
+    private onBorderChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if(this.props.onValueChange)
+            this.props.onValueChange({... this.props.value, border : event.target.checked});
+    }
+
+    private onCaptionChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if(this.props.onValueChange)
+            this.props.onValueChange({... this.props.value, caption : event.target.value});
+    }
+
+    private onCssClassChanged = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        if(this.props.onValueChange)
+            this.props.onValueChange({... this.props.value, className : event.target.value as SideBySideImageCssClass});
+    }
+
+    private static readonly defaultImageProps : SideBySideImageProps = {
+        caption : "",
+        border : false,
+        leftSource : "",
+        rightSource : "",
+        className : "sidebyside-image-large"
+    };
+
+    public render() {
+        const imageProps = this.props.value || SideBySideImageEditor.defaultImageProps;
+        return (
+            <div className="image-editor">
+                <section>
+                    <label>Left Image Source</label>
+                    <input type = "url" onChange={this.onLeftSourceChanged} value={imageProps.leftSource} size={80} />
+                </section>
+                <section>
+                    <label>Right Image Source</label>
+                    <input type = "url" onChange={this.onRightSourceChanged} value={imageProps.rightSource} size={80} />
+                </section>
+                <section>
+                    <input type="checkbox" onChange={this.onBorderChanged} checked={imageProps.border} />
+                    <label>Has Border?</label>
+                </section>
+                <section>
+                    <label>Caption</label>
+                    <input type = "text" onChange={this.onCaptionChanged} value={imageProps.caption} />
+                </section>
+                <section>
+                    <label>Image Size</label>
+                    <select value={imageProps.className} onChange={this.onCssClassChanged}>
+                        <option value="sidebyside-image-large">Large</option>
+                        <option value="sidebyside-image-small">Small</option>
+                    </select>
+                </section>
+            </div>
+        );
+    }
+}
+
 export default {
-    SingleImageEditor : AutoUnfocusEditor(SingleImageEditor)
+    SingleImageEditor : AutoUnfocusEditor(SingleImageEditor),
+    SideBySideImageEditor : AutoUnfocusEditor(SideBySideImageEditor)
 }

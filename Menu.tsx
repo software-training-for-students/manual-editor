@@ -8,6 +8,7 @@ export default class Menu extends React.Component<void, void> {
             <div id="menu">
                 <HeadingButton />
                 <ImageButtons.SingleImageButton />
+                <ImageButtons.SideBySideImageButton />
             </div>
         );
     }

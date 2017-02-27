@@ -8,6 +8,7 @@ interface ElementTypes {
 
 var instance : ElementTypes = {
     ["Heading"] : EditableHeading,
-    ["SingleImage"] : EditableImage.EditableSingleImage
+    ["SingleImage"] : EditableImage.EditableSingleImage,
+    ["SideBySideImage"] : EditableImage.EditableSideBySideImage
 };
 export default instance;
