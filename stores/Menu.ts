@@ -14,7 +14,7 @@ export interface MenuStore {
 export var initialState : MenuStore = {
     heading : {
         level : 1,
-        text : "Heading Text"
+        text : ""
     },
     singleImage : {
         source : "",

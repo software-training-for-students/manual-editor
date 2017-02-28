@@ -21,7 +21,9 @@
     "@types/react-dom": "^0.14.23",
     "@types/react-redux": "^4.4.36",
     "awesome-typescript-loader": "^3.0.4-rc.2",
+    "css-loader": "^0.26.2",
     "source-map-loader": "^0.1.6",
+    "style-loader": "^0.13.2",
     "typescript": "^2.2.1",
     "webpack": "^2.2.1"
   },

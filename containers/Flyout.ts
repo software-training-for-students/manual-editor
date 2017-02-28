@@ -3,6 +3,7 @@ import {connect, Dispatch} from 'react-redux';
 import {FlyoutToggle} from "actions/FlyoutActions";
 import {Props} from "@aneves/react-flyout";
 import FlyoutWrapper from '@aneves/react-flyout';
+import "@aneves/react-flyout/dist/flyout.css";
 
 const mapStateToProps = (state : Store, ownProp : Props) => {
     if (state.flyout.id === ownProp.id) {

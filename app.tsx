@@ -9,6 +9,7 @@ import MenuReducers from "reducers/MenuReducers";
 import FlyoutReducers from "reducers/FlyoutReducers";
 import Manual from "Manual";
 import Menu from "Menu";
+import "./styles.css";
 
 const store = Redux.createStore<Store>(Redux.combineReducers<Store>({
     document : DocumentReducers,
