@@ -6,14 +6,11 @@ export interface ItemOrdering {
         elementType : string;
 }
 
-// Redux mapping and reducing functions can use this interface to get strongly typed data.
-export interface DocumentView<TProps extends EditableProps<any>> {
-    [itemId : number] : TProps;
+export interface Document {
+    [itemId : number] : EditableProps<any> & any;
     nextItemId : number;
     elementOrdering : ItemOrdering[];
 }
-
-export interface Document extends DocumentView<EditableProps<any> & any> {}
 
 export var initialState : Document = {
     1 : {
