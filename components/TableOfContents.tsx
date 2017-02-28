@@ -16,7 +16,7 @@ class TableOfContents extends React.Component<Props, void> {
                     <ol>
                         {
                             this.props.headings.map(heading => 
-                                <li><p>{heading}</p></li>
+                                <li key={heading}><p>{heading}</p></li>
                             )
                         }
                     </ol>
