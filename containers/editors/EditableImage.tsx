@@ -2,7 +2,7 @@ import * as React from "react";
 import {connect} from "react-redux";
 import * as Images from "components/Images";
 import ImageEditor from "components/ImageEditor";
-import {EditableProps, InteractiveEditableProps, getCommonInteractiveEditableProps} from "EditableBase";
+import {InteractiveEditableProps, getCommonInteractiveEditableProps} from "EditableBase";
 import EditableContent from "components/EditableContent";
 import {createEditableStateToPropsMapper, mapBaseActionsToProps} from "DocumentMappers";
 import ElementTypes from "ElementTypes";

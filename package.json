@@ -20,6 +20,7 @@
     "@types/react": "^15.0.10",
     "@types/react-dom": "^0.14.23",
     "@types/react-redux": "^4.4.36",
+    "@types/draft-js": "^0.9.1",
     "awesome-typescript-loader": "^3.0.4-rc.2",
     "css-loader": "^0.26.2",
     "source-map-loader": "^0.1.6",
@@ -29,6 +30,9 @@
   },
   "dependencies": {
     "@aneves/react-flyout": "^0.1.16",
+    "draft-convert": "^1.4.2",
+    "draft-js": "^0.9.1",
+    "draft-js-export-html": "^0.5.2",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.2",
