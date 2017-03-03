@@ -1,11 +1,10 @@
 import * as React from "react";
 
-
 export interface CoverPageProps {
-    date : Date;
+    date: Date;
 }
 
-const CoverPageDescription = (props : CoverPageProps) => {
+const CoverPageDescription = (props: CoverPageProps) => {
     return (
     <div id="coverpage-description">
         <img src="http://software-training-for-students.github.io/manual-master-files/uwlogo.png" />
@@ -13,6 +12,6 @@ const CoverPageDescription = (props : CoverPageProps) => {
         <p>DoIT Software Training for Students</p>
         <p><em>Last Updated {props.date.toDateString()}</em></p>
     </div>);
-}
+};
 
 export default CoverPageDescription;

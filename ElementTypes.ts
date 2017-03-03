@@ -1,14 +1,14 @@
-import {ComponentClass, StatelessComponent} from "react";
 import EditableHeading from "containers/editors/EditableHeading";
+import EditableHtml from "containers/editors/EditableHtml";
 import EditableImage from "containers/editors/EditableImage";
 import EditableRichText from "containers/editors/EditableRichText";
-import EditableHtml from "containers/editors/EditableHtml";
+import {ComponentClass, StatelessComponent} from "react";
 
 interface ElementTypes {
-    [name : string] : ComponentClass<any> | StatelessComponent<any>;
+    [name: string]: ComponentClass<any> | StatelessComponent<any>;
 }
 
-var instance : ElementTypes = {
+let instance: ElementTypes = {
     ["Heading"] : EditableHeading,
     ["SingleImage"] : EditableImage.EditableSingleImage,
     ["SideBySideImage"] : EditableImage.EditableSideBySideImage,

@@ -11,6 +11,7 @@
     "sourceMap": true,
     "strictNullChecks": true,
     "alwaysStrict": true,
+    "noUnusedLocals": true,
     "baseUrl": ".",
     "paths": {
       "redux" : ["node_modules/redux/redux", "node_modules/redux/dist/redux"],

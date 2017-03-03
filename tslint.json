@@ -1,0 +1,22 @@
+{
+	"extends": [
+		"tslint:recommended",
+		"tslint-react"
+	],
+	"rules": {
+		"no-unused-expression": true,
+		"no-duplicate-variable": true,
+		"no-unused-new": true,
+		"no-unused-variable": [true, "react"],
+		"no-require-imports": true,
+		"curly": true,
+		"class-name": true,
+		"semicolon": ["always"],
+		"triple-equals": true,
+		"interface-name": [false],
+		"no-invalid-this": [true],
+		"jsx-no-multiline-js" : false,
+		"max-line-length": [130],
+		"no-reference": true
+	}
+}

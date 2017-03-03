@@ -1,32 +1,32 @@
-import { SingleImageProps, SideBySideImageProps } from 'components/Images';
+import { SideBySideImageProps, SingleImageProps } from "components/Images";
 
 export interface HeadingStore {
-        level : 1 | 2 | 3 | 4 | 5 | 6;
-        text : string;
+        level: 1 | 2 | 3 | 4 | 5 | 6;
+        text: string;
 }
 
 export interface MenuStore {
-    heading : HeadingStore;
-    singleImage : SingleImageProps;
-    sideBySideImage : SideBySideImageProps;
+    heading: HeadingStore;
+    singleImage: SingleImageProps;
+    sideBySideImage: SideBySideImageProps;
 }
 
-export var initialState : MenuStore = {
+export let initialState: MenuStore = {
     heading : {
         level : 1,
-        text : ""
-    },
-    singleImage : {
-        source : "",
-        className: "full-width-image",
-        caption : "",
-        border : false
+        text : "",
     },
     sideBySideImage : {
+        border : false,
+        caption : "",
+        className : "sidebyside-image-large",
         leftSource : "",
         rightSource : "",
-        className : "sidebyside-image-large",
+    },
+    singleImage : {
+        border : false,
         caption : "",
-        border : false
-    }
+        className: "full-width-image",
+        source : "",
+    },
 };

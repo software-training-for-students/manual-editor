@@ -1,13 +1,13 @@
+import EditableHeading from "containers/editors/EditableHeading";
 import * as React from "react";
 import CoverPageDescription from "./CoverPageDescription";
 import PageBreak from "./PageBreak";
-import EditableHeading from "containers/editors/EditableHeading";
 
 export interface CoverPageProps {
-    date : Date;
+    date: Date;
 }
 
-const CoverPage = (props : CoverPageProps) => {
+const CoverPage = (props: CoverPageProps) => {
     return (
         <div>
             <div id="coverpage-title">
@@ -18,6 +18,6 @@ const CoverPage = (props : CoverPageProps) => {
             <PageBreak />
         </div>
     );
-}
+};
 
 export default CoverPage;

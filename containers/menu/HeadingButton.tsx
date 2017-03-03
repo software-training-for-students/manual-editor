@@ -1,30 +1,33 @@
-import * as React from "react";
-import {connect} from "react-redux";
-import MenuItem from "containers/MenuItem";
 import {AddToDocument} from "actions/BaseEditActions";
 import {UpdateHeadingLevel, UpdateHeadingText} from "actions/MenuActions";
-import {Store, initialState} from "stores";
+import MenuItem from "containers/MenuItem";
+import * as React from "react";
+import {connect} from "react-redux";
+import {initialState, Store} from "stores";
 
 type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
 
 interface Props {
-    onCreate? : (componentTypeName : string,
-        defaultProps : any,
+    onCreate?: (componentTypeName: string,
+        defaultProps: any,
         ordering: "before" | "after" | "end") => void;
-    levelChanged? : (newLevel : HeadingLevel) => void;
-    textChanged? : (text : string) => void;
+    levelChanged?: (newLevel: HeadingLevel) => void;
+    textChanged?: (text: string) => void;
 
-    headingLevel : HeadingLevel;
-    headingText : string;
+    headingLevel: HeadingLevel;
+    headingText: string;
 }
 
 class HeadingButton extends React.Component<Props, void> {
     public render() {
         return (
-        <MenuItem menuItemId="headings" menuItemText="Headings"
+        <MenuItem
+            menuItemId="headings"
+            menuItemText="Headings"
             menuItemHeading="Create Heading"
             onCreate={this.onCreate}
-            insertEnabled={this.props.headingText.length !== 0}>
+            insertEnabled={this.props.headingText.length !== 0}
+        >
             <section>
                 <select onChange={this.levelChanged} value={this.props.headingLevel}>
                     <option value={1}>Section Heading</option>
@@ -41,50 +44,53 @@ class HeadingButton extends React.Component<Props, void> {
         );
     }
 
-    private onCreate = (ordering : "before" | "after" | "end") => {
-        if(this.props.onCreate)
+    private onCreate = (ordering: "before" | "after" | "end") => {
+        if (this.props.onCreate) {
             this.props.onCreate("Heading", {
-                value : this.props.headingText,
-                level : this.props.headingLevel
+                level: this.props.headingLevel,
+                value: this.props.headingText,
             },
             ordering);
+        }
     }
 
-    private levelChanged = (e : React.ChangeEvent<HTMLSelectElement>) => {
-        if(this.props.levelChanged)
-            this.props.levelChanged(parseInt(e.target.value) as HeadingLevel);
+    private levelChanged = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        if (this.props.levelChanged) {
+            this.props.levelChanged(parseInt(e.target.value, 10) as HeadingLevel);
+        }
     }
 
-    private textChanged = (e : React.ChangeEvent<HTMLInputElement>) => {
-        if(this.props.textChanged)
+    private textChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (this.props.textChanged) {
             this.props.textChanged(e.target.value);
+        }
     }
 }
 
-function mapStateToProps(state : Store = initialState) : Props {
+function mapStateToProps(state: Store = initialState): Props {
     return {
-        headingLevel : state.menu.heading.level,
-        headingText : state.menu.heading.text
+        headingLevel: state.menu.heading.level,
+        headingText: state.menu.heading.text,
     };
 }
 
-var mapActionsToProps = ({
-    onCreate : (componentTypeName : string,
-        defaultProps : any,
+let mapActionsToProps = ({
+    levelChanged: (newLevel: HeadingLevel) => ({
+        level: newLevel,
+        type: "update-heading-level",
+    } as UpdateHeadingLevel),
+    onCreate: (componentTypeName: string,
+        defaultProps: any,
         ordering: "before" | "after" | "end") => ({
-            type : "addToDocument",
+            type: "addToDocument",
             componentTypeName,
             ordering,
-            defaultProps
+            defaultProps,
         } as AddToDocument),
-    levelChanged : (newLevel : HeadingLevel) => ({
-        type : "update-heading-level",
-        level : newLevel
-    } as UpdateHeadingLevel),
-    textChanged: (newText : string) => ({
+    textChanged: (newText: string) => ({
+        text: newText,
         type: "update-heading-text",
-        text : newText
-    } as UpdateHeadingText)
+    } as UpdateHeadingText),
 });
 
 export default connect(mapStateToProps, mapActionsToProps)(HeadingButton);

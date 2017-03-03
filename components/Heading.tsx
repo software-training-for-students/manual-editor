@@ -1,12 +1,12 @@
 import * as React from "react";
 
-export type Props = React.HTMLAttributes<HTMLHeadingElement> & 
+export type Props = React.HTMLAttributes<HTMLHeadingElement> &
     {
-        level : 1 | 2 | 3 | 4 | 5 | 6
+        level: 1 | 2 | 3 | 4 | 5 | 6,
     };
 
-export const Component : React.StatelessComponent<Props> = (props : Props) => {
-    const Tag = "h" + props.level.toString();
+export const Component: React.StatelessComponent<Props> = (props: Props) => {
     const {level, ... rest} = props;
-    return <Tag {...rest}>{props.value}</Tag>
-}
+    const Tag = "h" + level.toString();
+    return <Tag {...rest}>{props.value}</Tag>;
+};

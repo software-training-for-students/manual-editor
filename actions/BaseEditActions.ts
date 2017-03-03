@@ -5,20 +5,20 @@ export interface EditActionBase extends Action {
 }
 
 export interface SetIsEditing extends EditActionBase {
-    type : "setIsEditing";
-    editing : boolean;
+    type: "setIsEditing";
+    editing: boolean;
 }
 
 export interface OnEdited extends EditActionBase {
-    type : "onEdited";
-    value : string;
+    type: "onEdited";
+    value: string;
 }
 
 export interface AddToDocument extends Action {
-    type : "addToDocument";
-    componentTypeName : string;
+    type: "addToDocument";
+    componentTypeName: string;
     ordering: "before" | "after" | "end";
-    defaultProps : any;
+    defaultProps: any;
 }
 
 export default EditActionBase;

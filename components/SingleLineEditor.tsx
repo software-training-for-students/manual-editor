@@ -1,10 +1,10 @@
-import * as React from "react";
 import AutoUnfocusEditor from "AutoUnfocusEditor";
+import * as React from "react";
 
 type EditorProps = React.HTMLAttributes<HTMLInputElement> & {
-    value : string;
+    value: string;
     onComplete: () => void;
-    onValueChange : (value : string) => void;
+    onValueChange: (value: string) => void;
 };
 
 const minInputSize = 20;
@@ -13,15 +13,21 @@ const extraInputSpace = 2; // Extra whitespace at the end to account for any but
 class SingleLineEditor extends React.Component<EditorProps, void> {
     public render() {
         const textLength = this.props.value.length;
-        var {onComplete, onChange, onValueChange, ...rest} = this.props;
-        return <input type="text" size={Math.max(minInputSize, textLength) + extraInputSpace}
-        onChange={(event) => {
-            onValueChange(event.target.value);
-            if(onChange !== undefined) {
-                onChange(event);
+        // tslint:disable-next-line:no-unused-variable
+        let {onComplete, onChange, onValueChange, ...rest} = this.props;
+        return <input
+            type="text"
+            size={Math.max(minInputSize, textLength) + extraInputSpace}
+            onChange={this.onChange}
+            {...rest}
+        />;
+    }
+
+    private onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+            this.props.onValueChange(event.target.value);
+            if (this.props.onChange !== undefined) {
+                this.props.onChange(event);
             }
-        }}
-        {...rest} />
     }
 }
 

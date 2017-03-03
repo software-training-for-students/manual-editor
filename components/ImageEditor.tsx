@@ -1,36 +1,19 @@
-import * as React from "react";
-import {SingleImageProps, SingleImageCssClass, SideBySideImageProps, SideBySideImageCssClass} from "components/Images";
 import AutoUnfocusEditor from "AutoUnfocusEditor";
+import {SideBySideImageCssClass, SideBySideImageProps, SingleImageCssClass, SingleImageProps} from "components/Images";
+import * as React from "react";
 
 interface ImageEditorProps<TImageProps> {
-    value : TImageProps | undefined
-    onValueChange : (newProps: TImageProps) => void;
-    onComplete : () => void
+    value: TImageProps | undefined;
+    onValueChange: (newProps: TImageProps) => void;
+    onComplete: () => void;
 }
 
 class SingleImageEditor extends React.Component<ImageEditorProps<SingleImageProps>, void> {
-
-    private onSourceChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.props.onValueChange({... this.props.value, source : event.target.value});
-    }
-    
-    private onBorderChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.props.onValueChange({... this.props.value, border : event.target.checked});
-    }
-
-    private onCaptionChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.props.onValueChange({... this.props.value, caption : event.target.value});
-    }
-
-    private onCssClassChanged = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        this.props.onValueChange({... this.props.value, className : event.target.value as SingleImageCssClass});
-    }
-
-    private static readonly defaultImageProps : SingleImageProps = {
-        caption : "",
+    private static readonly defaultImageProps: SingleImageProps = {
         border : false,
+        caption : "",
+        className : "full-width-image",
         source : "",
-        className : "full-width-image"
     };
 
     public render() {
@@ -66,18 +49,11 @@ class SingleImageEditor extends React.Component<ImageEditorProps<SingleImageProp
             </div>
         );
     }
-}
 
-class SideBySideImageEditor extends React.Component<ImageEditorProps<SideBySideImageProps>, void> {
-
-    private onLeftSourceChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.props.onValueChange({... this.props.value, leftSource : event.target.value});
+    private onSourceChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        this.props.onValueChange({... this.props.value, source : event.target.value});
     }
 
-    private onRightSourceChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.props.onValueChange({... this.props.value, rightSource : event.target.value});
-    }
-    
     private onBorderChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.props.onValueChange({... this.props.value, border : event.target.checked});
     }
@@ -87,15 +63,19 @@ class SideBySideImageEditor extends React.Component<ImageEditorProps<SideBySideI
     }
 
     private onCssClassChanged = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        this.props.onValueChange({... this.props.value, className : event.target.value as SideBySideImageCssClass});
+        this.props.onValueChange({... this.props.value, className : event.target.value as SingleImageCssClass});
     }
 
-    private static readonly defaultImageProps : SideBySideImageProps = {
-        caption : "",
+}
+
+// tslint:disable-next-line:max-classes-per-file
+class SideBySideImageEditor extends React.Component<ImageEditorProps<SideBySideImageProps>, void> {
+    private static readonly defaultImageProps: SideBySideImageProps = {
         border : false,
+        caption : "",
+        className : "sidebyside-image-large",
         leftSource : "",
         rightSource : "",
-        className : "sidebyside-image-large"
     };
 
     public render() {
@@ -128,9 +108,29 @@ class SideBySideImageEditor extends React.Component<ImageEditorProps<SideBySideI
             </div>
         );
     }
+
+    private onLeftSourceChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        this.props.onValueChange({... this.props.value, leftSource : event.target.value});
+    }
+
+    private onRightSourceChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        this.props.onValueChange({... this.props.value, rightSource : event.target.value});
+    }
+
+    private onBorderChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        this.props.onValueChange({... this.props.value, border : event.target.checked});
+    }
+
+    private onCaptionChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+        this.props.onValueChange({... this.props.value, caption : event.target.value});
+    }
+
+    private onCssClassChanged = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        this.props.onValueChange({... this.props.value, className : event.target.value as SideBySideImageCssClass});
+    }
 }
 
 export default {
+    SideBySideImageEditor : AutoUnfocusEditor(SideBySideImageEditor),
     SingleImageEditor : AutoUnfocusEditor(SingleImageEditor),
-    SideBySideImageEditor : AutoUnfocusEditor(SideBySideImageEditor)
-}
+};

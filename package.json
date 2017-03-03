@@ -4,7 +4,9 @@
   "description": "Editor for STS Manuals (React/Typescript based)",
   "main": "app.js",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "lint-check" : "tslint --project tsconfig.json",
+    "lint-fix" : "tslint --fix --project tsconfig.json"
   },
   "repository": {
     "type": "git",
@@ -17,14 +19,16 @@
   },
   "homepage": "https://github.com/software-training-for-students/manual-editor",
   "devDependencies": {
+    "@types/draft-js": "^0.9.1",
     "@types/react": "^15.0.10",
     "@types/react-dom": "^0.14.23",
     "@types/react-redux": "^4.4.36",
-    "@types/draft-js": "^0.9.1",
     "awesome-typescript-loader": "^3.0.4-rc.2",
     "css-loader": "^0.26.2",
     "source-map-loader": "^0.1.6",
     "style-loader": "^0.13.2",
+    "tslint": "^4.5.1",
+    "tslint-react": "^2.4.0",
     "typescript": "^2.2.1",
     "webpack": "^2.2.1"
   },

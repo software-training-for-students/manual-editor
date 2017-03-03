@@ -1,7 +1,5 @@
-import * as Redux from "redux";
-import {MenuStore, initialState} from "stores/Menu";
 import heading from "reducers/menu/HeadingReducers";
-import {singleImage, sideBySideImage} from "reducers/menu/ImageReducers";
-
+import {sideBySideImage, singleImage} from "reducers/menu/ImageReducers";
+import * as Redux from "redux";
 
 export default Redux.combineReducers({heading, singleImage, sideBySideImage});

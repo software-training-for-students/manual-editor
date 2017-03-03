@@ -18,6 +18,14 @@
         {
             "taskName": "build",
             "args": ["run", "build"]
+        },
+        {
+            "taskName": "lint-check",
+            "args" : ["run", "lint-check"]
+        },
+        {
+            "taskName": "lint-fix",
+            "args" : ["run", "lint-fix"]
         }
     ]
 }

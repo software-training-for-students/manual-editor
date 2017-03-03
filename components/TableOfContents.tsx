@@ -1,10 +1,8 @@
-import * as React from "react";
 import PageBreak from "components/PageBreak";
-import {connect} from "react-redux";
-import {Store, initialState} from "stores";
+import * as React from "react";
 
 interface Props {
-    headings : string[];
+    headings: string[];
 }
 
 class TableOfContents extends React.Component<Props, void> {
@@ -15,8 +13,10 @@ class TableOfContents extends React.Component<Props, void> {
                 <div id="outline">
                     <ol>
                         {
-                            this.props.headings.map(heading => 
-                                <li key={heading}><p>{heading}</p></li>
+                            this.props.headings.map((heading) =>
+                                <li key={heading}>
+                                    <p>{heading}</p>
+                                </li>,
                             )
                         }
                     </ol>

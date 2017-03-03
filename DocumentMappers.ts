@@ -1,26 +1,26 @@
-import { EditableProps, InteractiveEditableProps, EditableActionsMap } from 'EditableBase';
 import * as BaseActions from "actions/BaseEditActions";
-import { Document } from 'stores/Document';
-import {Store, initialState} from "stores";
+import { EditableActionsMap, EditableProps, InteractiveEditableProps } from "EditableBase";
+import {initialState, Store} from "stores";
 
-function mapItemStateToDefaultProps(state : EditableProps<any>) : Partial<EditableProps<any>> {
+function mapItemStateToDefaultProps(state: EditableProps<any>): Partial<EditableProps<any>> {
     return {
         editing : state.editing,
-        value : state.value
+        value : state.value,
     };
 }
 
-function mapItemStateToAdditionalPropsDefault<TProps extends EditableProps<any>>(itemState : any, updatedBaseProps: Partial<EditableProps<any>>) : Partial<TProps> {
-    return {... itemState, ... updatedBaseProps}
+function mapItemStateToAdditionalPropsDefault<TProps extends EditableProps<any>>(itemState: any, updatedBaseProps: Partial<EditableProps<any>>):
+ Partial<TProps> {
+    return {... itemState, ... updatedBaseProps};
 }
 
 export function createEditableStateToPropsMapper<TProps extends EditableProps<any>>(
-    mapItemStateToAdditionalProps : (itemState : TProps, updatedBaseProps: Partial<EditableProps<any>>) => Partial<TProps>
+    mapItemStateToAdditionalProps: (itemState: TProps, updatedBaseProps: Partial<EditableProps<any>>) => Partial<TProps>
      = mapItemStateToAdditionalPropsDefault) {
 
-    return (state : Store = initialState, oldProps : TProps) : Partial<TProps> => {
+    return (state: Store = initialState, oldProps: TProps) : Partial<TProps> => {
         const itemState = state.document[oldProps.itemId] as TProps;
-        if(itemState) {
+        if (itemState) {
             const updatedBaseProps = mapItemStateToDefaultProps(itemState);
             return mapItemStateToAdditionalProps(itemState, updatedBaseProps);
         }
@@ -28,15 +28,15 @@ export function createEditableStateToPropsMapper<TProps extends EditableProps<an
     };
 }
 
-export const mapBaseActionsToProps : EditableActionsMap<InteractiveEditableProps<any>> = {
-    setIsEditing : (id : number, isEditing : boolean) => (<BaseActions.SetIsEditing>{
-        type : "setIsEditing",
-        editing : isEditing,
-        itemId : id
-    }),
-    onEdited: (id : number, newValue : any) => (<BaseActions.OnEdited>{
+export const mapBaseActionsToProps: EditableActionsMap<InteractiveEditableProps<any>> = {
+    onEdited: (id: number, newValue: any) => (<BaseActions.OnEdited> {
+        itemId : id,
         type : "onEdited",
         value : newValue,
-        itemId : id
-    })
+    }),
+    setIsEditing : (id: number, isEditing: boolean) => (<BaseActions.SetIsEditing> {
+        editing : isEditing,
+        itemId : id,
+        type : "setIsEditing",
+    }),
 };
