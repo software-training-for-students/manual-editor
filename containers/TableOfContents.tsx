@@ -32,7 +32,7 @@ function mapStateToProps(state: Store) {
         headings: state.document.elementOrdering.filter((element) =>
                         element.elementType === "Heading" && state.document[element.itemId].level === 1,
                     ).map((element) => state.document[element.itemId].value),
-    }
+    };
 }
 
 export default connect(mapStateToProps)(TableOfContents);
