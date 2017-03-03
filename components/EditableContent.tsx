@@ -1,12 +1,24 @@
 import * as React from "react";
 
+interface InputProps<T> {
+    autoFocus? : boolean;
+    onComplete : () => void;
+    onValueChange : (value : T) => void;
+    value : T | undefined;
+}
+
+interface StaticProps<T> {
+    value : T | undefined;
+    onClick : (event : React.SyntheticEvent<HTMLElement>) => void;
+}
+
 interface Props<T> {
     editing : boolean | undefined;
     value : T | undefined;
     inputProps? : any;
     staticProps? : any;
-    inputComponentClass : string | React.StatelessComponent<any> | React.ComponentClass<any>;
-    staticComponentClass : string | React.StatelessComponent<any> | React.ComponentClass<any>;
+    inputComponentClass : React.StatelessComponent<InputProps<T>> | React.ComponentClass<InputProps<T>>;
+    staticComponentClass : string | React.StatelessComponent<StaticProps<T> & any> | React.ComponentClass<StaticProps<T> & any>;
     toggleIsEditing : () => void;
     updateValue : (value : T) => void;
 }

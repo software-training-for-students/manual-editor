@@ -4,30 +4,26 @@ import AutoUnfocusEditor from "AutoUnfocusEditor";
 
 interface ImageEditorProps<TImageProps> {
     value : TImageProps | undefined
-    onValueChange? : (newProps: TImageProps) => void;
+    onValueChange : (newProps: TImageProps) => void;
     onComplete : () => void
 }
 
 class SingleImageEditor extends React.Component<ImageEditorProps<SingleImageProps>, void> {
 
     private onSourceChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if(this.props.onValueChange)
-            this.props.onValueChange({... this.props.value, source : event.target.value});
+        this.props.onValueChange({... this.props.value, source : event.target.value});
     }
     
     private onBorderChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if(this.props.onValueChange)
-            this.props.onValueChange({... this.props.value, border : event.target.checked});
+        this.props.onValueChange({... this.props.value, border : event.target.checked});
     }
 
     private onCaptionChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if(this.props.onValueChange)
-            this.props.onValueChange({... this.props.value, caption : event.target.value});
+        this.props.onValueChange({... this.props.value, caption : event.target.value});
     }
 
     private onCssClassChanged = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        if(this.props.onValueChange)
-            this.props.onValueChange({... this.props.value, className : event.target.value as SingleImageCssClass});
+        this.props.onValueChange({... this.props.value, className : event.target.value as SingleImageCssClass});
     }
 
     private static readonly defaultImageProps : SingleImageProps = {
@@ -75,28 +71,23 @@ class SingleImageEditor extends React.Component<ImageEditorProps<SingleImageProp
 class SideBySideImageEditor extends React.Component<ImageEditorProps<SideBySideImageProps>, void> {
 
     private onLeftSourceChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if(this.props.onValueChange)
-            this.props.onValueChange({... this.props.value, leftSource : event.target.value});
+        this.props.onValueChange({... this.props.value, leftSource : event.target.value});
     }
 
     private onRightSourceChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if(this.props.onValueChange)
-            this.props.onValueChange({... this.props.value, rightSource : event.target.value});
+        this.props.onValueChange({... this.props.value, rightSource : event.target.value});
     }
     
     private onBorderChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if(this.props.onValueChange)
-            this.props.onValueChange({... this.props.value, border : event.target.checked});
+        this.props.onValueChange({... this.props.value, border : event.target.checked});
     }
 
     private onCaptionChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if(this.props.onValueChange)
-            this.props.onValueChange({... this.props.value, caption : event.target.value});
+        this.props.onValueChange({... this.props.value, caption : event.target.value});
     }
 
     private onCssClassChanged = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        if(this.props.onValueChange)
-            this.props.onValueChange({... this.props.value, className : event.target.value as SideBySideImageCssClass});
+        this.props.onValueChange({... this.props.value, className : event.target.value as SideBySideImageCssClass});
     }
 
     private static readonly defaultImageProps : SideBySideImageProps = {
