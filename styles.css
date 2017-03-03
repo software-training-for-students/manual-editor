@@ -52,3 +52,7 @@ input[type=text].h2 {
 .flyout header {
     text-align: center;
 }
+
+.editor {
+    border : 1px solid black;
+}
