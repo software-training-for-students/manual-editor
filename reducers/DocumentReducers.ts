@@ -32,7 +32,10 @@ let onEdited: Redux.Reducer<Document> =
 let onAddDocument: Redux.Reducer<Document> =
     (state: Document = initialState, action: BaseActions.AddToDocument) => {
     if (action.type === "addToDocument") {
-    let newState: Document = {... state};
+    let newState: Document = {
+        ... state,
+        elementOrdering : state.elementOrdering.slice(),
+    };
     if (action.ordering === "end") {
         addElementToEndOfDocument(newState, action.componentTypeName, action.defaultProps);
     } else {

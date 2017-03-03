@@ -1,6 +1,6 @@
 import AboutPage from "components/AboutPage";
 import CoverPage from "components/CoverPage";
-import TableOfContents from "components/TableOfContents";
+import TableOfContents from "containers/TableOfContents";
 import ElementTypes from "ElementTypes";
 import * as React from "react";
 import {connect} from "react-redux";
@@ -9,7 +9,6 @@ import {ItemOrdering} from "stores/Document";
 
 interface Props {
     items: ItemOrdering[];
-    headings: string[];
 }
 
 class Manual extends React.Component<Props, void> {
@@ -18,7 +17,7 @@ class Manual extends React.Component<Props, void> {
             <div id="manual">
                 <CoverPage date={new Date()} />
                 <AboutPage />
-                <TableOfContents headings={this.props.headings} />
+                <TableOfContents />
                 {
                     this.props.items.map(
                         (item) => {
@@ -34,10 +33,7 @@ class Manual extends React.Component<Props, void> {
 
 function mapStateToProps(state: Store): Props {
     return {
-        headings : state.document.elementOrdering.filter((element) =>
-                        element.elementType === "Heading" && state.document[element.itemId].level === 1,
-                    ).map((element) => state.document[element.itemId].value),
-        items: state.document.elementOrdering.slice(),
+        items: state.document.elementOrdering,
     };
 }
 
