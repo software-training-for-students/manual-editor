@@ -13,6 +13,7 @@ const CoverPage = (props: CoverPageProps) => {
             <div id="coverpage-title">
                 <EditableHeading itemId={1} level={1} />
                 <EditableHeading itemId={2} level={2} />
+                <h3><em>Classroom Course Material</em></h3>
             </div>
             <CoverPageDescription date={props.date} />
             <PageBreak />
