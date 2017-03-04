@@ -13,5 +13,3 @@ export let initialState: Store = {
     flyout : Flyout.initialState,
     menu : Menu.initialState,
 };
-
-export default initialState;
