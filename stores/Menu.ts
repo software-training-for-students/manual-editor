@@ -9,9 +9,13 @@ export interface MenuStore {
     heading: HeadingStore;
     singleImage: SingleImageProps;
     sideBySideImage: SideBySideImageProps;
+    code: {language: string};
 }
 
 export let initialState: MenuStore = {
+    code : {
+        language : "html-css-javascript",
+    },
     heading : {
         level : 1,
         text : "",

@@ -1,3 +1,4 @@
+import CodeSnippetButton from "containers/menu/CodeSnippetButton";
 import HeadingButton from "containers/menu/HeadingButton";
 import ImageButtons from "containers/menu/ImageButtons";
 import ParagraphButton from "containers/menu/ParagraphButton";
@@ -13,6 +14,7 @@ export default class Menu extends React.Component<void, void> {
                 <ImageButtons.SideBySideImageButton />
                 <ParagraphButton />
                 <HtmlButton />
+                <CodeSnippetButton />
             </div>
         );
     }

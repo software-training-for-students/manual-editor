@@ -1,3 +1,4 @@
+import EditableCode from "containers/editors/EditableCode";
 import EditableHeading from "containers/editors/EditableHeading";
 import EditableHtml from "containers/editors/EditableHtml";
 import EditableImage from "containers/editors/EditableImage";
@@ -14,5 +15,6 @@ let instance: ElementTypes = {
     ["SideBySideImage"] : EditableImage.EditableSideBySideImage,
     ["RichText"] : EditableRichText,
     ["RawHtml"] : EditableHtml,
+    ["Code"] : EditableCode,
 };
 export default instance;

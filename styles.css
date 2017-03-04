@@ -56,3 +56,7 @@ input[type=text].h2 {
 .editor {
     border : 1px solid black;
 }
+
+textarea {
+    width: 100%;
+}

@@ -20,3 +20,8 @@ export interface UpdateSideBySideImageProps extends Action {
     type: "update-sidebyside-image-props";
     props: SideBySideImageProps;
 }
+
+export interface UpdateCodeLanguage extends Action {
+    type: "update-code-language";
+    language: string;
+}

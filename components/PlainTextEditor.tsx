@@ -8,7 +8,7 @@ interface Props {
     value: string;
 }
 
-class RawHtmlEditor extends React.Component<Props, void> {
+class PlainTextEditor extends React.Component<Props, void> {
 public render() {
         return <textarea onChange={this.onChange} value={this.props.value} {... this.props} />;
     }
@@ -18,4 +18,4 @@ public render() {
     }
 }
 
-export default AutoUnfocusEditor(RawHtmlEditor);
+export default AutoUnfocusEditor(PlainTextEditor);

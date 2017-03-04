@@ -1,24 +1,32 @@
+import CodePresenter from "components/CodePresenter";
 import EditableContent from "components/EditableContent";
-import HtmlPresenter from "components/HtmlPresenter";
 import PlainTextEditor from "components/PlainTextEditor";
 import {createEditableStateToPropsMapper, mapBaseActionsToProps} from "DocumentMappers";
 import {getCommonInteractiveEditableProps, InteractiveEditableProps} from "EditableBase";
 import * as React from "react";
 import * as ReactRedux from "react-redux";
 
-class EditableRawHtml extends EditableContent<string> {};
+class EditableCodeBlock extends EditableContent<string> {};
 
-const EditableHtml = (props: InteractiveEditableProps<string>) => {
+type Props = InteractiveEditableProps<string> & {language: string};
+
+const EditableCode = (props: Props) => {
 
     const {toggleIsEditing, updateValue} = getCommonInteractiveEditableProps(props);
 
-    return <EditableRawHtml
+    return <EditableCodeBlock
         inputComponentClass={PlainTextEditor}
-        staticComponentClass={HtmlPresenter}
+        staticComponentClass={CodePresenter}
+        staticProps={{language : props.language}}
+        inputProps={
+            {
+                rows : 15,
+            }
+        }
         {...props}
         toggleIsEditing={toggleIsEditing}
         updateValue={updateValue}
     />;
 };
 
-export default ReactRedux.connect(createEditableStateToPropsMapper(), mapBaseActionsToProps)(EditableHtml);
+export default ReactRedux.connect(createEditableStateToPropsMapper(), mapBaseActionsToProps)(EditableCode);
