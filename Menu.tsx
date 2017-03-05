@@ -3,6 +3,7 @@ import HeadingButton from "containers/menu/HeadingButton";
 import ImageButtons from "containers/menu/ImageButtons";
 import ParagraphButton from "containers/menu/ParagraphButton";
 import HtmlButton from "containers/menu/RawHtmlButton";
+import SaveLoadButtons from "containers/menu/SaveLoadButtons";
 import * as React from "react";
 
 export default class Menu extends React.Component<void, void> {
@@ -15,6 +16,7 @@ export default class Menu extends React.Component<void, void> {
                 <ParagraphButton />
                 <HtmlButton />
                 <CodeSnippetButton />
+                <SaveLoadButtons />
             </div>
         );
     }

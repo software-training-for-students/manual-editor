@@ -1,4 +1,5 @@
 import * as BaseActions from "actions/BaseEditActions";
+import * as SaveLoadActions from "actions/SaveLoadActions";
 import * as Redux from "redux";
 import {addElementRelativeToCurrentlyActiveElement, addElementToEndOfDocument, Document, initialState} from "stores/Document";
 
@@ -46,10 +47,18 @@ let onAddDocument: Redux.Reducer<Document> =
     return state;
 };
 
+let onSetDocument: Redux.Reducer<Document> = (state: Document = initialState, action: SaveLoadActions.SetDocumentAction) => {
+    if (action.type === "set-document") {
+        return action.document;
+    }
+    return state;
+};
+
 let editReducers = (document: Document, action: Redux.Action) => {
     let newDoc = setIsEditing(document, action);
     newDoc = onEdited(newDoc, action);
     newDoc = onAddDocument(newDoc, action);
+    newDoc = onSetDocument(newDoc, action);
     return newDoc;
 };
 

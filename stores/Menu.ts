@@ -10,6 +10,7 @@ export interface MenuStore {
     singleImage: SingleImageProps;
     sideBySideImage: SideBySideImageProps;
     code: {language: string};
+    load: {file?: File};
 }
 
 export let initialState: MenuStore = {
@@ -20,6 +21,7 @@ export let initialState: MenuStore = {
         level : 1,
         text : "",
     },
+    load : {},
     sideBySideImage : {
         border : false,
         caption : "",
