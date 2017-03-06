@@ -1,5 +1,6 @@
 import AutoUnfocusEditor from "AutoUnfocusEditor";
 import * as Draft from "draft-js";
+import "draft-js/dist/Draft.css";
 import "es6-shim";
 import * as React from "react";
 
@@ -16,7 +17,7 @@ class RichTextEditor extends React.Component<Props, void> {
                 <Draft.Editor
                     editorState={this.props.value}
                     onChange={this.onChange}
-                    placeholder={"Type your content below."}
+                    placeholder={"Type your content here."}
                     handleKeyCommand={this.handleKeyCommand}
                 />
             </div>

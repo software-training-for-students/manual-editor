@@ -15,6 +15,10 @@ export function saveAsThunkAction(): ThunkAction<void, Store, void> {
                 let editorState: EditorState = documentToSave[element.itemId].value;
                 documentToSave[element.itemId].value = convertToRaw(editorState.getCurrentContent());
             }
+            if (element.elementType === "SidebarNote") {
+                let editorState: EditorState = documentToSave[element.itemId].value.content;
+                documentToSave[element.itemId].value.content = convertToRaw(editorState.getCurrentContent());
+            }
         });
         let data = new Blob([JSON.stringify(documentToSave)]);
         saveAs(data, "manual.json");
