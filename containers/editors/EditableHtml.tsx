@@ -9,15 +9,11 @@ import * as ReactRedux from "react-redux";
 class EditableRawHtml extends EditableContent<string> {};
 
 const EditableHtml = (props: InteractiveEditableProps<string>) => {
-
-    const {toggleIsEditing, updateValue} = getCommonInteractiveEditableProps(props);
-
     return <EditableRawHtml
+        {...props}
+        {... getCommonInteractiveEditableProps(props)}
         inputComponentClass={PlainTextEditor}
         staticComponentClass={HtmlPresenter}
-        {...props}
-        toggleIsEditing={toggleIsEditing}
-        updateValue={updateValue}
     />;
 };
 

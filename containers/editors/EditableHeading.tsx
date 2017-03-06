@@ -19,17 +19,13 @@ const EditableHeading: React.StatelessComponent<Props> = (props: Props) => {
     let inputProps = {
         className : "h" + props.level,
     };
-
-    const {toggleIsEditing, updateValue} = getCommonInteractiveEditableProps(props);
     return <EditableText
-        editing = {props.editing}
+        {...props}
+        {...getCommonInteractiveEditableProps(props)}
         inputComponentClass = {SingleLineEditor}
         staticComponentClass={Heading.Component}
         inputProps = {inputProps}
         staticProps = {headingProps}
-        value={props.value}
-        toggleIsEditing = {toggleIsEditing}
-        updateValue = {updateValue}
     />;
 };
 

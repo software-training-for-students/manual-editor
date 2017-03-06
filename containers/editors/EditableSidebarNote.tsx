@@ -19,10 +19,10 @@ type Props = InteractiveEditableProps<Value>;
 
 const EditableSidebarNote = (props: Props) => {
     return <EditableSidebar
-        inputComponentClass={SidebarEditor}
-        staticComponentClass={SidebarNote}
         {...props}
         {... getCommonInteractiveEditableProps(props)}
+        inputComponentClass={SidebarEditor}
+        staticComponentClass={SidebarNote}
     />;
 };
 

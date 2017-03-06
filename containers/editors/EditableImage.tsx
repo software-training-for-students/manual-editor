@@ -11,18 +11,13 @@ class EditableSingleImageContainer extends EditableContent<Images.SingleImagePro
 class EditableSideBySideImageContainer extends EditableContent<Images.SideBySideImageProps> {}
 
 const EditableSingleImage = (props: InteractiveEditableProps<Images.SingleImageProps>) => {
-
-    const {toggleIsEditing, updateValue} = getCommonInteractiveEditableProps(props);
-
     return <EditableSingleImageContainer
-        editing = {props.editing}
+        {... props}
+        {... getCommonInteractiveEditableProps(props)}
         inputComponentClass={ImageEditor.SingleImageEditor}
         staticComponentClass={Images.SingleImage}
         inputProps = {props.value}
         staticProps = {props.value}
-        toggleIsEditing = {toggleIsEditing}
-        updateValue = {updateValue}
-        value = {props.value}
     />;
 };
 

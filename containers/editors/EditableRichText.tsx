@@ -10,15 +10,12 @@ import {connect} from "react-redux";
 class EditableRichTextContainer extends EditableContent<DraftJs.EditorState> {}
 
 const EditableRichText = (props: InteractiveEditableProps<DraftJs.EditorState>) => {
-    const {toggleIsEditing, updateValue} = getCommonInteractiveEditableProps(props);
 
     return <EditableRichTextContainer
-        editing={props.editing}
-        toggleIsEditing={toggleIsEditing}
-        updateValue={updateValue}
+        {... props}
+        {... getCommonInteractiveEditableProps(props)}
         staticComponentClass={RichTextPresenter}
         inputComponentClass={RichTextEditor}
-        value={props.value}
     />;
 };
 

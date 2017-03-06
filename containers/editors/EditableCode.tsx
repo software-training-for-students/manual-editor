@@ -11,10 +11,9 @@ class EditableCodeBlock extends EditableContent<string> {};
 type Props = InteractiveEditableProps<string> & {language: string};
 
 const EditableCode = (props: Props) => {
-
-    const {toggleIsEditing, updateValue} = getCommonInteractiveEditableProps(props);
-
     return <EditableCodeBlock
+        {...props}
+        {...getCommonInteractiveEditableProps(props)}
         inputComponentClass={PlainTextEditor}
         staticComponentClass={CodePresenter}
         staticProps={{language : props.language}}
@@ -23,9 +22,6 @@ const EditableCode = (props: Props) => {
                 rows : 15,
             }
         }
-        {...props}
-        toggleIsEditing={toggleIsEditing}
-        updateValue={updateValue}
     />;
 };
 
