@@ -8,6 +8,7 @@ interface Props {
         content: EditorState;
         imgSource: string;
     };
+    onClick: (e: React.SyntheticEvent<HTMLDivElement>) => void;
 }
 
 const SidebarNote: React.StatelessComponent<Props> = (props: Props) => {

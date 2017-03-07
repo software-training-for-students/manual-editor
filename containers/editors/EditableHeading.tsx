@@ -13,7 +13,7 @@ interface Props extends InteractiveEditableProps<string> {
 class EditableText extends EditableContent<string> {}
 
 const EditableHeading: React.StatelessComponent<Props> = (props: Props) => {
-    let headingProps: Heading.Props = {
+    let headingProps: Partial<Heading.Props> = {
         level : props.level,
     };
     let inputProps = {

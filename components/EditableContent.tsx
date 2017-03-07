@@ -9,7 +9,7 @@ interface InputProps<T> {
 
 interface StaticProps<T> {
     value: T | undefined;
-    onClick: (event: React.SyntheticEvent<HTMLElement>) => void;
+    onClick?: ((event: React.SyntheticEvent<HTMLElement>) => void);
 }
 
 interface Props<T> {
@@ -19,8 +19,8 @@ interface Props<T> {
     staticProps?: any;
     inputComponentClass: React.StatelessComponent<InputProps<T>> | React.ComponentClass<InputProps<T>>;
     staticComponentClass: string
-                             | React.StatelessComponent<StaticProps<T> & any>
-                             | React.ComponentClass<StaticProps<T> & any>;
+                             | React.StatelessComponent<StaticProps<T> & {[k: string]: any}>
+                             | React.ComponentClass<StaticProps<T> & {[k: string]: any}>;
     toggleIsEditing: () => void;
     updateValue: (value: T) => void;
 }

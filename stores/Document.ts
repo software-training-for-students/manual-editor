@@ -7,7 +7,7 @@ export interface ItemOrdering {
 }
 
 export interface Document {
-    [itemId: number]: EditableProps<any> & any;
+    [itemId: number]: EditableProps<any> & {[k: string]: any};
     nextItemId: number;
     elementOrdering: ItemOrdering[];
 }

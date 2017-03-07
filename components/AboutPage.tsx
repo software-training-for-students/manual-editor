@@ -14,8 +14,10 @@ const AboutPage = () => {
                       For more information on the Software Training for Students (STS) program,
                        visit our website at <strong><a href="http://wisc.edu/sts">wisc.edu/sts</a></strong>.</p>
                 <Images.SingleImage
-                  className="full-width-image"
-                  source="http://software-training-for-students.github.io/manual-master-files/sts-services.png"
+                    value ={{
+                        className: "full-width-image",
+                        source: "http://software-training-for-students.github.io/manual-master-files/sts-services.png",
+                    }}
                 />
                 <p>
                     STS is part of the Division of Information Technology (DoIT) - Academic Technology at UW-Madison.

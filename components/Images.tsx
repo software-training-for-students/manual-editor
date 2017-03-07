@@ -15,50 +15,74 @@ export type SideBySideImageCssClass =
     "sidebyside-image-small"
     | "sidebyside-image-large";
 
+interface SingleImageComponentProps {
+    value: SingleImageProps | undefined;
+    onClick?: (e: React.SyntheticEvent<HTMLImageElement>) => void;
+}
+
 export interface SingleImageProps {
-    className: SingleImageCssClass;
-    border?: boolean;
-    source: string;
-    caption?: string;
-    onClick?: React.EventHandler<React.SyntheticEvent<HTMLImageElement>>;
+        className: SingleImageCssClass;
+        border?: boolean;
+        source: string;
+        caption?: string;
+}
+
+interface SideBySideImageComponentProps {
+    value: SideBySideImageProps | undefined;
+    onClick: (e: React.SyntheticEvent<HTMLDivElement>) => void;
 }
 
 export interface SideBySideImageProps {
-    className: SideBySideImageCssClass;
-    border?: boolean;
-    leftSource: string;
-    rightSource: string;
-    caption?: string;
-    onClick?: React.EventHandler<React.SyntheticEvent<HTMLDivElement>>;
+        className: SideBySideImageCssClass;
+        border?: boolean;
+        leftSource: string;
+        rightSource: string;
+        caption?: string;
 }
 
-export class SingleImage extends React.Component<SingleImageProps, void> {
+export class SingleImage extends React.Component<SingleImageComponentProps, void> {
 
     public render() {
+        let value = this.props.value || {
+            border: false,
+            caption: "",
+            className: "full-width-image",
+            source: "",
+        };
         return (
-        <div className={this.props.className + (this.props.border ? " border" : "")}>
-            <img src={this.props.source} onClick={this.onClick} />
-            <p>{this.props.caption}</p>
+        <div className={value.className + (value.border ? " border" : "")}>
+            <img src={value.source} onClick={this.onClick} />
+            <p>{value.caption}</p>
          </div>);
     }
 
-    private onClick = (event: React.SyntheticEvent<HTMLImageElement>) =>
-         this.props.onClick !== undefined ? this.props.onClick(event) : void 0;
+    private onClick = (event: React.SyntheticEvent<HTMLImageElement>) => {
+        if (this.props.onClick) {
+          this.props.onClick(event);
+        }
+    }
 }
 
 // tslint:disable-next-line:max-classes-per-file
-export class SideBySideImages extends React.Component<SideBySideImageProps, void> {
+export class SideBySideImages extends React.Component<SideBySideImageComponentProps, void> {
 
     public render() {
+        let value = this.props.value || {
+            border: false,
+            caption: "",
+            className: "sidebyside-image-large",
+            leftSource: "",
+            rightSource: "",
+        };
         return (
-        <div className={this.props.className + (this.props.border ? " border" : "")} onClick={this.onClick}>
-            <img src={this.props.leftSource} />
-            <img src={this.props.rightSource} />
-            <p>{this.props.caption}</p>
+        <div className={value.className + (value.border ? " border" : "")} onClick={this.onClick}>
+            <img src={value.leftSource} />
+            <img src={value.rightSource} />
+            <p>{value.caption}</p>
          </div>);
     }
 
     private onClick = (event: React.SyntheticEvent<HTMLDivElement>) =>
-        this.props.onClick !== undefined ? this.props.onClick(event) : void 0;
+        this.props.onClick(event);
 
 }
