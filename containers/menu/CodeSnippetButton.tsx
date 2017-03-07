@@ -13,9 +13,9 @@ class CodeSnippetButton extends React.Component<Props, void> {
     public render() {
         return <MenuItem
             insertEnabled={!!this.props.language}
-            menuItemHeading="Code Snippet"
+            menuItemHeading="Insert Code Snippet"
             menuItemId="code-snippet"
-            menuItemText="Insert Code Snippet"
+            menuItemText="Code Snippet"
             elementType={"Code"}
             defaultValue={{
                 language: this.props.language,
