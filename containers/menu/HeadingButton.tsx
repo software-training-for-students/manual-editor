@@ -1,4 +1,3 @@
-import {AddToDocument} from "actions/BaseEditActions";
 import {UpdateHeadingLevel, UpdateHeadingText} from "actions/MenuActions";
 import MenuItem from "containers/MenuItem";
 import * as React from "react";
@@ -8,9 +7,6 @@ import {initialState, Store} from "stores";
 type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
 
 interface Props {
-    onCreate?: (componentTypeName: string,
-        defaultProps: any,
-        ordering: "before" | "after" | "end") => void;
     levelChanged?: (newLevel: HeadingLevel) => void;
     textChanged?: (text: string) => void;
 
@@ -25,8 +21,12 @@ class HeadingButton extends React.Component<Props, void> {
             menuItemId="headings"
             menuItemText="Headings"
             menuItemHeading="Create Heading"
-            onCreate={this.onCreate}
             insertEnabled={this.props.headingText.length !== 0}
+            defaultValue={{
+                level: this.props.headingLevel,
+                value: this.props.headingText,
+            }}
+            elementType="Heading"
         >
             <section>
                 <select onChange={this.levelChanged} value={this.props.headingLevel}>
@@ -42,16 +42,6 @@ class HeadingButton extends React.Component<Props, void> {
             </section>
         </MenuItem>
         );
-    }
-
-    private onCreate = (ordering: "before" | "after" | "end") => {
-        if (this.props.onCreate) {
-            this.props.onCreate("Heading", {
-                level: this.props.headingLevel,
-                value: this.props.headingText,
-            },
-            ordering);
-        }
     }
 
     private levelChanged = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -79,14 +69,6 @@ let mapActionsToProps = ({
         level: newLevel,
         type: "update-heading-level",
     } as UpdateHeadingLevel),
-    onCreate: (componentTypeName: string,
-        defaultProps: any,
-        ordering: "before" | "after" | "end") => ({
-            type: "addToDocument",
-            componentTypeName,
-            ordering,
-            defaultProps,
-        } as AddToDocument),
     textChanged: (newText: string) => ({
         text: newText,
         type: "update-heading-text",

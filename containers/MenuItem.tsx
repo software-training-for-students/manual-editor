@@ -1,8 +1,9 @@
+import { AddToDocument } from "actions/BaseEditActions";
 import {FlyoutToggle} from "actions/FlyoutActions";
 import Flyout from "containers/Flyout";
 import * as React from "react";
 import {connect} from "react-redux";
-import {Store} from "stores";
+import { Store } from "stores";
 
 type Ordering = "before" | "after" | "end";
 
@@ -10,7 +11,11 @@ interface Props {
     menuItemId: string;
     menuItemText: string;
     menuItemHeading: string;
-    onCreate: (location: Ordering) => void;
+    elementType: string;
+    defaultValue: {value: any} & {[k: string]: any};
+    onCreate?: (componentTypeName: string,
+        defaultProps: any,
+        ordering: Ordering) => void;
     toggleFlyout?: (flyoutId: string) => void;
     enableRelativeInsert?: boolean | undefined;
     insertEnabled: boolean;
@@ -61,7 +66,9 @@ class MenuItem extends React.Component<Props, void> {
     }
 
     private onCreate = (e: React.SyntheticEvent<HTMLButtonElement>) => {
-        this.props.onCreate(e.currentTarget.value as Ordering);
+        if (this.props.onCreate) {
+            this.props.onCreate(this.props.elementType, this.props.defaultValue, e.currentTarget.value as Ordering);
+        }
     }
 }
 
@@ -78,6 +85,14 @@ function mapStateToProps(state: Store, props: Props): Props {
 }
 
 let mapActionsToProps = ({
+    onCreate: (componentTypeName: string,
+        defaultProps: any,
+        ordering: "before" | "after" | "end") => ({
+            type: "addToDocument",
+            componentTypeName,
+            ordering,
+            defaultProps,
+        } as AddToDocument),
     toggleFlyout: (id: string) => ({
         type: "flyout-toggle",
         id,

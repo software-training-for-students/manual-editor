@@ -1,4 +1,3 @@
-import {AddToDocument} from "actions/BaseEditActions";
 import { UpdateCodeLanguage } from "actions/MenuActions";
 import MenuItem from "containers/MenuItem";
 import * as React from "react";
@@ -7,7 +6,6 @@ import { Store } from "stores";
 
 interface Props {
     language: string;
-    onCreate: (ordering: "before" | "after" | "end", defaultProps: {language: string}) => void;
     onChangeLanguage: (language: string) => void;
 }
 
@@ -18,7 +16,11 @@ class CodeSnippetButton extends React.Component<Props, void> {
             menuItemHeading="Code Snippet"
             menuItemId="code-snippet"
             menuItemText="Insert Code Snippet"
-            onCreate={this.onCreate}
+            elementType={"Code"}
+            defaultValue={{
+                language: this.props.language,
+                value: "",
+            }}
         >
             <select value={this.props.language} onChange={this.onChangeLanguage}>
                 <option value="html-css-javascript">HTML/CSS/JavaScript</option>
@@ -32,10 +34,6 @@ class CodeSnippetButton extends React.Component<Props, void> {
                 <option value="tex">LaTeX</option>
             </select>
         </MenuItem>;
-    }
-
-    private onCreate = (ordering: "before" | "after" | "end") => {
-        this.props.onCreate(ordering, {language: this.props.language});
     }
 
     private onChangeLanguage = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -54,12 +52,6 @@ const mapActionsToProps = ({
         language,
         type: "update-code-language",
     } as UpdateCodeLanguage),
-    onCreate: (ordering: "before" | "after" | "end", defaultProps: {language: string}) => ({
-        componentTypeName: "Code",
-        defaultProps,
-        ordering,
-        type: "addToDocument",
-    } as AddToDocument),
 });
 
 export default connect(mapStateToProps, mapActionsToProps)(CodeSnippetButton);

@@ -1,4 +1,3 @@
-import {AddToDocument} from "actions/BaseEditActions";
 import {UpdateSideBySideImageProps, UpdateSingleImageProps} from "actions/MenuActions";
 import ImageEditors from "components/ImageEditor";
 import {SideBySideImageProps, SingleImageProps} from "components/Images";
@@ -10,9 +9,6 @@ import {initialState, Store} from "stores";
 const noop = () => void 0;
 
 interface CreateImageProps<TImageProps> {
-    onCreate?: (componentTypeName: string,
-        defaultProps: {value: TImageProps},
-        ordering: "before" | "after" | "end") => void;
     imageProps: TImageProps;
     onImagePropsChanged?: (imageProps: TImageProps) => void;
 }
@@ -24,18 +20,13 @@ class SingleImageButton extends React.Component<CreateImageProps<SingleImageProp
                 menuItemId="single-images"
                 menuItemText="Single Image"
                 menuItemHeading="Create Single Image"
-                onCreate={this.onCreate}
                 insertEnabled={this.props.imageProps.source.length !== 0}
+                defaultValue={{value: this.props.imageProps}}
+                elementType="SingleImage"
             >
                 <ImageEditors.SingleImageEditor onComplete={noop} value={this.props.imageProps} onValueChange={this.onValueChange} />
             </MenuItem>
         );
-    }
-
-    private onCreate = (ordering: "before" | "after" | "end") => {
-        if (this.props.onCreate) {
-            this.props.onCreate("SingleImage", {value: this.props.imageProps}, ordering);
-        }
     }
 
     private onValueChange = (value: SingleImageProps) => {
@@ -50,14 +41,6 @@ function mapStateToSingleImageProps(state: Store = initialState): CreateImagePro
 }
 
 const mapActionsToSingleImageProps = ({
-    onCreate: (componentTypeName: string,
-        defaultProps: any,
-        ordering: "before" | "after" | "end") => ({
-            type: "addToDocument",
-            componentTypeName,
-            ordering,
-            defaultProps,
-        } as AddToDocument),
     onImagePropsChanged: (value: SingleImageProps) => ({
         props: value,
         type: "update-single-image-props",
@@ -72,18 +55,13 @@ class SideBySideImageButton extends React.Component<CreateImageProps<SideBySideI
                 menuItemId="sidebyside-images"
                 menuItemText="Side By Side Images"
                 menuItemHeading="Create Side By Side Images"
-                onCreate={this.onCreate}
                 insertEnabled={this.props.imageProps.leftSource.length !== 0 && this.props.imageProps.rightSource.length !== 0}
+                elementType="SideBySideImage"
+                defaultValue={{value: this.props.imageProps}}
             >
                 <ImageEditors.SideBySideImageEditor onComplete={noop} value={this.props.imageProps} onValueChange={this.onValueChange} />
             </MenuItem>
         );
-    }
-
-    private onCreate = (ordering: "before" | "after" | "end") => {
-        if (this.props.onCreate) {
-            this.props.onCreate("SideBySideImage", {value: this.props.imageProps}, ordering);
-        }
     }
 
     private onValueChange = (value: SideBySideImageProps) => {
@@ -98,14 +76,6 @@ function mapStateToSideBySideImageProps(state: Store = initialState): CreateImag
 }
 
 const mapActionsToSideBySideImageProps = ({
-    onCreate: (componentTypeName: string,
-        defaultProps: any,
-        ordering: "before" | "after" | "end") => ({
-            type: "addToDocument",
-            componentTypeName,
-            ordering,
-            defaultProps,
-        } as AddToDocument),
     onImagePropsChanged: (value: SideBySideImageProps) => ({
         props: value,
         type: "update-sidebyside-image-props",

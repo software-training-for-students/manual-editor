@@ -7,20 +7,30 @@ import {Document} from "stores/Document";
 
 export function saveAsThunkAction(): ThunkAction<void, Store, void> {
     return (_, getStore) => {
-        let documentToSave = getStore().document;
-        documentToSave.elementOrdering.forEach((element) => {
+        // Clone the document object since we have to make changes.
+        let document = getStore().document;
+        let manual: Document = {
+            elementOrdering: document.elementOrdering,
+            nextItemId : document.nextItemId,
+            1 : document[1],
+            2 : document[2],
+        };
+        manual.elementOrdering.forEach((element) => {
+            manual[element.itemId] = {... document[element.itemId]};
             // We need to convert to a JSON-serializable structure
             // for saving for element types that don't have JSON-serializable values.
             if (element.elementType === "RichText") {
-                let editorState: EditorState = documentToSave[element.itemId].value;
-                documentToSave[element.itemId].value = convertToRaw(editorState.getCurrentContent());
+                let editorState: EditorState = manual[element.itemId].value;
+                manual[element.itemId].value = convertToRaw(editorState.getCurrentContent());
             }
             if (element.elementType === "SidebarNote") {
-                let editorState: EditorState = documentToSave[element.itemId].value.content;
-                documentToSave[element.itemId].value.content = convertToRaw(editorState.getCurrentContent());
+                 // Need to clone the element since we are changing a subproperty.
+                manual[element.itemId].value = {... manual[element.itemId].value};
+                let editorState: EditorState = manual[element.itemId].value.content;
+                manual[element.itemId].value.content = convertToRaw(editorState.getCurrentContent());
             }
         });
-        let data = new Blob([JSON.stringify(documentToSave)]);
+        let data = new Blob([JSON.stringify(manual)]);
         saveAs(data, "manual.json");
     };
 }
@@ -37,6 +47,10 @@ export function loadThunkAction(file: File): ThunkAction<void, Store, void> {
                 if (element.elementType === "RichText") {
                     let content: RawDraftContentState = manual[element.itemId].value;
                     manual[element.itemId].value = EditorState.createWithContent(convertFromRaw(content));
+                }
+                if (element.elementType === "SidebarNote") {
+                    let content: RawDraftContentState = manual[element.itemId].value.content;
+                    manual[element.itemId].value.content = EditorState.createWithContent(convertFromRaw(content));
                 }
             });
 
