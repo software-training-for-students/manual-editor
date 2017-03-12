@@ -14,18 +14,40 @@ class RichTextEditor extends React.Component<Props, void> {
     public render() {
         return (
             <div className="editor">
-                <Draft.Editor
-                    editorState={this.props.value}
-                    onChange={this.onChange}
-                    placeholder={"Type your content here."}
-                    handleKeyCommand={this.handleKeyCommand}
-                />
+                <div>
+                    <ul>
+                        <li onClick={this.toggleBold}>Bold</li>
+                        <li onClick={this.toggleItalic}>Italic</li>
+                        <li onClick={this.toggleUnderline}>Underline</li>
+                    </ul>
+                </div>
+                <hr />
+                <div>
+                    <Draft.Editor
+                        editorState={this.props.value}
+                        onChange={this.onChange}
+                        placeholder={"Type your content here."}
+                        handleKeyCommand={this.handleKeyCommand}
+                    />
+                </div>
             </div>
         );
     }
 
     private onChange = (value: Draft.EditorState) => {
         this.props.onValueChange(value);
+    }
+
+    private toggleBold = () => {
+        this.onChange(Draft.RichUtils.toggleInlineStyle(this.props.value, "BOLD"));
+    }
+
+    private toggleItalic = () => {
+        this.onChange(Draft.RichUtils.toggleInlineStyle(this.props.value, "ITALIC"));
+    }
+
+    private toggleUnderline = () => {
+        this.onChange(Draft.RichUtils.toggleInlineStyle(this.props.value, "UNDERLINE"));
     }
 
     private handleKeyCommand: (command: string) => "handled" | "not-handled" = (command: string) => {

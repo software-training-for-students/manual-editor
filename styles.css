@@ -64,3 +64,13 @@ input[type=text].h2 {
 textarea {
     width: 100%;
 }
+
+.editor ul {
+    list-style-type: none;
+    display: block;
+}
+
+.editor ul li {
+    display: inline-block;
+    margin-right: 2em;
+}
