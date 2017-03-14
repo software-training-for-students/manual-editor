@@ -15,8 +15,8 @@ const Toolbox = (props: Props) => {
     return (
         <div className="toolbox" onClick={props.onClick}>
             {
-                props.value.map((entry) => (
-                    <div key={entry.name}>
+                props.value.map((entry, idx) => (
+                    <div key={idx}>
                         <img src={entry.imgSrc} />
                         <p>
                             <strong>{entry.name}</strong>
