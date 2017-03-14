@@ -1,6 +1,5 @@
 import * as React from "react";
 import AutoUnfocusEditor from "./enhancers/AutoUnfocusEditor";
-import DeletableEditor from "./enhancers/DeletableEditor";
 
 type EditorProps = React.HTMLAttributes<HTMLInputElement> & {
     value: string;
