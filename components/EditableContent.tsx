@@ -2,7 +2,7 @@ import * as React from "react";
 
 interface InputProps<T> {
     autoFocus?: boolean;
-    onComplete: () => void;
+    onComplete?: (() => void) | undefined;
     onValueChange: (value: T) => void;
     value: T | undefined;
 }

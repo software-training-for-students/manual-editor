@@ -1,8 +1,8 @@
 import EditableContent from "components/EditableContent";
 import ImageEditor from "components/ImageEditor";
 import * as Images from "components/Images";
-import {createEditableStateToPropsMapper, mapBaseActionsToProps} from "DocumentMappers";
-import {getCommonInteractiveEditableProps, InteractiveEditableProps} from "EditableBase";
+import {createEditableStateToPropsMapper, mapBaseActionsToProps} from "core/DocumentMappers";
+import {getCommonInteractiveEditableProps, InteractiveEditableProps} from "core/EditableBase";
 import * as React from "react";
 import {connect} from "react-redux";
 

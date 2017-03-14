@@ -1,8 +1,8 @@
-import AutoUnfocusEditor from "AutoUnfocusEditor";
 import * as Draft from "draft-js";
 import "draft-js/dist/Draft.css";
 import "es6-shim";
 import * as React from "react";
+import AutoUnfocusEditor from "./enhancers/AutoUnfocusEditor";
 
 interface Props {
     value: Draft.EditorState;

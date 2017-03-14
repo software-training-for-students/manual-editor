@@ -1,9 +1,9 @@
 import EditableContent from "components/EditableContent";
 import SidebarEditor from "components/SidebarEditor";
 import SidebarNote from "components/SidebarNote";
-import {createEditableStateToPropsMapper, mapBaseActionsToProps} from "DocumentMappers";
+import {createEditableStateToPropsMapper, mapBaseActionsToProps} from "core/DocumentMappers";
+import {getCommonInteractiveEditableProps, InteractiveEditableProps} from "core/EditableBase";
 import {EditorState} from "draft-js";
-import {getCommonInteractiveEditableProps, InteractiveEditableProps} from "EditableBase";
 import * as React from "react";
 import * as ReactRedux from "react-redux";
 

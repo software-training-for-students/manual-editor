@@ -1,8 +1,8 @@
 import CodePresenter from "components/CodePresenter";
 import EditableContent from "components/EditableContent";
 import PlainTextEditor from "components/PlainTextEditor";
-import {createEditableStateToPropsMapper, mapBaseActionsToProps} from "DocumentMappers";
-import {getCommonInteractiveEditableProps, InteractiveEditableProps} from "EditableBase";
+import {createEditableStateToPropsMapper, mapBaseActionsToProps} from "core/DocumentMappers";
+import {getCommonInteractiveEditableProps, InteractiveEditableProps} from "core/EditableBase";
 import * as React from "react";
 import * as ReactRedux from "react-redux";
 

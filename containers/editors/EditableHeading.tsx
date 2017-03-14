@@ -1,8 +1,8 @@
 import EditableContent from "components/EditableContent";
 import * as Heading from "components/Heading";
 import SingleLineEditor from "components/SingleLineEditor";
-import {createEditableStateToPropsMapper, mapBaseActionsToProps} from "DocumentMappers";
-import {EditableProps, getCommonInteractiveEditableProps, InteractiveEditableProps} from "EditableBase";
+import {createEditableStateToPropsMapper, mapBaseActionsToProps} from "core/DocumentMappers";
+import {EditableProps, getCommonInteractiveEditableProps, InteractiveEditableProps} from "core/EditableBase";
 import * as React from "react";
 import {connect} from "react-redux";
 

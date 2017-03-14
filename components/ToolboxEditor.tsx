@@ -1,5 +1,5 @@
-import AutoUnfocusEditor from "AutoUnfocusEditor";
 import * as React from "react";
+import AutoUnfocusEditor from "./enhancers/AutoUnfocusEditor";
 
 interface ToolboxEntry {
     imgSrc: string;

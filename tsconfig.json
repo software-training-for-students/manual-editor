@@ -12,6 +12,7 @@
     "strictNullChecks": true,
     "alwaysStrict": true,
     "noUnusedLocals": true,
+    "experimentalDecorators": true,
     "baseUrl": ".",
     "paths": {
       "redux" : ["node_modules/redux/redux", "node_modules/redux/dist/redux"],
@@ -19,12 +20,7 @@
       "redux-devtools-extension" : ["node_modules/redux-devtools-extension/", "type-definitions/redux-devtools-extension"],
       "draft-convert" : ["node_modules/draft-convert/", "type-definitions/draft-convert"],
       "file-saver" : ["type-definitions/file-saver"],
-      "react-highlight.js" : ["type-definitions/react-highlight/"],
-      "components" : ["components/*"],
-      "containers/*" : ["containers/*"],
-      "stores/*" : ["stores/*"],
-      "actions/*" : ["actions/*"],
-      "reducers/*" : ["reducers/*"]
+      "react-highlight.js" : ["type-definitions/react-highlight/"]
     }
   },
   "exclude": [

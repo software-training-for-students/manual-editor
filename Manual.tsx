@@ -1,7 +1,7 @@
 import AboutPage from "components/AboutPage";
 import CoverPage from "components/CoverPage";
 import TableOfContents from "containers/TableOfContents";
-import ElementTypes from "ElementTypes";
+import ElementTypes from "core/ElementTypes";
 import * as React from "react";
 import {connect} from "react-redux";
 import {Store} from "stores";

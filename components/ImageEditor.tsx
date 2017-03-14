@@ -1,6 +1,6 @@
-import AutoUnfocusEditor from "AutoUnfocusEditor";
 import {SideBySideImageCssClass, SideBySideImageProps, SingleImageCssClass, SingleImageProps} from "components/Images";
 import * as React from "react";
+import AutoUnfocusEditor from "./enhancers/AutoUnfocusEditor";
 
 interface ImageEditorProps<TImageProps> {
     value: TImageProps | undefined;

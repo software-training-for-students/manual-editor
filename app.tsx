@@ -1,5 +1,3 @@
-import Manual from "Manual";
-import Menu from "Menu";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as ReactRedux from "react-redux";
@@ -8,6 +6,8 @@ import * as Redux from "redux";
 import * as ReduxDevTools from "redux-devtools-extension";
 import ReduxThunkMiddleware from "redux-thunk";
 import {Store} from "stores";
+import Manual from "./Manual";
+import Menu from "./Menu";
 import "./styles.css";
 
 const store = Redux.createStore<Store>(reducer,

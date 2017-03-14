@@ -1,5 +1,4 @@
-
-import { EditableProps } from "EditableBase";
+import { EditableProps } from "core/EditableBase";
 
 export interface ItemOrdering {
         itemId: number;

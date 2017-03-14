@@ -1,7 +1,7 @@
-import AutoUnfocusEditor from "AutoUnfocusEditor";
 import RichTextEditor from "components/RichTextEditor";
 import {EditorState} from "draft-js";
 import * as React from "react";
+import AutoUnfocusEditor from "./enhancers/AutoUnfocusEditor";
 
 interface Value {
     title: string;

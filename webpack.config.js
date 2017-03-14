@@ -27,12 +27,7 @@ var config = {
       stores : srcPath("stores"),
       actions : srcPath("actions"),
       reducers : srcPath("reducers"),
-      Menu : srcPath("Menu"),
-      Manual : srcPath("Manual"),
-      ElementTypes : srcPath("ElementTypes"),
-      EditableBase : srcPath("EditableBase"),
-      DocumentMappers : srcPath("DocumentMappers"),
-      AutoUnfocusEditor : srcPath("AutoUnfocusEditor")
+      core: srcPath("core")
     }
   },
 

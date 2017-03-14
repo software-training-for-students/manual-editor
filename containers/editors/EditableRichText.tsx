@@ -1,9 +1,9 @@
 import EditableContent from "components/EditableContent";
 import RichTextEditor from "components/RichTextEditor";
 import RichTextPresenter from "components/RichTextPresenter";
-import {createEditableStateToPropsMapper, mapBaseActionsToProps} from "DocumentMappers";
+import {createEditableStateToPropsMapper, mapBaseActionsToProps} from "core/DocumentMappers";
+import {EditableProps, getCommonInteractiveEditableProps, InteractiveEditableProps} from "core/EditableBase";
 import * as DraftJs from "draft-js";
-import {EditableProps, getCommonInteractiveEditableProps, InteractiveEditableProps} from "EditableBase";
 import * as React from "react";
 import {connect} from "react-redux";
 
