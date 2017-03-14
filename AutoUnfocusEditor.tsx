@@ -1,8 +1,8 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-function AutoUnfocusEditor<TProps extends {onComplete: () => void }>(Component: React.ComponentClass<TProps>) {
-    return class extends Component {
+function AutoUnfocusEditor<TProps>(Component: React.ComponentClass<TProps>) {
+    return class extends React.Component<TProps & {onComplete: () => void} , React.ComponentState> {
         public componentDidMount() {
             window.addEventListener("click", this.onWindowClick);
         }
@@ -11,11 +11,15 @@ function AutoUnfocusEditor<TProps extends {onComplete: () => void }>(Component: 
             window.removeEventListener("click", this.onWindowClick);
         }
 
+        public render() {
+            return <Component {... this.props} />;
+        }
+
         private onWindowClick = (e: MouseEvent) => {
             let editorElement = ReactDOM.findDOMNode(this);
-            let menuRoot = <HTMLElement> document.getElementById("menu");
+            let menuRoot = document.getElementById("menu") as HTMLElement;
 
-            let element = <Node> e.target;
+            let element = e.target as Node;
             if (!menuRoot.contains(element) && !editorElement.contains(element)) {
                 this.props.onComplete();
             }

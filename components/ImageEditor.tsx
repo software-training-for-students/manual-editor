@@ -5,7 +5,6 @@ import * as React from "react";
 interface ImageEditorProps<TImageProps> {
     value: TImageProps | undefined;
     onValueChange: (newProps: TImageProps) => void;
-    onComplete: () => void;
 }
 
 class SingleImageEditor extends React.Component<ImageEditorProps<SingleImageProps>, void> {

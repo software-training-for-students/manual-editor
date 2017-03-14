@@ -9,7 +9,6 @@ interface ToolboxEntry {
 
 interface Props {
     onValueChange: (value: ToolboxEntry[]) => void;
-    onComplete: () => void;
     value: ToolboxEntry[];
 }
 

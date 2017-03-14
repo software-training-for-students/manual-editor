@@ -3,7 +3,6 @@ import * as React from "react";
 
 interface Props {
     autoFocus?: boolean;
-    onComplete: () => void;
     onValueChange: (value: string) => void;
     value: string;
 }

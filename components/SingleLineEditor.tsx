@@ -3,7 +3,6 @@ import * as React from "react";
 
 type EditorProps = React.HTMLAttributes<HTMLInputElement> & {
     value: string;
-    onComplete: () => void;
     onValueChange: (value: string) => void;
 };
 
@@ -14,7 +13,7 @@ class SingleLineEditor extends React.Component<EditorProps, void> {
     public render() {
         const textLength = this.props.value.length;
         // tslint:disable-next-line:no-unused-variable
-        let {onComplete, onChange, onValueChange, ...rest} = this.props;
+        let {onChange, onValueChange, ...rest} = this.props;
         return <input
             type="text"
             size={Math.max(minInputSize, textLength) + extraInputSpace}
