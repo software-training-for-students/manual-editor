@@ -16,6 +16,9 @@ function entityConverter(entity: RawEntity, originalText: string) {
     if (entity.type === "TELETYPE") {
         return <span className="type-text">{originalText}</span>;
     }
+    if (entity.type === "HIGHLIGHT") {
+        return <span className="highlight">{originalText}</span>;
+    }
     return originalText;
 }
 

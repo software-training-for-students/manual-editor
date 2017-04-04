@@ -32,6 +32,9 @@ class RichTextEditor extends React.Component<Props, State> {
                 component: Teletype,
                 strategy: findEntityRanges("TELETYPE"),
             },
+            {   component: Highlight,
+                strategy: findEntityRanges("HIGHLIGHT"),
+            }
         ]);
         this.state = {
             editorState: Draft.EditorState.createWithContent(content, decorator),
@@ -67,6 +70,7 @@ class RichTextEditor extends React.Component<Props, State> {
                         <li onClick={this.toggleItalic}>Italic</li>
                         <li onClick={this.toggleUnderline}>Underline</li>
                         <li onClick={this.toggleTeletype}>Teletype</li>
+                        <li onClick={this.toggleHighlight}>Highlight</li>
                         <li onClick={this.promptForLink}>Add Link</li>
                         <li onClick={this.removeLink}>Remove Link</li>
                     </ul>
@@ -120,6 +124,11 @@ class RichTextEditor extends React.Component<Props, State> {
 
     private toggleTeletype = () => {
         const entityKey = Draft.Entity.create("TELETYPE", "MUTABLE");
+        this.onChangeEditorState(Draft.RichUtils.toggleLink(this.state.editorState, this.state.editorState.getSelection(), entityKey));
+    }
+
+    private toggleHighlight = () => {
+        const entityKey = Draft.Entity.create("HIGHLIGHT", "MUTABLE");
         this.onChangeEditorState(Draft.RichUtils.toggleLink(this.state.editorState, this.state.editorState.getSelection(), entityKey));
     }
 
@@ -187,6 +196,10 @@ const Link = (props: any) => {
 
 const Teletype = (props: any) => {
     return <span className="type-text">{props.children}</span>;
+};
+
+const Highlight = (props: any) => {
+    return <span className="highlight">{props.children}</span>;
 };
 
 export default AutoUnfocusEditor(RichTextEditor);
