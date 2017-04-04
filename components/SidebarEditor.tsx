@@ -1,11 +1,11 @@
 import RichTextEditor from "components/RichTextEditor";
-import {EditorState} from "draft-js";
+import {RawDraftContentState} from "draft-js";
 import * as React from "react";
 import AutoUnfocusEditor from "./enhancers/AutoUnfocusEditor";
 
 interface Value {
     title: string;
-    content: EditorState;
+    content: RawDraftContentState;
     imgSource: string;
 }
 
@@ -33,7 +33,7 @@ class SidebarEditor extends React.Component<Props, void> {
         this.props.onValueChange({... this.props.value, title: e.currentTarget.value});
     }
 
-    private contentChanged = (state: EditorState) => {
+    private contentChanged = (state: RawDraftContentState) => {
         this.props.onValueChange({... this.props.value, content: state});
     }
 

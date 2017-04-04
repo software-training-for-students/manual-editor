@@ -7,9 +7,9 @@ import * as DraftJs from "draft-js";
 import * as React from "react";
 import {connect} from "react-redux";
 
-class EditableRichTextContainer extends EditableContent<DraftJs.EditorState> {}
+class EditableRichTextContainer extends EditableContent<DraftJs.RawDraftContentState> {}
 
-const EditableRichText = (props: InteractiveEditableProps<DraftJs.EditorState>) => {
+const EditableRichText = (props: InteractiveEditableProps<DraftJs.RawDraftContentState>) => {
 
     return <EditableRichTextContainer
         {... props}
@@ -22,7 +22,7 @@ const EditableRichText = (props: InteractiveEditableProps<DraftJs.EditorState>) 
 function mapRichTextStateToProps(itemState: EditableProps<any>, updatedBaseProps: Partial<EditableProps<any>>) {
     return {
         ... updatedBaseProps,
-        value : updatedBaseProps.value ? updatedBaseProps.value : DraftJs.EditorState.createEmpty(),
+        value : updatedBaseProps.value ? updatedBaseProps.value : {blocks: [], entityMap: {}},
     };
 }
 

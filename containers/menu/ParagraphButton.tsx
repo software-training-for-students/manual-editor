@@ -1,5 +1,5 @@
 import MenuItem from "containers/MenuItem";
-import {EditorState} from "draft-js";
+import {convertToRaw, EditorState} from "draft-js";
 import * as React from "react";
 
 const ParagraphButton = () => {
@@ -10,7 +10,7 @@ const ParagraphButton = () => {
         menuItemHeading="Create Paragraph"
         menuItemId="paragraph"
         elementType="RichText"
-        defaultValue={{value: EditorState.createEmpty()}}
+        defaultValue={{value: convertToRaw(EditorState.createEmpty().getCurrentContent())}}
     />;
 };
 

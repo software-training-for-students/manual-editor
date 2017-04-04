@@ -3,13 +3,13 @@ import SidebarEditor from "components/SidebarEditor";
 import SidebarNote from "components/SidebarNote";
 import {createEditableStateToPropsMapper, mapBaseActionsToProps} from "core/DocumentMappers";
 import {getCommonInteractiveEditableProps, InteractiveEditableProps} from "core/EditableBase";
-import {EditorState} from "draft-js";
+import {RawDraftContentState} from "draft-js";
 import * as React from "react";
 import * as ReactRedux from "react-redux";
 
 interface Value {
     title: string;
-    content: EditorState;
+    content: RawDraftContentState;
     imgSource: string;
 }
 

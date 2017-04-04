@@ -6,11 +6,22 @@ interface Props {
 }
 
 const HtmlPresenter = (props: Props) => {
-    const {value, ...rest} = props;
+    const {value, onClick, ...rest} = props;
     if (value === undefined) {
         return <div />;
     }
-    return <div dangerouslySetInnerHTML={{ __html : value}} {...rest} />;
+    const onClickHandler = (e: React.SyntheticEvent<HTMLDivElement>) => {
+        for (let target = e.target as HTMLElement; target !== e.currentTarget; target = target.parentElement!) {
+            if (target.tagName === "A") {
+                return;
+            }
+        }
+        if (onClick) {
+            onClick(e);
+        }
+    };
+
+    return <div onClick={onClickHandler} dangerouslySetInnerHTML={{ __html : value}} {...rest} />;
 };
 
 export default HtmlPresenter;

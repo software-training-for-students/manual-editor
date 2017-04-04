@@ -1,5 +1,5 @@
 import MenuItem from "containers/MenuItem";
-import {EditorState} from "draft-js";
+import {convertToRaw, EditorState} from "draft-js";
 import * as React from "react";
 
 class SidebarNoteButton extends React.Component<void, void> {
@@ -12,7 +12,7 @@ class SidebarNoteButton extends React.Component<void, void> {
                     menuItemText="Sidebar Note"
                     defaultValue={{
                         value: {
-                            content: EditorState.createEmpty(),
+                            content: convertToRaw(EditorState.createEmpty().getCurrentContent()),
                             imgSource: "",
                             title: "",
                         },

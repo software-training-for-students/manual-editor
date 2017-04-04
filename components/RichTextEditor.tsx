@@ -5,13 +5,56 @@ import * as React from "react";
 import AutoUnfocusEditor from "./enhancers/AutoUnfocusEditor";
 
 interface Props {
-    value: Draft.EditorState;
-    onValueChange: (value: Draft.EditorState) => void;
+    value: Draft.RawDraftContentState;
+    onValueChange: (value: Draft.RawDraftContentState) => void;
     onComplete: () => void;
 }
 
-class RichTextEditor extends React.Component<Props, void> {
+interface State {
+    editorState: Draft.EditorState;
+    showURLInput: boolean;
+    urlValue: string;
+}
+
+class RichTextEditor extends React.Component<Props, State> {
+    private urlInput: HTMLElement;
+    private editor: Draft.Editor;
+
+    constructor(props: Props, context?: any) {
+        super(props, context);
+        const content = Draft.convertFromRaw(props.value);
+        const decorator = new Draft.CompositeDecorator([
+            {
+                component: Link,
+                strategy: findLinkEntities,
+            },
+        ]);
+        this.state = {
+            editorState: Draft.EditorState.createWithContent(content, decorator),
+            showURLInput: false,
+            urlValue: "",
+        };
+    }
+
+    public componentWillUnmount() {
+        this.props.onValueChange(Draft.convertToRaw(this.state.editorState.getCurrentContent()));
+    }
+
     public render() {
+        let urlInput: JSX.Element | null = null;
+        if (this.state.showURLInput) {
+            urlInput = (
+                <div className="url-input">
+                    <input
+                        onChange={this.onUrlChange}
+                        ref={this.setUrl}
+                        type="text"
+                        value={this.state.urlValue}
+                        onKeyDown={this.onLinkInputKeyDown}
+                    />
+                </div>
+            );
+        }
         return (
             <div className="editor">
                 <div>
@@ -19,12 +62,16 @@ class RichTextEditor extends React.Component<Props, void> {
                         <li onClick={this.toggleBold}>Bold</li>
                         <li onClick={this.toggleItalic}>Italic</li>
                         <li onClick={this.toggleUnderline}>Underline</li>
+                        <li onClick={this.promptForLink}>Add Link</li>
+                        <li onClick={this.removeLink}>Remove Link</li>
                     </ul>
                 </div>
                 <hr />
+                {urlInput}
                 <div>
                     <Draft.Editor
-                        editorState={this.props.value}
+                        ref={this.setEditor}
+                        editorState={this.state.editorState}
                         onChange={this.onChange}
                         placeholder={"Type your content here."}
                         handleKeyCommand={this.handleKeyCommand}
@@ -34,30 +81,96 @@ class RichTextEditor extends React.Component<Props, void> {
         );
     }
 
+    private onUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        this.setState({
+            urlValue: e.target.value,
+        });
+    }
+
+    private setUrl = (urlInput: HTMLInputElement) => {
+        this.urlInput = urlInput;
+    }
+
+    private setEditor = (editor: Draft.Editor) => {
+        this.editor = editor;
+    }
+
     private onChange = (value: Draft.EditorState) => {
-        this.props.onValueChange(value);
+        this.setState({
+            editorState: value,
+        });
     }
 
     private toggleBold = () => {
-        this.onChange(Draft.RichUtils.toggleInlineStyle(this.props.value, "BOLD"));
+        this.onChange(Draft.RichUtils.toggleInlineStyle(this.state.editorState, "BOLD"));
     }
 
     private toggleItalic = () => {
-        this.onChange(Draft.RichUtils.toggleInlineStyle(this.props.value, "ITALIC"));
+        this.onChange(Draft.RichUtils.toggleInlineStyle(this.state.editorState, "ITALIC"));
     }
 
     private toggleUnderline = () => {
-        this.onChange(Draft.RichUtils.toggleInlineStyle(this.props.value, "UNDERLINE"));
+        this.onChange(Draft.RichUtils.toggleInlineStyle(this.state.editorState, "UNDERLINE"));
     }
 
     private handleKeyCommand: (command: string) => "handled" | "not-handled" = (command: string) => {
-        let state = Draft.RichUtils.handleKeyCommand(this.props.value, command);
+        let state = Draft.RichUtils.handleKeyCommand(this.state.editorState, command);
         if (state) {
             this.onChange(state);
             return "handled";
         }
         return "not-handled";
     }
+
+    private promptForLink = () => {
+        const selection = this.state.editorState.getSelection();
+        if (!selection.isCollapsed()) {
+            this.setState({
+               showURLInput: true,
+               urlValue: "",
+            }, () => setTimeout(this.urlInput.focus(), 0));
+        }
+    }
+
+    private confirmLink = (e: React.SyntheticEvent<HTMLElement>) => {
+        e.preventDefault();
+        const entityKey = Draft.Entity.create("LINK", "MUTABLE", {url: this.state.urlValue});
+        this.onChange(Draft.RichUtils.toggleLink(this.state.editorState, this.state.editorState.getSelection(), entityKey));
+        this.setState({
+            showURLInput: false,
+            urlValue: "",
+        }, () => setTimeout(() => this.editor.focus(), 0));
+    }
+
+    private onLinkInputKeyDown = (e: React.SyntheticEvent<HTMLInputElement>) => {
+        if ((e.nativeEvent as KeyboardEvent).which === 13) {
+            this.confirmLink(e);
+        }
+    }
+
+    private removeLink = (e: React.SyntheticEvent<HTMLElement>) => {
+        e.preventDefault();
+        const selection = this.state.editorState.getSelection();
+        if (!selection.isCollapsed()) {
+            this.onChange(Draft.RichUtils.toggleLink(this.state.editorState, selection, null!));
+        }
+    }
 }
+
+function findLinkEntities(block: Draft.ContentBlock, callback: (start: number, end: number) => void) {
+    block.findEntityRanges((character: Draft.CharacterMetadata) => {
+        const key = character.getEntity();
+        return key !== null && Draft.Entity.get(key).getType() === "LINK";
+    }, callback);
+}
+
+const Link = (props: any) => {
+    const {url} = Draft.Entity.get(props.entityKey).getData();
+    return (
+        <a href={url} target="_blank">
+            {props.children}
+        </a>
+    );
+};
 
 export default AutoUnfocusEditor(RichTextEditor);

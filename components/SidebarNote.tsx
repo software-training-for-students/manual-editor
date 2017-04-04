@@ -1,11 +1,11 @@
 import RichTextPresenter from "components/RichTextPresenter";
-import {EditorState} from "draft-js";
+import {RawDraftContentState} from "draft-js";
 import * as React from "react";
 
 interface Props {
     value: {
         title: string;
-        content: EditorState;
+        content: RawDraftContentState;
         imgSource: string;
     };
     onClick: (e: React.SyntheticEvent<HTMLDivElement>) => void;

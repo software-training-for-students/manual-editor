@@ -1,16 +1,28 @@
 import HtmlPresenter from "components/HtmlPresenter";
-import {convertToHTML} from "draft-convert";
-import {EditorState} from "draft-js";
+import {convertToHTML, RawEntity} from "draft-convert";
+import {convertFromRaw, RawDraftContentState} from "draft-js";
 import * as React from "react";
 
 interface Props {
-    value: EditorState;
+    value: RawDraftContentState;
     onClick?: (e: React.SyntheticEvent<HTMLElement>) => void;
 }
 
+function entityConverter(entity: RawEntity, originalText: string) {
+    let entityData = entity.data as any;
+    if (entity.type === "LINK") {
+        return <a href={entityData.url} target="_blank">{originalText}</a>;
+    }
+    return originalText;
+}
+
+const htmlConvert = convertToHTML({entityToHTML: entityConverter});
+
 const RichTextPresenter = (props: Props) => {
-    const htmlProps = {... props, value : convertToHTML(props.value.getCurrentContent())};
+    const htmlProps = {... props, value : htmlConvert(convertFromRaw(props.value))};
     return <HtmlPresenter {...htmlProps} onClick={props.onClick} />;
 };
+
+
 
 export default RichTextPresenter;
