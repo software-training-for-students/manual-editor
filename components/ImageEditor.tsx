@@ -1,4 +1,5 @@
 import {SideBySideImageCssClass, SideBySideImageProps, SingleImageCssClass, SingleImageProps} from "components/Images";
+import ImagePicker from "containers/ImagePicker";
 import * as React from "react";
 import AutoUnfocusEditor from "./enhancers/AutoUnfocusEditor";
 
@@ -20,8 +21,7 @@ class SingleImageEditor extends React.Component<ImageEditorProps<SingleImageProp
         return (
             <div className="image-editor">
                 <section>
-                    <label>Image Source</label>
-                    <input type = "url" onChange={this.onSourceChanged} value={imageProps.source} size={80} />
+                    <ImagePicker onImageChanged={this.onSourceChanged}  currentImage={imageProps.source} />
                 </section>
                 <section>
                     <input type="checkbox" onChange={this.onBorderChanged} checked={imageProps.border} />
@@ -49,8 +49,8 @@ class SingleImageEditor extends React.Component<ImageEditorProps<SingleImageProp
         );
     }
 
-    private onSourceChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.props.onValueChange({... this.props.value, source : event.target.value});
+    private onSourceChanged = (source: string) => {
+        this.props.onValueChange({... this.props.value, source});
     }
 
     private onBorderChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,43 +77,52 @@ class SideBySideImageEditor extends React.Component<ImageEditorProps<SideBySideI
         rightSource : "",
     };
 
+    private leftSource: string;
+    private rightSource: string;
+
     public render() {
         const imageProps = this.props.value || SideBySideImageEditor.defaultImageProps;
         return (
             <div className="image-editor">
-                <section>
-                    <label>Left Image Source</label>
-                    <input type = "url" onChange={this.onLeftSourceChanged} value={imageProps.leftSource} size={80} />
+                <section className="leftSource">
+                    <ImagePicker onImageChanged={this.onLeftSourceChanged} currentImage={imageProps.leftSource} />
                 </section>
-                <section>
-                    <label>Right Image Source</label>
-                    <input type = "url" onChange={this.onRightSourceChanged} value={imageProps.rightSource} size={80} />
+                <section className="rightSource">
+                    <ImagePicker onImageChanged={this.onRightSourceChanged} currentImage={imageProps.rightSource} />
                 </section>
-                <section>
-                    <input type="checkbox" onChange={this.onBorderChanged} checked={imageProps.border} />
-                    <label>Has Border?</label>
-                </section>
-                <section>
-                    <label>Caption</label>
-                    <input type = "text" onChange={this.onCaptionChanged} value={imageProps.caption} />
-                </section>
-                <section>
-                    <label>Image Size</label>
-                    <select value={imageProps.className} onChange={this.onCssClassChanged}>
-                        <option value="sidebyside-image-large">Large</option>
-                        <option value="sidebyside-image-small">Small</option>
-                    </select>
+                <section className="commonSettings">
+                    <div>
+                        <input type="checkbox" onChange={this.onBorderChanged} checked={imageProps.border} />
+                        <label>Has Border?</label>
+                    </div>
+                    <div>
+                        <label>Caption</label>
+                        <input type = "text" onChange={this.onCaptionChanged} value={imageProps.caption} />
+                    </div>
+                    <div>
+                        <label>Image Size</label>
+                        <select value={imageProps.className} onChange={this.onCssClassChanged}>
+                            <option value="sidebyside-image-large">Large</option>
+                            <option value="sidebyside-image-small">Small</option>
+                        </select>
+                    </div>
                 </section>
             </div>
         );
     }
 
-    private onLeftSourceChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.props.onValueChange({... this.props.value, leftSource : event.target.value});
+    private onLeftSourceChanged = (source: string) => {
+        this.leftSource = source;
+        this.updateSources(this.leftSource, this.rightSource);
     }
 
-    private onRightSourceChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        this.props.onValueChange({... this.props.value, rightSource : event.target.value});
+    private onRightSourceChanged = (source: string) => {
+        this.rightSource = source;
+        this.updateSources(this.leftSource, this.rightSource);
+    }
+
+    private updateSources = (leftSource: string, rightSource: string) => {
+        this.props.onValueChange({... this.props.value, leftSource, rightSource});
     }
 
     private onBorderChanged = (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -1,3 +1,4 @@
+import SmartImagePresenter from "containers/SmartImagePresenter";
 import * as React from "react";
 
 export type SingleImageCssClass =
@@ -51,7 +52,7 @@ export class SingleImage extends React.Component<SingleImageComponentProps, void
         };
         return (
         <div className={value.className + (value.border ? " border" : "")}>
-            <img src={value.source} onClick={this.onClick} />
+            <SmartImagePresenter src={value.source} onClick={this.onClick} />
             <p>{value.caption}</p>
          </div>);
     }
@@ -76,8 +77,8 @@ export class SideBySideImages extends React.Component<SideBySideImageComponentPr
         };
         return (
         <div className={value.className + (value.border ? " border" : "")} onClick={this.onClick}>
-            <img src={value.leftSource} />
-            <img src={value.rightSource} />
+            <SmartImagePresenter src={value.leftSource} />
+            <SmartImagePresenter src={value.rightSource} />
             <p>{value.caption}</p>
          </div>);
     }

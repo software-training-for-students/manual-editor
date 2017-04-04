@@ -49,6 +49,19 @@ input[type=text].h2 {
     background: azure;
 }
 
+#manual .image-editor > section.leftSource {
+    float: left;
+}
+
+#manual .image-editor > section.rightSource {
+    float: right;
+}
+
+#manual .image-editor > section.commonSettings {
+    clear: both;
+    text-align: center;
+}
+
 .flyout__wrapper {
     min-width: 150px;
 }
