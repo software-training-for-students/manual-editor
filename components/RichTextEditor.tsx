@@ -26,7 +26,11 @@ class RichTextEditor extends React.Component<Props, State> {
         const decorator = new Draft.CompositeDecorator([
             {
                 component: Link,
-                strategy: findLinkEntities,
+                strategy: findEntityRanges("LINK"),
+            },
+            {
+                component: Teletype,
+                strategy: findEntityRanges("TELETYPE"),
             },
         ]);
         this.state = {
@@ -62,6 +66,7 @@ class RichTextEditor extends React.Component<Props, State> {
                         <li onClick={this.toggleBold}>Bold</li>
                         <li onClick={this.toggleItalic}>Italic</li>
                         <li onClick={this.toggleUnderline}>Underline</li>
+                        <li onClick={this.toggleTeletype}>Teletype</li>
                         <li onClick={this.promptForLink}>Add Link</li>
                         <li onClick={this.removeLink}>Remove Link</li>
                     </ul>
@@ -72,7 +77,7 @@ class RichTextEditor extends React.Component<Props, State> {
                     <Draft.Editor
                         ref={this.setEditor}
                         editorState={this.state.editorState}
-                        onChange={this.onChange}
+                        onChange={this.onChangeEditorState}
                         placeholder={"Type your content here."}
                         handleKeyCommand={this.handleKeyCommand}
                     />
@@ -95,28 +100,33 @@ class RichTextEditor extends React.Component<Props, State> {
         this.editor = editor;
     }
 
-    private onChange = (value: Draft.EditorState) => {
+    private onChangeEditorState = (value: Draft.EditorState) => {
         this.setState({
             editorState: value,
-        });
+        }, () => setTimeout(() => this.editor && this.editor.focus(), 0));
     }
 
     private toggleBold = () => {
-        this.onChange(Draft.RichUtils.toggleInlineStyle(this.state.editorState, "BOLD"));
+        this.onChangeEditorState(Draft.RichUtils.toggleInlineStyle(this.state.editorState, "BOLD"));
     }
 
     private toggleItalic = () => {
-        this.onChange(Draft.RichUtils.toggleInlineStyle(this.state.editorState, "ITALIC"));
+        this.onChangeEditorState(Draft.RichUtils.toggleInlineStyle(this.state.editorState, "ITALIC"));
     }
 
     private toggleUnderline = () => {
-        this.onChange(Draft.RichUtils.toggleInlineStyle(this.state.editorState, "UNDERLINE"));
+        this.onChangeEditorState(Draft.RichUtils.toggleInlineStyle(this.state.editorState, "UNDERLINE"));
+    }
+
+    private toggleTeletype = () => {
+        const entityKey = Draft.Entity.create("TELETYPE", "MUTABLE");
+        this.onChangeEditorState(Draft.RichUtils.toggleLink(this.state.editorState, this.state.editorState.getSelection(), entityKey));
     }
 
     private handleKeyCommand: (command: string) => "handled" | "not-handled" = (command: string) => {
         let state = Draft.RichUtils.handleKeyCommand(this.state.editorState, command);
         if (state) {
-            this.onChange(state);
+            this.onChangeEditorState(state);
             return "handled";
         }
         return "not-handled";
@@ -135,7 +145,7 @@ class RichTextEditor extends React.Component<Props, State> {
     private confirmLink = (e: React.SyntheticEvent<HTMLElement>) => {
         e.preventDefault();
         const entityKey = Draft.Entity.create("LINK", "MUTABLE", {url: this.state.urlValue});
-        this.onChange(Draft.RichUtils.toggleLink(this.state.editorState, this.state.editorState.getSelection(), entityKey));
+        this.onChangeEditorState(Draft.RichUtils.toggleLink(this.state.editorState, this.state.editorState.getSelection(), entityKey));
         this.setState({
             showURLInput: false,
             urlValue: "",
@@ -152,16 +162,18 @@ class RichTextEditor extends React.Component<Props, State> {
         e.preventDefault();
         const selection = this.state.editorState.getSelection();
         if (!selection.isCollapsed()) {
-            this.onChange(Draft.RichUtils.toggleLink(this.state.editorState, selection, null!));
+            this.onChangeEditorState(Draft.RichUtils.toggleLink(this.state.editorState, selection, null!));
         }
     }
 }
 
-function findLinkEntities(block: Draft.ContentBlock, callback: (start: number, end: number) => void) {
-    block.findEntityRanges((character: Draft.CharacterMetadata) => {
-        const key = character.getEntity();
-        return key !== null && Draft.Entity.get(key).getType() === "LINK";
-    }, callback);
+function findEntityRanges(entityKey: string) {
+    return (block: Draft.ContentBlock, callback: (start: number, end: number) => void) => {
+        block.findEntityRanges((character: Draft.CharacterMetadata) => {
+            const key = character.getEntity();
+            return key !== null && Draft.Entity.get(key).getType() === entityKey;
+        }, callback);
+    };
 }
 
 const Link = (props: any) => {
@@ -171,6 +183,10 @@ const Link = (props: any) => {
             {props.children}
         </a>
     );
+};
+
+const Teletype = (props: any) => {
+    return <span className="type-text">{props.children}</span>;
 };
 
 export default AutoUnfocusEditor(RichTextEditor);

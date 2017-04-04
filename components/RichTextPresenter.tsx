@@ -13,6 +13,9 @@ function entityConverter(entity: RawEntity, originalText: string) {
     if (entity.type === "LINK") {
         return <a href={entityData.url} target="_blank">{originalText}</a>;
     }
+    if (entity.type === "TELETYPE") {
+        return <span className="type-text">{originalText}</span>;
+    }
     return originalText;
 }
 
@@ -22,7 +25,5 @@ const RichTextPresenter = (props: Props) => {
     const htmlProps = {... props, value : htmlConvert(convertFromRaw(props.value))};
     return <HtmlPresenter {...htmlProps} onClick={props.onClick} />;
 };
-
-
 
 export default RichTextPresenter;
