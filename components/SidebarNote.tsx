@@ -1,4 +1,5 @@
 import RichTextPresenter from "components/RichTextPresenter";
+import SmartImagePresenter from "containers/SmartImagePresenter";
 import {RawDraftContentState} from "draft-js";
 import * as React from "react";
 
@@ -17,7 +18,7 @@ const SidebarNote: React.StatelessComponent<Props> = (props: Props) => {
         <div className="sidebar-note" {...rest}>
             <h2>{value.title}</h2>
             <RichTextPresenter value={value.content} />
-            <img src={value.imgSource} />
+            <SmartImagePresenter src={value.imgSource} />
         </div>
     );
 };

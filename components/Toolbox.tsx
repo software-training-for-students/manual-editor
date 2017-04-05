@@ -1,3 +1,4 @@
+import SmartImagePresenter from "containers/SmartImagePresenter";
 import * as React from "react";
 
 interface ToolboxEntry {
@@ -17,7 +18,7 @@ const Toolbox = (props: Props) => {
             {
                 props.value.map((entry, idx) => (
                     <div key={idx}>
-                        <img src={entry.imgSrc} />
+                        <SmartImagePresenter src={entry.imgSrc} />
                         <p>
                             <strong>{entry.name}</strong>
                             {entry.description}

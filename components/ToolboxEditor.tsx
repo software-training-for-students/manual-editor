@@ -1,3 +1,4 @@
+import ImagePicker from "containers/ImagePicker";
 import * as React from "react";
 import AutoUnfocusEditor from "./enhancers/AutoUnfocusEditor";
 
@@ -22,7 +23,7 @@ export class ToolboxEditor extends React.Component<Props, void> {
                 {
                     this.props.value.map((entry, idx) => (
                         <div key={idx}>
-                            <input type="text" placeholder="Image Source" value={entry.imgSrc} onChange={(e) => this.onChangeImage(e, idx)} onKeyPress={(e) => this.onKeyPress(e, idx)} />
+                            <ImagePicker currentImage={entry.imgSrc} onImageChanged={(source) => this.onChangeImage(source, idx)} />
                             <input type="text" placeholder="Tool Name" value={entry.name} onChange={(e) => this.onChangeName(e, idx)} onKeyPress={(e) => this.onKeyPress(e, idx)} />
                             <input type="text" placeholder="Tool Description" value={entry.description} onChange={(e) => this.onChangeDescription(e, idx)} onKeyPress={(e) => this.onKeyPress(e, idx)} />
                         </div>
@@ -32,9 +33,9 @@ export class ToolboxEditor extends React.Component<Props, void> {
         );
     }
 
-    private onChangeImage = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+    private onChangeImage = (imageUrl: string, index: number) => {
         let value = this.props.value.slice();
-        value[index] = {... value[index], imgSrc: e.target.value};
+        value[index] = {... value[index], imgSrc: imageUrl};
         this.props.onValueChange(value);
     }
 
