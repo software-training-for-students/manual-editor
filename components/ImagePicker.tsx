@@ -30,7 +30,7 @@ const ImagePicker = (props: Props) => {
             </div>
             <div>
                 <span>Upload a new image:</span>
-                <input type="file" onChange={props.onFileUploadChange} />
+                <input type="file" accept="image/*" onChange={props.onFileUploadChange} />
             </div>
         </div>
     );

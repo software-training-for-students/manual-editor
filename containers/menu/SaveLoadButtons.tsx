@@ -24,7 +24,7 @@ class SaveLoadButtons extends React.Component<Props, void> {
                     <Flyout id="load-flyout" options={{align: "bottom middle"}}>
                         <div>
                             <header>Load Manual</header>
-                            <input type="file" onChange={this.fileChanged} />
+                            <input type="file" accept=".uwstsmanual" onChange={this.fileChanged} />
                             <button onClick={this.onLoad}>Load</button>
                         </div>
                     </Flyout>

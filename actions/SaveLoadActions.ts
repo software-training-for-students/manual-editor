@@ -1,13 +1,15 @@
-//import {convertFromRaw, convertToRaw, EditorState, RawDraftContentState} from "draft-js";
 import { saveAs } from "file-saver";
+import * as JSZip from "jszip";
 import { Action } from "redux";
 import { ThunkAction } from "redux-thunk";
 import {Store} from "stores";
 import {Document} from "stores/Document";
+import { UploadImage } from "./ImageActions";
 
 export function saveAsThunkAction(): ThunkAction<void, Store, void> {
     return (_, getStore) => {
         // Clone the document object since we have to make changes.
+        let manualFile = new JSZip();
         let document = getStore().document;
         let manual: Document = {
             elementOrdering: document.elementOrdering,
@@ -18,32 +20,66 @@ export function saveAsThunkAction(): ThunkAction<void, Store, void> {
         manual.elementOrdering.forEach((element) => {
             manual[element.itemId] = {... document[element.itemId]};
         });
-        let data = new Blob([JSON.stringify(manual)]);
-        saveAs(data, "manual.json");
+        manualFile.file("manual.json", JSON.stringify(manual));
+        for (let key in getStore().images) {
+            if (getStore().images.hasOwnProperty(key)) {
+                let image = getStore().images[key];
+                manualFile.file(key, image.image);
+            }
+        }
+        manualFile.generateAsync({type: "blob"}).then((blob: Blob) => saveAs(blob, manual[1].value.toString() + ".uwstsmanual"));
     };
 }
 
-export function loadThunkAction(file: File): ThunkAction<void, Store, void> {
+export function loadThunkAction(zipFile: File): ThunkAction<void, Store, void> {
     return (dispatcher) => {
-        let loader = new FileReader();
-        loader.onload = () => {
-            let manual: Document = JSON.parse(loader.result);
-
-            dispatcher(<SetDocumentAction> {
-                document : manual,
-                type : "set-document",
+        let zip = new JSZip();
+        zip.loadAsync(zipFile).then((loadedZip) => {
+            loadedZip.file("manual.json").async("text").then((text: string) => {
+                dispatcher(<SetDocumentAction> {
+                    document : JSON.parse(text),
+                    type : "set-document",
+                });
+            }).then(() => {
+                for (let fileName in loadedZip.files) {
+                    if (loadedZip.files.hasOwnProperty(fileName)) {
+                        let file = loadedZip.files[fileName];
+                        file.async("blob").then((data: Blob) => {
+                            dispatcher(<UploadImage> {
+                                image: new File([data], fileName),
+                                type: "uploadImage",
+                            });
+                        });
+                    }
+                }
             });
-        };
-        loader.readAsText(file);
+        });
     };
+    // return (dispatcher) => {
+    //     let loader = new FileReader();
+    //     loader.onload = () => {
+    //         let manual: Document = JSON.parse(loader.result);
+
+    //         dispatcher(<SetDocumentAction> {
+    //             document : manual,
+    //             type : "set-document",
+    //         });
+    //     };
+    //     loader.readAsText(zipFile);
+    // };
 }
 
 export interface SetDocumentAction extends Action {
     type: "set-document";
     document: Document;
+    clearImageStore: boolean;
 }
 
 export interface FileChangedAction extends Action {
     type: "load-file-changed";
     file: File;
+}
+
+export interface ClearImagesAction extends Action {
+    type: "clear-images";
 }
