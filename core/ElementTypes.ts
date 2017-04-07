@@ -6,9 +6,15 @@ import EditableRichText from "containers/editors/EditableRichText";
 import EditableSidebarNote from "containers/editors/EditableSidebarNote";
 import EditableToolbox from "containers/editors/EditableToolbox";
 import {ComponentClass, StatelessComponent} from "react";
+import { ItemTree } from "./../stores/Document";
+
+type EditableProps = {
+    itemId: number;
+    items?: ItemTree[];
+};
 
 interface ElementTypes {
-    [name: string]: ComponentClass<any> | StatelessComponent<any>;
+    [name: string]: ComponentClass<EditableProps> | StatelessComponent<EditableProps>;
 }
 
 let instance: ElementTypes = {

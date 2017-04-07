@@ -8,6 +8,10 @@ export interface ItemOrdering {
         metaItemType?: MetaItemType;
 }
 
+export interface ItemTree extends ItemOrdering {
+    items: ItemTree[];
+}
+
 export interface Document {
     [itemId: number]: EditableProps<any> & {[k: string]: any};
     nextItemId: number;
