@@ -1,7 +1,7 @@
 import * as BaseActions from "actions/BaseEditActions";
 import * as SaveLoadActions from "actions/SaveLoadActions";
 import * as Redux from "redux";
-import {addElementRelativeToCurrentlyActiveElement, addElementToEndOfDocument, Document, initialState} from "stores/Document";
+import {addSingleElement, Document, initialState} from "stores/Document";
 
 let setIsEditing: Redux.Reducer<Document> =
     (state: Document = initialState, action: BaseActions.SetIsEditing) => {
@@ -33,16 +33,12 @@ let onEdited: Redux.Reducer<Document> =
 let onAddDocument: Redux.Reducer<Document> =
     (state: Document = initialState, action: BaseActions.AddToDocument) => {
     if (action.type === "addToDocument") {
-    let newState: Document = {
-        ... state,
-        elementOrdering : state.elementOrdering.slice(),
-    };
-    if (action.ordering === "end") {
-        addElementToEndOfDocument(newState, action.componentTypeName, action.defaultProps);
-    } else {
-        addElementRelativeToCurrentlyActiveElement(newState, action.componentTypeName, action.defaultProps, action.ordering);
-    }
-    return newState;
+        let newState: Document = {
+            ... state,
+            elementOrdering : state.elementOrdering.slice(),
+        };
+        addSingleElement(newState, action.componentTypeName, action.defaultProps, action.ordering);
+        return newState;
     }
     return state;
 };

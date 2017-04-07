@@ -36,46 +36,41 @@ function exitEditModes(document: Document) {
     }
 }
 
-export function addElementToEndOfDocument(document: Document, elementType: string, elementState: EditableProps<any>) {
-    exitEditModes(document);
-    let itemId = document.nextItemId;
-    document[itemId] = {... elementState, editing : true};
-    document.nextItemId++;
-    document.elementOrdering.push({itemId, elementType});
-}
-
-export function addElementRelativeToCurrentlyActiveElement(
+export function addSingleElement(
     document: Document,
     elementType: string,
     elementState: EditableProps<any>,
-    relativeLocation: "before" | "after") {
-    let activeItemId: number = -1;
-    for (let i = 0; i < document.nextItemId ; ++i) {
-        if (document[i] && document[i].editing) {
-            activeItemId = i;
-            break;
+    relativeLocation: "before" | "after" | "end" = "end") {
+    let location: number;
+    if (relativeLocation !== "end") {
+        let activeItemId: number = -1;
+        for (let i = 0; i < document.nextItemId ; ++i) {
+            if (document[i] && document[i].editing) {
+                activeItemId = i;
+                break;
+            }
         }
+
+        let orderIndex: number = document.elementOrdering.length - 1;
+
+        for (let i = 0; i < document.elementOrdering.length ; ++i) {
+            if (document.elementOrdering[i].itemId === activeItemId) {
+                orderIndex = i;
+                break;
+            }
+        }
+        location = orderIndex;
+        if (relativeLocation === "after") {
+            ++location;
+        }
+    } else {
+        location = document.elementOrdering.length - 1;
     }
 
-    let orderIndex: number = document.elementOrdering.length - 1;
-
-    for (let i = 0; i < document.elementOrdering.length ; ++i) {
-        if (document.elementOrdering[i].itemId === activeItemId) {
-            orderIndex = i;
-            break;
-        }
-    }
 
     exitEditModes(document);
     let itemId = document.nextItemId;
     document[itemId] = {... elementState, editing : true};
     document.nextItemId++;
-    if (relativeLocation === "before") {
-        document.elementOrdering.splice(orderIndex, 0, {itemId, elementType});
-    } else if (relativeLocation === "after") {
-        document.elementOrdering.splice(orderIndex + 1, 0, {itemId, elementType});
-    } else {
-        throw new Error("Invalid ordering");
-    }
-
+    document.elementOrdering.splice(location, 0, {itemId, elementType})
 }
