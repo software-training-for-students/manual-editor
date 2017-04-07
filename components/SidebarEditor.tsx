@@ -20,8 +20,6 @@ interface Props {
 function noop() {}
 
 class SidebarEditor extends React.Component<Props, void> {
-    private contentState: RawDraftContentState;
-    private imgSource: string;
 
     public render() {
         return(
@@ -38,17 +36,13 @@ class SidebarEditor extends React.Component<Props, void> {
     }
 
     private contentChanged = (state: RawDraftContentState) => {
-        this.contentState = state;
-        this.multiPartUpdate();
+        this.props.onValueChange({... this.props.value, content: state});
+
     }
 
     private imgSourceChanged = (src: string) => {
-        this.imgSource = src;
-        this.multiPartUpdate();
-    }
+        this.props.onValueChange({... this.props.value, imgSource: src});
 
-    private multiPartUpdate = () => {
-        this.props.onValueChange({... this.props.value, imgSource: this.imgSource, content: this.contentState});
     }
 }
 
