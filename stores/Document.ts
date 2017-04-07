@@ -41,12 +41,11 @@ function exitEditModes(document: Document) {
     }
 }
 
-export function addElements(
+function findLocation(
     document: Document,
-    elements: ElementInfo[],
-    elementToEdit: number = 0,
-    relativeLocation: "before" | "after" | "end" = "end") {
+    relativeLocation: "before" | "after" | "end") {
     let location: number;
+
     if (relativeLocation !== "end") {
         let activeItemId: number = -1;
         for (let i = 0; i < document.nextItemId ; ++i) {
@@ -71,12 +70,19 @@ export function addElements(
     } else {
         location = document.elementOrdering.length;
     }
+    return location;
+}
 
+export function addElements(
+    document: Document,
+    elements: ElementInfo[],
+    elementToEdit: number = 0,
+    relativeLocation: "before" | "after" | "end" = "end") {
 
+    let location = findLocation(document, relativeLocation);
     exitEditModes(document);
 
     let orderings: ItemOrdering[] = [];
-
     elements.forEach((element, idx) => {
         let itemId = document.nextItemId;
         document[itemId] = {... element.elementState, editing : idx === elementToEdit};
