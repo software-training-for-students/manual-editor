@@ -18,7 +18,8 @@ export interface AddToDocument extends Action {
     type: "addToDocument";
     items: Array<{
         componentTypeName: string,
-        defaultProps: any
+        defaultProps: any,
+        metaItemType?: "open" | "close",
     }>;
     itemToEdit?: number;
     ordering: "before" | "after" | "end";
