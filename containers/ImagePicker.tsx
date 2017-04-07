@@ -11,20 +11,9 @@ interface Props {
     currentImage?: string;
 }
 
-interface State {
-    imageType: "imageUrl" | "uploadedImage";
-    imageUrl: string | null;
-    uploadedImage: File | null;
-}
-
-class ImagePickerWrapper extends React.Component<Props, State> {
+class ImagePickerWrapper extends React.Component<Props, void> {
     constructor(props: Props, context?: any) {
         super(props, context);
-        this.state = {
-            imageType: "imageUrl",
-            imageUrl: this.props.currentImage || (props.uploadedImages && props.uploadedImages.length > 0 ? props.uploadedImages[0] : ""),
-            uploadedImage: null,
-        };
     }
 
     public render() {
@@ -33,38 +22,21 @@ class ImagePickerWrapper extends React.Component<Props, State> {
             onCurrentImageChange={this.setReusedImage}
             onImageUrlChange={this.setImageUrl}
             onFileUploadChange={this.setUploadedImage}
-            currentImage={this.props.currentImage}
+            defaultImage={this.props.currentImage}
         />;
     }
 
-    public componentWillUnmount() {
-        if (this.state.imageType === "uploadedImage") {
-            this.props.uploadImage!(this.state.uploadedImage!);
-            this.props.onImageChanged(this.state.uploadedImage!.name);
-        } else {
-            this.props.onImageChanged(this.state.imageUrl!);
-        }
-    }
-
     private setReusedImage = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        this.setState({
-            imageType: "imageUrl",
-            imageUrl: e.currentTarget.value,
-        });
+        this.props.onImageChanged(e.currentTarget.value);
     }
 
     private setImageUrl = (e: React.ChangeEvent<HTMLInputElement>) => {
-        this.setState({
-            imageType: "imageUrl",
-            imageUrl: e.currentTarget.value,
-        });
+        this.props.onImageChanged(e.currentTarget.value);
     }
 
     private setUploadedImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-        this.setState({
-            imageType: "uploadedImage",
-            uploadedImage: e.target.files![0],
-        });
+        this.props.uploadImage!(e.target.files![0]);
+        this.props.onImageChanged(e.target.files![0].name);
     }
 }
 
