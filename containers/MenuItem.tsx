@@ -88,10 +88,10 @@ let mapActionsToProps = ({
     onCreate: (componentTypeName: string,
         defaultProps: any,
         ordering: "before" | "after" | "end") => ({
+            itemToEdit: 0,
+            items: [{componentTypeName, defaultProps}],
             type: "addToDocument",
-            componentTypeName,
             ordering,
-            defaultProps,
         } as AddToDocument),
     toggleFlyout: (id: string) => ({
         type: "flyout-toggle",

@@ -1,7 +1,7 @@
 import * as BaseActions from "actions/BaseEditActions";
 import * as SaveLoadActions from "actions/SaveLoadActions";
 import * as Redux from "redux";
-import {addSingleElement, Document, initialState} from "stores/Document";
+import {addElements, Document, initialState} from "stores/Document";
 
 let setIsEditing: Redux.Reducer<Document> =
     (state: Document = initialState, action: BaseActions.SetIsEditing) => {
@@ -37,7 +37,10 @@ let onAddDocument: Redux.Reducer<Document> =
             ... state,
             elementOrdering : state.elementOrdering.slice(),
         };
-        addSingleElement(newState, action.componentTypeName, action.defaultProps, action.ordering);
+        addElements(newState, action.items.map((value) => ({
+                elementState: value.defaultProps,
+                elementType: value.componentTypeName,
+            })), action.itemToEdit, action.ordering);
         return newState;
     }
     return state;

@@ -16,9 +16,12 @@ export interface OnEdited extends EditActionBase {
 
 export interface AddToDocument extends Action {
     type: "addToDocument";
-    componentTypeName: string;
+    items: Array<{
+        componentTypeName: string,
+        defaultProps: any
+    }>;
+    itemToEdit?: number;
     ordering: "before" | "after" | "end";
-    defaultProps: any;
 }
 
 export default EditActionBase;

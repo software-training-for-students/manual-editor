@@ -11,6 +11,11 @@ export interface Document {
     elementOrdering: ItemOrdering[];
 }
 
+interface ElementInfo {
+    elementType: string;
+    elementState: EditableProps<any>;
+}
+
 export let initialState: Document = {
     1 : {
         editing : false,
@@ -36,10 +41,10 @@ function exitEditModes(document: Document) {
     }
 }
 
-export function addSingleElement(
+export function addElements(
     document: Document,
-    elementType: string,
-    elementState: EditableProps<any>,
+    elements: ElementInfo[],
+    elementToEdit: number = 0,
     relativeLocation: "before" | "after" | "end" = "end") {
     let location: number;
     if (relativeLocation !== "end") {
@@ -69,8 +74,15 @@ export function addSingleElement(
 
 
     exitEditModes(document);
-    let itemId = document.nextItemId;
-    document[itemId] = {... elementState, editing : true};
-    document.nextItemId++;
-    document.elementOrdering.splice(location, 0, {itemId, elementType})
+
+    let orderings: ItemOrdering[] = [];
+
+    elements.forEach((element, idx) => {
+        let itemId = document.nextItemId;
+        document[itemId] = {... element.elementState, editing : idx === elementToEdit};
+        document.nextItemId++;
+        orderings.push({itemId, elementType: element.elementType});
+    });
+
+    document.elementOrdering.splice(location, 0, ...orderings);
 }
