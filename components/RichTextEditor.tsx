@@ -34,17 +34,13 @@ class RichTextEditor extends React.Component<Props, State> {
             },
             {   component: Highlight,
                 strategy: findEntityRanges("HIGHLIGHT"),
-            }
+            },
         ]);
         this.state = {
             editorState: Draft.EditorState.createWithContent(content, decorator),
             showURLInput: false,
             urlValue: "",
         };
-    }
-
-    public componentWillUnmount() {
-        this.props.onValueChange(Draft.convertToRaw(this.state.editorState.getCurrentContent()));
     }
 
     public render() {
@@ -81,13 +77,18 @@ class RichTextEditor extends React.Component<Props, State> {
                     <Draft.Editor
                         ref={this.setEditor}
                         editorState={this.state.editorState}
-                        onChange={this.onChangeEditorState}
+                        onChange={this.onChangeEditorStateAllowBlur}
                         placeholder={"Type your content here."}
                         handleKeyCommand={this.handleKeyCommand}
+                        onBlur={this.onBlur}
                     />
                 </div>
             </div>
         );
+    }
+
+    private onBlur = () => {
+        this.props.onValueChange(Draft.convertToRaw(this.state.editorState.getCurrentContent()));
     }
 
     private onUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -102,6 +103,12 @@ class RichTextEditor extends React.Component<Props, State> {
 
     private setEditor = (editor: Draft.Editor) => {
         this.editor = editor;
+    }
+
+    private onChangeEditorStateAllowBlur = (value: Draft.EditorState) => {
+        this.setState({
+            editorState: value,
+        });
     }
 
     private onChangeEditorState = (value: Draft.EditorState) => {
