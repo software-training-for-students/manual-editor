@@ -39,6 +39,7 @@ let onAddDocument: Redux.Reducer<Document> =
         addElements(newState, action.items.map((value) => ({
                 elementState: value.defaultProps,
                 elementType: value.componentTypeName,
+                metaItemType: value.metaItemType,
             })), action.itemToEdit, action.ordering);
         return newState;
     }

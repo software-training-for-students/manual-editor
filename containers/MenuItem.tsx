@@ -9,6 +9,7 @@ type Ordering = "before" | "after" | "end";
 type ItemInformation = {
     componentTypeName: string;
     defaultProps: any;
+    metaItemType?: "open" | "close";
 };
 
 interface Props {

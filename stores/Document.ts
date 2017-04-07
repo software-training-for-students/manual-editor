@@ -1,8 +1,11 @@
 import { EditableProps } from "core/EditableBase";
 
+type MetaItemType = "open" | "close";
+
 export interface ItemOrdering {
         itemId: number;
         elementType: string;
+        metaItemType?: MetaItemType;
 }
 
 export interface Document {
@@ -14,6 +17,7 @@ export interface Document {
 interface ElementInfo {
     elementType: string;
     elementState: EditableProps<any>;
+    metaItemType?: MetaItemType;
 }
 
 export let initialState: Document = {
@@ -87,7 +91,7 @@ export function addElements(
         let itemId = document.nextItemId;
         document[itemId] = {... element.elementState, editing : idx === elementToEdit};
         document.nextItemId++;
-        orderings.push({itemId, elementType: element.elementType});
+        orderings.push({itemId, elementType: element.elementType, metaItemType: element.metaItemType});
     });
 
     let docOrdering = document.elementOrdering.slice();
