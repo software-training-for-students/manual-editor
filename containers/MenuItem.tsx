@@ -6,15 +6,19 @@ import {connect} from "react-redux";
 import { Store } from "stores";
 
 type Ordering = "before" | "after" | "end";
+type ItemInformation = {
+    componentTypeName: string;
+    defaultProps: any;
+};
 
 interface Props {
     menuItemId: string;
     menuItemText: string;
     menuItemHeading: string;
-    elementType: string;
-    defaultValue: {value: any} & {[k: string]: any};
-    onCreate?: (componentTypeName: string,
-        defaultProps: any,
+    items: ItemInformation[];
+    itemToEdit?: number;
+    onCreate?: (items: ItemInformation[],
+        itemToEdit: number,
         ordering: Ordering) => void;
     toggleFlyout?: (flyoutId: string) => void;
     enableRelativeInsert?: boolean | undefined;
@@ -67,7 +71,7 @@ class MenuItem extends React.Component<Props, void> {
 
     private onCreate = (e: React.SyntheticEvent<HTMLButtonElement>) => {
         if (this.props.onCreate) {
-            this.props.onCreate(this.props.elementType, this.props.defaultValue, e.currentTarget.value as Ordering);
+            this.props.onCreate(this.props.items, this.props.itemToEdit || 0, e.currentTarget.value as Ordering);
         }
     }
 }
@@ -85,11 +89,11 @@ function mapStateToProps(state: Store, props: Props): Props {
 }
 
 let mapActionsToProps = ({
-    onCreate: (componentTypeName: string,
-        defaultProps: any,
-        ordering: "before" | "after" | "end") => ({
-            itemToEdit: 0,
-            items: [{componentTypeName, defaultProps}],
+    onCreate: (items: ItemInformation[],
+        itemToEdit: number,
+        ordering: Ordering) => ({
+            itemToEdit,
+            items,
             type: "addToDocument",
             ordering,
         } as AddToDocument),

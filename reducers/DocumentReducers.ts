@@ -35,7 +35,6 @@ let onAddDocument: Redux.Reducer<Document> =
     if (action.type === "addToDocument") {
         let newState: Document = {
             ... state,
-            elementOrdering : state.elementOrdering.slice(),
         };
         addElements(newState, action.items.map((value) => ({
                 elementState: value.defaultProps,

@@ -16,11 +16,15 @@ class CodeSnippetButton extends React.Component<Props, void> {
             menuItemHeading="Insert Code Snippet"
             menuItemId="code-snippet"
             menuItemText="Code Snippet"
-            elementType={"Code"}
-            defaultValue={{
-                language: this.props.language,
-                value: "",
-            }}
+            items={[
+                {
+                    componentTypeName: "Code",
+                     defaultProps: {
+                        language: this.props.language,
+                        value: "",
+                    },
+                },
+            ]}
         >
             <select value={this.props.language} onChange={this.onChangeLanguage}>
                 <option value="html-css-javascript">HTML/CSS/JavaScript</option>

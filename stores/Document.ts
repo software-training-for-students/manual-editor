@@ -69,7 +69,7 @@ export function addElements(
             ++location;
         }
     } else {
-        location = document.elementOrdering.length - 1;
+        location = document.elementOrdering.length;
     }
 
 
@@ -84,5 +84,7 @@ export function addElements(
         orderings.push({itemId, elementType: element.elementType});
     });
 
-    document.elementOrdering.splice(location, 0, ...orderings);
+    let docOrdering = document.elementOrdering.slice();
+    Array.prototype.splice.apply(docOrdering, (<any[]> [location, 0]).concat(orderings));
+    document.elementOrdering = docOrdering;
 }

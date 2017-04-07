@@ -11,8 +11,15 @@ class SingleImageButton extends React.Component<void, void> {
                 menuItemText="Single Image"
                 menuItemHeading="Create Single Image"
                 insertEnabled
-                defaultValue={this.defaultValue}
-                elementType="SingleImage"
+                items={[
+                    {
+                        componentTypeName: "SingleImage",
+                        defaultProps: {
+                            language: this.defaultValue,
+                            value: "",
+                        },
+                    },
+                ]}
             />
         );
     }
@@ -29,8 +36,15 @@ class SideBySideImageButton extends React.Component<void, void> {
                 menuItemText="Side By Side Images"
                 menuItemHeading="Create Side By Side Images"
                 insertEnabled
-                elementType="SideBySideImage"
-                defaultValue={this.defaultValue}
+                items={[
+                    {
+                        componentTypeName: "SideBySideImage",
+                        defaultProps: {
+                            language: this.defaultValue,
+                            value: "",
+                        },
+                    },
+                ]}
             />
         );
     }

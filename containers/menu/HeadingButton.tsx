@@ -22,11 +22,15 @@ class HeadingButton extends React.Component<Props, void> {
             menuItemText="Headings"
             menuItemHeading="Create Heading"
             insertEnabled={this.props.headingText.length !== 0}
-            defaultValue={{
-                level: this.props.headingLevel,
-                value: this.props.headingText,
-            }}
-            elementType="Heading"
+            items={[
+                {
+                    componentTypeName: "Heading",
+                    defaultProps: {
+                        level: this.props.headingLevel,
+                        value: this.props.headingText,
+                        },
+                },
+            ]}
         >
             <section>
                 <select onChange={this.levelChanged} value={this.props.headingLevel}>

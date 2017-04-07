@@ -9,8 +9,14 @@ const ParagraphButton = () => {
         menuItemText="Paragraph"
         menuItemHeading="Create Paragraph"
         menuItemId="paragraph"
-        elementType="RichText"
-        defaultValue={{value: convertToRaw(EditorState.createEmpty().getCurrentContent())}}
+        items={[
+            {
+                componentTypeName: "RichText",
+                defaultProps: {
+                    value: convertToRaw(EditorState.createEmpty().getCurrentContent()),
+                },
+            },
+        ]}
     />;
 };
 
