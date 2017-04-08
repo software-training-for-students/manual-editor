@@ -1,6 +1,5 @@
 import ImagePicker from "containers/ImagePicker";
 import * as React from "react";
-import AutoUnfocusEditor from "./enhancers/AutoUnfocusEditor";
 
 interface ToolboxEntry {
     imgSrc: string;
@@ -65,4 +64,4 @@ export class ToolboxEditor extends React.Component<Props, void> {
     }
 }
 
-export default AutoUnfocusEditor(ToolboxEditor);
+export default ToolboxEditor;

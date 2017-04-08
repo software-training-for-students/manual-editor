@@ -1,5 +1,4 @@
 import * as React from "react";
-import AutoUnfocusEditor from "./enhancers/AutoUnfocusEditor";
 
 interface Props {
     autoFocus?: boolean;
@@ -28,4 +27,4 @@ public render() {
     }
 }
 
-export default AutoUnfocusEditor(PlainTextEditor);
+export default PlainTextEditor;

@@ -3,12 +3,10 @@ import "draft-js/dist/Draft.css";
 import "es6-shim";
 import * as React from "react";
 import {findDOMNode} from "react-dom";
-import AutoUnfocusEditor from "./enhancers/AutoUnfocusEditor";
 
 interface Props {
     value: Draft.RawDraftContentState;
     onValueChange: (value: Draft.RawDraftContentState) => void;
-    
 }
 
 interface State {
@@ -214,4 +212,4 @@ const Highlight = (props: any) => {
     return <span className="highlight">{props.children}</span>;
 };
 
-export default AutoUnfocusEditor(RichTextEditor);
+export default RichTextEditor;

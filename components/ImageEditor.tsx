@@ -1,7 +1,6 @@
 import {SideBySideImageCssClass, SideBySideImageProps, SingleImageCssClass, SingleImageProps} from "components/Images";
 import ImagePicker from "containers/ImagePicker";
 import * as React from "react";
-import AutoUnfocusEditor from "./enhancers/AutoUnfocusEditor";
 
 interface ImageEditorProps<TImageProps> {
     value: TImageProps | undefined;
@@ -139,6 +138,6 @@ class SideBySideImageEditor extends React.Component<ImageEditorProps<SideBySideI
 }
 
 export default {
-    SideBySideImageEditor : AutoUnfocusEditor(SideBySideImageEditor),
-    SingleImageEditor : AutoUnfocusEditor(SingleImageEditor),
+    SideBySideImageEditor,
+    SingleImageEditor,
 };

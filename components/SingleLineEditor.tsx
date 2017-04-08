@@ -1,5 +1,4 @@
 import * as React from "react";
-import AutoUnfocusEditor from "./enhancers/AutoUnfocusEditor";
 
 type EditorProps = React.HTMLAttributes<HTMLInputElement> & {
     value: string;
@@ -30,4 +29,4 @@ class SingleLineEditor extends React.Component<EditorProps, void> {
     }
 }
 
-export default AutoUnfocusEditor(SingleLineEditor);
+export default SingleLineEditor;

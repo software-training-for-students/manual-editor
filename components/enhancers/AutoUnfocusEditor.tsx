@@ -1,8 +1,8 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-function AutoUnfocusEditor<TProps extends object>(Component: React.ComponentClass<TProps>) {
-    return class extends React.Component<TProps & {onComplete?: () => void} , React.ComponentState> {
+function AutoUnfocusEditor<TProps extends object>(Component: React.ComponentClass<TProps> | React.StatelessComponent<TProps>) {
+    return class extends React.Component<TProps & {onComplete: () => void} , React.ComponentState> {
         public componentDidMount() {
             window.addEventListener("click", this.onWindowClick);
         }

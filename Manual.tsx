@@ -5,13 +5,30 @@ import ElementTypes from "core/ElementTypes";
 import * as React from "react";
 import {connect} from "react-redux";
 import {Store} from "stores";
-import {ItemTree} from "stores/Document";
+import {ItemTree, ItemOrdering} from "stores/Document";
 
 interface Props {
-    items: ItemTree[];
+    items: ItemOrdering[];
 }
 
-class Manual extends React.Component<Props, void> {
+interface State {
+    tree: ItemTree;
+}
+
+class Manual extends React.Component<Props, State> {
+    constructor(props: Props, context?: any) {
+        super(props, context);
+        this.state = {
+            tree: createElementTree(props.items),
+        };
+    }
+
+    public componentWillReceiveProps(props: Props) {
+        this.setState({
+            tree: createElementTree(props.items),
+        });
+    }
+
     public render() {
         return (
             <div id="manual">
@@ -19,7 +36,7 @@ class Manual extends React.Component<Props, void> {
                 <AboutPage />
                 <TableOfContents />
                 {
-                    this.props.items.map(
+                    this.state.tree.items.map(
                         (item) => {
                             const ElementType = ElementTypes[item.elementType];
                             return <ElementType itemId={item.itemId} key={item.itemId} items={item.items} />;
@@ -31,7 +48,7 @@ class Manual extends React.Component<Props, void> {
     }
 }
 
-function mapStateToProps(state: Store): Props {
+function createElementTree(elementOrdering: ItemOrdering[]): ItemTree {
     let itemTree: ItemTree = {
         elementType: "Manual",
         itemId: -1,
@@ -40,7 +57,7 @@ function mapStateToProps(state: Store): Props {
 
     let treeStack: ItemTree[] = [itemTree];
 
-    state.document.elementOrdering.forEach((item) => {
+    elementOrdering.forEach((item) => {
         let topTree = treeStack[treeStack.length - 1];
         if (item.metaItemType === "open") {
             let newSubTree = {... item, items: []};
@@ -60,7 +77,13 @@ function mapStateToProps(state: Store): Props {
         throw new Error("Mismatched element tree.");
     }
 
-    return { items: itemTree.items };
+    return itemTree;
+}
+
+function mapStateToProps(state: Store): Props {
+    return {
+        items: state.document.elementOrdering,
+    };
 }
 
 export default connect(mapStateToProps)(Manual);
