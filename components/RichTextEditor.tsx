@@ -2,12 +2,13 @@ import * as Draft from "draft-js";
 import "draft-js/dist/Draft.css";
 import "es6-shim";
 import * as React from "react";
+import {findDOMNode} from "react-dom";
 import AutoUnfocusEditor from "./enhancers/AutoUnfocusEditor";
 
 interface Props {
     value: Draft.RawDraftContentState;
     onValueChange: (value: Draft.RawDraftContentState) => void;
-    onComplete: () => void;
+    
 }
 
 interface State {
@@ -62,13 +63,13 @@ class RichTextEditor extends React.Component<Props, State> {
             <div className="editor">
                 <div>
                     <ul>
-                        <li onClick={this.toggleBold}>Bold</li>
-                        <li onClick={this.toggleItalic}>Italic</li>
-                        <li onClick={this.toggleUnderline}>Underline</li>
-                        <li onClick={this.toggleTeletype}>Teletype</li>
-                        <li onClick={this.toggleHighlight}>Highlight</li>
-                        <li onClick={this.promptForLink}>Add Link</li>
-                        <li onClick={this.removeLink}>Remove Link</li>
+                        <li tabIndex={4} onClick={this.toggleBold}>Bold</li>
+                        <li tabIndex={5} onClick={this.toggleItalic}>Italic</li>
+                        <li tabIndex={6} onClick={this.toggleUnderline}>Underline</li>
+                        <li tabIndex={7} onClick={this.toggleTeletype}>Teletype</li>
+                        <li tabIndex={8} onClick={this.toggleHighlight}>Highlight</li>
+                        <li tabIndex={9} onClick={this.promptForLink}>Add Link</li>
+                        <li tabIndex={10} onClick={this.removeLink}>Remove Link</li>
                     </ul>
                 </div>
                 <hr />
@@ -87,8 +88,12 @@ class RichTextEditor extends React.Component<Props, State> {
         );
     }
 
-    private onBlur = () => {
-        this.props.onValueChange(Draft.convertToRaw(this.state.editorState.getCurrentContent()));
+    private onBlur = (e: React.SyntheticEvent<{}>) => {
+        let editorNode = findDOMNode(this);
+        let newFocus = (e.nativeEvent as MouseEvent).relatedTarget as Node;
+        if (!editorNode.contains(newFocus)) {
+            this.props.onValueChange(Draft.convertToRaw(this.state.editorState.getCurrentContent()));
+        }
     }
 
     private onUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
