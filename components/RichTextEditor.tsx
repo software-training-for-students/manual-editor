@@ -88,7 +88,7 @@ class RichTextEditor extends React.Component<Props, State> {
 
     private onBlur = (e: React.SyntheticEvent<{}>) => {
         let editorNode = findDOMNode(this);
-        let newFocus = (e.nativeEvent as MouseEvent).relatedTarget as Node;
+        let newFocus = (e as React.MouseEvent<{}>).relatedTarget as Node;
         if (!editorNode.contains(newFocus)) {
             this.props.onValueChange(Draft.convertToRaw(this.state.editorState.getCurrentContent()));
         }
