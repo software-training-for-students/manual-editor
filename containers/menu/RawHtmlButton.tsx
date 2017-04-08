@@ -10,7 +10,7 @@ const HtmlButton = () => {
         menuItemId="raw-html"
         items={[
             {
-                componentTypeName: "RichText",
+                componentTypeName: "RawHtml",
                 defaultProps: {
                     value: "",
                 },
