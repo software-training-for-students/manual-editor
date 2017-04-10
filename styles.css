@@ -87,3 +87,12 @@ textarea {
     display: inline-block;
     margin-right: 2em;
 }
+
+.instruction-list input {
+    margin-left: 2.25em;
+    margin-top: 0.75em;
+}
+
+.instruction-list li {
+    min-height: 19px;
+}

@@ -1,7 +1,7 @@
 import AboutPage from "components/AboutPage";
 import CoverPage from "components/CoverPage";
 import TableOfContents from "containers/TableOfContents";
-import ElementTypes from "core/ElementTypes";
+import createElement from "core/createElement";
 import * as React from "react";
 import {connect} from "react-redux";
 import {Store} from "stores";
@@ -36,12 +36,7 @@ class Manual extends React.Component<Props, State> {
                 <AboutPage />
                 <TableOfContents />
                 {
-                    this.state.tree.items.map(
-                        (item) => {
-                            const ElementType = ElementTypes[item.elementType];
-                            return <ElementType itemId={item.itemId} key={item.itemId} items={item.items} />;
-                        },
-                    )
+                    this.state.tree.items.map(createElement)
                 }
             </div>
         );

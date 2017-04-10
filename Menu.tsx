@@ -1,6 +1,8 @@
 import CodeSnippetButton from "containers/menu/CodeSnippetButton";
 import HeadingButton from "containers/menu/HeadingButton";
 import ImageButtons from "containers/menu/ImageButtons";
+import * as ListButtons from "containers/menu/ListButtons";
+import ListItemButton from "containers/menu/ListItemButton";
 import ParagraphButton from "containers/menu/ParagraphButton";
 import HtmlButton from "containers/menu/RawHtmlButton";
 import SaveLoadButtons from "containers/menu/SaveLoadButtons";
@@ -20,6 +22,10 @@ export default class Menu extends React.Component<void, void> {
                 <CodeSnippetButton />
                 <SidebarNoteButton />
                 <ToolboxButton />
+                <ListButtons.UnorderedListButton />
+                <ListButtons.OrderedListButton />
+                <ListButtons.InstructionListButton />
+                <ListItemButton />
                 <SaveLoadButtons />
             </div>
         );

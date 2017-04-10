@@ -1,11 +1,13 @@
+import * as Lists from "components/Lists";
 import EditableCode from "containers/editors/EditableCode";
 import EditableHeading from "containers/editors/EditableHeading";
 import EditableHtml from "containers/editors/EditableHtml";
 import EditableImage from "containers/editors/EditableImage";
+import EditableListItem from "containers/editors/EditableListItem";
 import EditableRichText from "containers/editors/EditableRichText";
 import EditableSidebarNote from "containers/editors/EditableSidebarNote";
 import EditableToolbox from "containers/editors/EditableToolbox";
-import {ComponentClass, StatelessComponent} from "react";
+import * as React from "react";
 import { ItemTree } from "./../stores/Document";
 
 type EditableProps = {
@@ -14,10 +16,10 @@ type EditableProps = {
 };
 
 interface ElementTypes {
-    [name: string]: ComponentClass<EditableProps> | StatelessComponent<EditableProps>;
+    [name: string]: React.ComponentClass<EditableProps> | React.StatelessComponent<EditableProps>;
 }
 
-let instance: ElementTypes = {
+let elementTypes: ElementTypes = {
     ["Heading"] : EditableHeading,
     ["SingleImage"] : EditableImage.EditableSingleImage,
     ["SideBySideImage"] : EditableImage.EditableSideBySideImage,
@@ -26,5 +28,15 @@ let instance: ElementTypes = {
     ["Code"] : EditableCode,
     ["SidebarNote"] : EditableSidebarNote,
     ["Toolbox"]: EditableToolbox,
+    ["UnorderedList"] : Lists.UnorderedList,
+    ["OrderedList"] : Lists.OrderedList,
+    ["InstructionList"] : Lists.InstructionList,
+    ["ListItem"] : EditableListItem,
 };
-export default instance;
+
+function createElement(props: ItemTree) {
+    const Element = elementTypes[props.elementType];
+    return <Element itemId={props.itemId} key={props.itemId} items={props.items} />;
+}
+
+export default createElement;
