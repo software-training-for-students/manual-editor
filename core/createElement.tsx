@@ -1,4 +1,8 @@
 import * as Lists from "components/Lists";
+import Table from "components/Table";
+import TableCell from "components/TableCell";
+import TableHeader from "components/TableHeader";
+import TableRow from "components/TableRow";
 import EditableCode from "containers/editors/EditableCode";
 import EditableHeading from "containers/editors/EditableHeading";
 import EditableHtml from "containers/editors/EditableHtml";
@@ -32,6 +36,10 @@ let elementTypes: ElementTypes = {
     ["OrderedList"] : Lists.OrderedList,
     ["InstructionList"] : Lists.InstructionList,
     ["ListItem"] : EditableListItem,
+    ["Table"] : Table,
+    ["TableRow"] : TableRow,
+    ["TableCell"] : TableCell,
+    ["TableHeader"] : TableHeader,
 };
 
 function createElement(props: ItemTree) {

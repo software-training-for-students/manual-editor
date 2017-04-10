@@ -14,3 +14,13 @@ export interface UpdateCodeLanguage extends Action {
     type: "update-code-language";
     language: string;
 }
+
+export interface UpdateTableRows extends Action {
+    type: "update-table-rows";
+    rows: number;
+}
+
+export interface UpdateTableColumns extends Action {
+    type: "update-table-columns";
+    columns: number;
+}

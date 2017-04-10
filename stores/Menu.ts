@@ -1,5 +1,3 @@
-import { SideBySideImageProps, SingleImageProps } from "components/Images";
-
 export interface HeadingStore {
         level: 1 | 2 | 3 | 4 | 5 | 6;
         text: string;
@@ -7,10 +5,12 @@ export interface HeadingStore {
 
 export interface MenuStore {
     heading: HeadingStore;
-    singleImage: SingleImageProps;
-    sideBySideImage: SideBySideImageProps;
     code: {language: string};
     load: {file?: File};
+    table: {
+        rows: number;
+        columns: number;
+    }
 }
 
 export let initialState: MenuStore = {
@@ -22,17 +22,8 @@ export let initialState: MenuStore = {
         text : "",
     },
     load : {},
-    sideBySideImage : {
-        border : false,
-        caption : "",
-        className : "sidebyside-image-large",
-        leftSource : "",
-        rightSource : "",
-    },
-    singleImage : {
-        border : false,
-        caption : "",
-        className: "full-width-image",
-        source : "",
+    table: {
+        columns: 0,
+        rows: 0,
     },
 };
