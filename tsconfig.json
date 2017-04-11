@@ -16,7 +16,6 @@
       "redux" : ["node_modules/redux/redux", "node_modules/redux/dist/redux"],
       "@aneves/react-flyout" : ["node_modules/@aneves/react-flyout", "type-definitions/@aneves/react-flyout"],
       "redux-devtools-extension" : ["node_modules/redux-devtools-extension/", "type-definitions/redux-devtools-extension"],
-      "draft-convert" : ["node_modules/draft-convert/", "type-definitions/draft-convert"],
       "file-saver" : ["type-definitions/file-saver"],
       "react-highlight.js" : ["type-definitions/react-highlight/"]
     }

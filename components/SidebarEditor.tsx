@@ -1,4 +1,4 @@
-import RichTextEditor from "components/RichTextEditor";
+import {Editor as RichTextEditor} from "components/RichText";
 import ImagePicker from "containers/ImagePicker";
 import {RawDraftContentState} from "draft-js";
 import * as React from "react";

@@ -1,4 +1,4 @@
-import RichTextPresenter from "components/RichTextPresenter";
+import {Presenter as RichTextPresenter} from "components/RichText";
 import SmartImagePresenter from "containers/SmartImagePresenter";
 import {RawDraftContentState} from "draft-js";
 import * as React from "react";

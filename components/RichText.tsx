@@ -4,37 +4,66 @@ import "es6-shim";
 import * as React from "react";
 import {findDOMNode} from "react-dom";
 
-interface Props {
+const styleMap: {[style: string]: React.CSSProperties} = {
+    HIGHLIGHT : {
+        backgroundColor: "#BFF0FF",
+        border: {
+            radius: "0.25em",
+        },
+    },
+    TELETYPE : {
+        backgroundColor: "#F7F7F7",
+        border: {
+            radius: "0.25em",
+        },
+        fontFamily: "Source Code Pro, serif",
+        fontSize: "0.95em",
+    },
+};
+
+function findEntityRanges(entityKey: string) {
+    return (block: Draft.ContentBlock, callback: (start: number, end: number) => void) => {
+        block.findEntityRanges((character: Draft.CharacterMetadata) => {
+            const key = character.getEntity();
+            return key !== null && Draft.Entity.get(key).getType() === entityKey;
+        }, callback);
+    };
+}
+
+const Link = (props: any) => {
+    const {url} = Draft.Entity.get(props.entityKey).getData();
+    return (
+        <a href={url} target="_blank">
+            {props.children}
+        </a>
+    );
+};
+
+const decorator = new Draft.CompositeDecorator([
+    {
+        component: Link,
+        strategy: findEntityRanges("LINK"),
+    },
+]);
+
+interface EditorProps {
     value: Draft.RawDraftContentState;
     onValueChange: (value: Draft.RawDraftContentState) => void;
 }
 
-interface State {
+interface EditorState {
     editorState: Draft.EditorState;
     showURLInput: boolean;
     urlValue: string;
 }
 
-class RichTextEditor extends React.Component<Props, State> {
+class RichTextEditor extends React.Component<EditorProps, EditorState> {
     private urlInput: HTMLElement;
     private editor: Draft.Editor;
 
-    constructor(props: Props, context?: any) {
+    constructor(props: EditorProps, context?: any) {
         super(props, context);
         const content = Draft.convertFromRaw(props.value);
-        const decorator = new Draft.CompositeDecorator([
-            {
-                component: Link,
-                strategy: findEntityRanges("LINK"),
-            },
-            {
-                component: Teletype,
-                strategy: findEntityRanges("TELETYPE"),
-            },
-            {   component: Highlight,
-                strategy: findEntityRanges("HIGHLIGHT"),
-            },
-        ]);
         this.state = {
             editorState: Draft.EditorState.createWithContent(content, decorator),
             showURLInput: false,
@@ -80,6 +109,7 @@ class RichTextEditor extends React.Component<Props, State> {
                         placeholder={"Type your content here."}
                         handleKeyCommand={this.handleKeyCommand}
                         onBlur={this.onBlur}
+                        customStyleMap={styleMap}
                     />
                 </div>
             </div>
@@ -133,13 +163,11 @@ class RichTextEditor extends React.Component<Props, State> {
     }
 
     private toggleTeletype = () => {
-        const entityKey = Draft.Entity.create("TELETYPE", "MUTABLE");
-        this.onChangeEditorState(Draft.RichUtils.toggleLink(this.state.editorState, this.state.editorState.getSelection(), entityKey));
+        this.onChangeEditorState(Draft.RichUtils.toggleInlineStyle(this.state.editorState, "TELETYPE"));
     }
 
     private toggleHighlight = () => {
-        const entityKey = Draft.Entity.create("HIGHLIGHT", "MUTABLE");
-        this.onChangeEditorState(Draft.RichUtils.toggleLink(this.state.editorState, this.state.editorState.getSelection(), entityKey));
+        this.onChangeEditorState(Draft.RichUtils.toggleInlineStyle(this.state.editorState, "HIGHLIGHT"));
     }
 
     private handleKeyCommand: (command: string) => "handled" | "not-handled" = (command: string) => {
@@ -186,30 +214,47 @@ class RichTextEditor extends React.Component<Props, State> {
     }
 }
 
-function findEntityRanges(entityKey: string) {
-    return (block: Draft.ContentBlock, callback: (start: number, end: number) => void) => {
-        block.findEntityRanges((character: Draft.CharacterMetadata) => {
-            const key = character.getEntity();
-            return key !== null && Draft.Entity.get(key).getType() === entityKey;
-        }, callback);
-    };
+interface PresenterProps {
+    value: Draft.RawDraftContentState;
+    onClick?: (e: React.SyntheticEvent<HTMLElement>) => void;
 }
 
-const Link = (props: any) => {
-    const {url} = Draft.Entity.get(props.entityKey).getData();
-    return (
-        <a href={url} target="_blank">
-            {props.children}
-        </a>
-    );
-};
+interface PresenterState {
+    editorState: Draft.EditorState;
+}
 
-const Teletype = (props: any) => {
-    return <span className="type-text">{props.children}</span>;
-};
+// tslint:disable-next-line:max-classes-per-file
+class RichTextPresenter extends React.Component<PresenterProps, PresenterState> {
+    constructor(props: EditorProps, context?: any) {
+        super(props, context);
+        const content = Draft.convertFromRaw(props.value);
 
-const Highlight = (props: any) => {
-    return <span className="highlight">{props.children}</span>;
-};
+        this.state = {
+            editorState: Draft.EditorState.createWithContent(content, decorator),
+        };
+    }
 
-export default RichTextEditor;
+    public componentWillReceiveProps(props: PresenterProps) {
+        this.setState({
+            editorState: Draft.EditorState.createWithContent(Draft.convertFromRaw(props.value), decorator),
+        });
+    }
+
+    public render() {
+        return <div onClick={this.props.onClick}>
+            <Draft.Editor
+                readOnly
+                editorState={this.state.editorState}
+                placeholder={"Empty Paragraph"}
+                customStyleMap={styleMap}
+                onChange={this.onChange}
+            />
+        </div>;
+    }
+
+    private onChange= () => {
+        // No changes handled in read-only mode
+    }
+}
+
+export {RichTextEditor as Editor, RichTextPresenter as Presenter};

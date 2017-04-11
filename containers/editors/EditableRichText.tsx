@@ -1,6 +1,5 @@
 import EditableContent from "components/EditableContent";
-import RichTextEditor from "components/RichTextEditor";
-import RichTextPresenter from "components/RichTextPresenter";
+import * as RichText from "components/RichText";
 import {createEditableStateToPropsMapper, mapBaseActionsToProps} from "core/DocumentMappers";
 import {EditableProps, getCommonInteractiveEditableProps, InteractiveEditableProps} from "core/EditableBase";
 import * as DraftJs from "draft-js";
@@ -14,8 +13,8 @@ const EditableRichText = (props: InteractiveEditableProps<DraftJs.RawDraftConten
     return <EditableRichTextContainer
         {... props}
         {... getCommonInteractiveEditableProps(props)}
-        staticComponentClass={RichTextPresenter}
-        inputComponentClass={RichTextEditor}
+        staticComponentClass={RichText.Presenter}
+        inputComponentClass={RichText.Editor}
     />;
 };
 
