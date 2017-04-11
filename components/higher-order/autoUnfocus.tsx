@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-function AutoUnfocusEditor<TProps extends object>(Component: React.ComponentClass<TProps> | React.StatelessComponent<TProps>) {
+function autoUnfocus<TProps>(Component: React.ComponentClass<TProps> | React.StatelessComponent<TProps>) {
     return class extends React.Component<TProps & {onComplete: () => void} , React.ComponentState> {
         public componentDidMount() {
             window.addEventListener("click", this.onWindowClick);
@@ -21,13 +21,12 @@ function AutoUnfocusEditor<TProps extends object>(Component: React.ComponentClas
 
             let element = e.target as Node;
             if (!menuRoot.contains(element) && !editorElement.contains(element)) {
-                // Typescript gets confused with its type inference and doesn't see that we already checked for undefined
                 if (this.props.onComplete) {
-                 (this.props.onComplete as () => void)();
+                    this.props.onComplete();
                 }
             }
         }
     };
 }
 
-export default AutoUnfocusEditor;
+export default autoUnfocus;
