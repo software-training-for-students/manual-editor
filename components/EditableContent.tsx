@@ -1,4 +1,4 @@
-import AutoUnfocusEditor from "components/enhancers/AutoUnfocusEditor";
+import autoUnfocus from "components/higher-order/autoUnfocus";
 import * as React from "react";
 
 type ComponentType<TProps> = React.StatelessComponent<TProps> | React.ComponentClass<TProps>;
@@ -42,7 +42,7 @@ function enhanceComponent<T>(component: ComponentType<InputProps<T>>): Component
     if (filtered.length > 0) {
         return filtered[0].outputType;
     }
-    let outputType = AutoUnfocusEditor(component);
+    let outputType = autoUnfocus(component);
     inputComponentCache.push({
         inputType: component,
         outputType,

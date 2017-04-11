@@ -91,9 +91,13 @@ export function addElements(
     exitEditModes(document);
 
     let orderings: ItemOrdering[] = [];
+    let idStack: number[] = [];
     elements.forEach((element, idx) => {
-        let itemId = document.nextItemId;
+        let itemId = element.metaItemType === "close" ? idStack.pop()! : document.nextItemId;
         document[itemId] = {... element.elementState, editing : idx === elementToEdit};
+        if (element.metaItemType === "open") {
+            idStack.push(itemId);
+        }
         document.nextItemId++;
         orderings.push({itemId, elementType: element.elementType, metaItemType: element.metaItemType});
     });
@@ -101,4 +105,19 @@ export function addElements(
     let docOrdering = document.elementOrdering.slice();
     Array.prototype.splice.apply(docOrdering, (<any[]> [location, 0]).concat(orderings));
     document.elementOrdering = docOrdering;
+}
+
+export function removeElement(document: Document, itemId: number) {
+    delete document[itemId];
+    let elementOrdering: ItemOrdering[] = [];
+    let deletingRange: boolean = false;
+    document.elementOrdering.forEach((element) => {
+        if (element.itemId !== itemId && !deletingRange) {
+            elementOrdering.push(element);
+        }
+        if (element.itemId === itemId) {
+            deletingRange = element.metaItemType === "open";
+        }
+    });
+    document.elementOrdering = elementOrdering;
 }

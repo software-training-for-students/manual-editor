@@ -25,4 +25,8 @@ export interface AddToDocument extends Action {
     ordering: "before" | "after" | "end";
 }
 
+export interface RemoveFromDocument extends EditActionBase {
+    type: "removeFromDocument";
+}
+
 export default EditActionBase;

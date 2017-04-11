@@ -96,3 +96,16 @@ textarea {
 .instruction-list li {
     min-height: 19px;
 }
+
+div.removable {
+  position:relative;
+}
+
+div.removable:hover > button {
+    position: absolute;
+    top: 0%;
+    right: 0%;
+}
+div.removable:not(:hover) > button {
+  display: none;
+}

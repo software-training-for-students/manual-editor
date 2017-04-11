@@ -1,7 +1,7 @@
 import * as BaseActions from "actions/BaseEditActions";
 import * as SaveLoadActions from "actions/SaveLoadActions";
 import * as Redux from "redux";
-import {addElements, Document, initialState} from "stores/Document";
+import {addElements, removeElement, Document, initialState} from "stores/Document";
 
 let setIsEditing: Redux.Reducer<Document> =
     (state: Document = initialState, action: BaseActions.SetIsEditing) => {
@@ -46,6 +46,18 @@ let onAddDocument: Redux.Reducer<Document> =
     return state;
 };
 
+let onRemoveElement: Redux.Reducer<Document> =
+    (state: Document= initialState, action: BaseActions.RemoveFromDocument) => {
+    if (action.type === "removeFromDocument") {
+        let newState: Document = {
+            ...state,
+        };
+        removeElement(newState, action.itemId);
+        return newState;
+    }
+    return state;
+};
+
 let onSetDocument: Redux.Reducer<Document> = (state: Document = initialState, action: SaveLoadActions.SetDocumentAction) => {
     if (action.type === "set-document") {
         return action.document;
@@ -53,10 +65,12 @@ let onSetDocument: Redux.Reducer<Document> = (state: Document = initialState, ac
     return state;
 };
 
+
 let editReducers = (document: Document, action: Redux.Action) => {
     let newDoc = setIsEditing(document, action);
     newDoc = onEdited(newDoc, action);
     newDoc = onAddDocument(newDoc, action);
+    newDoc = onRemoveElement(newDoc, action);
     newDoc = onSetDocument(newDoc, action);
     return newDoc;
 };

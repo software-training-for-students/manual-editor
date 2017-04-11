@@ -12,6 +12,7 @@ import EditableRichText from "containers/editors/EditableRichText";
 import EditableSidebarNote from "containers/editors/EditableSidebarNote";
 import EditableToolbox from "containers/editors/EditableToolbox";
 import * as React from "react";
+import removable from "components/higher-order/removable";
 import { ItemTree } from "./../stores/Document";
 
 type EditableProps = {
@@ -24,19 +25,19 @@ interface ElementTypes {
 }
 
 let elementTypes: ElementTypes = {
-    ["Heading"] : EditableHeading,
-    ["SingleImage"] : EditableImage.EditableSingleImage,
-    ["SideBySideImage"] : EditableImage.EditableSideBySideImage,
-    ["RichText"] : EditableRichText,
-    ["RawHtml"] : EditableHtml,
-    ["Code"] : EditableCode,
-    ["SidebarNote"] : EditableSidebarNote,
-    ["Toolbox"]: EditableToolbox,
+    ["Heading"] : removable(EditableHeading),
+    ["SingleImage"] : removable(EditableImage.EditableSingleImage),
+    ["SideBySideImage"] : removable(EditableImage.EditableSideBySideImage),
+    ["RichText"] : removable(EditableRichText),
+    ["RawHtml"] : removable(EditableHtml),
+    ["Code"] : removable(EditableCode),
+    ["SidebarNote"] : removable(EditableSidebarNote),
+    ["Toolbox"]: removable(EditableToolbox),
     ["UnorderedList"] : Lists.UnorderedList,
     ["OrderedList"] : Lists.OrderedList,
     ["InstructionList"] : Lists.InstructionList,
-    ["ListItem"] : EditableListItem,
-    ["Table"] : Table,
+    ["ListItem"] : removable(EditableListItem),
+    ["Table"] : removable(Table),
     ["TableRow"] : TableRow,
     ["TableCell"] : TableCell,
     ["TableHeader"] : TableHeader,
