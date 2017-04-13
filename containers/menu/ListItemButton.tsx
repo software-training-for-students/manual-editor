@@ -1,4 +1,5 @@
 import MenuItem from "containers/MenuItem";
+import {convertToRaw, EditorState} from "draft-js";
 import * as React from "react";
 
 const ListItemButton = () => {
@@ -11,7 +12,7 @@ const ListItemButton = () => {
             {
                 componentTypeName: "ListItem",
                 defaultProps: {
-                    value: "",
+                    value: convertToRaw(EditorState.createEmpty().getCurrentContent()),
                 },
             },
         ]}

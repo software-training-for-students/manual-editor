@@ -1,4 +1,5 @@
 import MenuItem from "containers/MenuItem";
+import {convertToRaw, EditorState} from "draft-js";
 import * as React from "react";
 
 export let UnorderedListButton = () => {
@@ -16,7 +17,7 @@ export let UnorderedListButton = () => {
             {
                 componentTypeName: "ListItem",
                 defaultProps: {
-                    value: "",
+                    value: convertToRaw(EditorState.createEmpty().getCurrentContent()),
                 },
             },
             {
@@ -43,7 +44,7 @@ export let OrderedListButton = () => {
             {
                 componentTypeName: "ListItem",
                 defaultProps: {
-                    value: "",
+                    value: convertToRaw(EditorState.createEmpty().getCurrentContent()),
                 },
             },
             {
@@ -71,7 +72,7 @@ export let InstructionListButton = () => {
             {
                 componentTypeName: "ListItem",
                 defaultProps: {
-                    value: "",
+                    value: convertToRaw(EditorState.createEmpty().getCurrentContent()),
                 },
             },
             {

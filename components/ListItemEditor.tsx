@@ -1,15 +1,19 @@
-import SingleLineEditor from "components/SingleLineEditor";
+import {Editor as RichTextEditor} from "components/RichText";
+import {RawDraftContentState} from "draft-js";
 import * as React from "react";
 
 type Props = {
-    value: string;
-    onValueChange: (value: string) => void;
+    value: RawDraftContentState;
+    onValueChange: (value: RawDraftContentState) => void;
 };
 
 export default function(props: Props) {
+    let {value, onValueChange, ...rest} = props;
     return (
-        <li {...props}>
-            <SingleLineEditor value={props.value} onValueChange={props.onValueChange} />
+        <li {...rest} >
+            <p>
+                <RichTextEditor value={value} onValueChange={onValueChange} />
+            </p>
         </li>
     );
 }
