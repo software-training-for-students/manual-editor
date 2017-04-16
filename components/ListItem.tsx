@@ -10,9 +10,7 @@ type Props = {
 export default function(props: Props) {
     return (
         <li onClick={props.onClick}>
-            <p>
-                <RichTextPresenter {... props} />
-            </p>
+            <RichTextPresenter {... props} />
         </li>
     );
 }

@@ -2,6 +2,10 @@ import { ContentState, convertFromHTML, convertToRaw } from "draft-js";
 import {decode} from "he";
 import {addElements, Document, ElementInfo} from "stores/Document";
 
+// These are used for images in the old manual style.
+const legacyImagesFolder = "images/";
+const legacyKeyboardIconsFolder = "keyboard-icons/";
+
 function extractElements(parentElement: Element): ElementInfo[] {
     let encounteredIntro = !(parentElement instanceof HTMLBodyElement);
     let items: ElementInfo[] = [];
@@ -30,7 +34,7 @@ function convertCurrentElement(currentElement: Element) {
                     {
                         elementState: {
                             level: parseInt(currentElement.tagName[1], 10),
-                            value: currentElement.innerHTML,
+                            value: decode(currentElement.innerHTML),
                         },
                         elementType: "Heading",
                     },
@@ -132,49 +136,54 @@ function convertCurrentElement(currentElement: Element) {
         }
 }
 
+function generateImageItem(element: HTMLDivElement): ElementInfo {
+    let classList = element.classList;
+    const border = element.getAttribute("border") !== null || classList.contains("border");
+    const captionElement = element.querySelector("p");
+    const caption = captionElement ? captionElement.innerText : "";
+    let className: string;
+    for (let i = 0; i < classList.length; ++i) {
+        if (classList.item(i).includes("image")) {
+            className = classList.item(i);
+            if (className.includes("sidebyside")) {
+                let leftSrc = importImagePath(element.querySelectorAll("img")[0].getAttribute("src")!);
+                let rightSrc = importImagePath(element.querySelectorAll("img")[1].getAttribute("src")!);
+                return {
+                    elementState: {
+                        value: {
+                            border,
+                            caption,
+                            leftSrc,
+                            rightSrc,
+                            className,
+                        },
+                    },
+                    elementType: "SideBySideImage",
+                };
+            } else {
+                let source = importImagePath(element.querySelector("img")!.getAttribute("src")!);
+                return {
+                    elementState: {
+                        value: {
+                            border,
+                            caption,
+                            source,
+                            className,
+                        },
+                    },
+                    elementType: "SingleImage",
+                };
+            }
+        }
+    }
+    throw new Error("Impossible error: Class-list does not contain an image class, but the className attribute does.");
+}
+
 function generateDivItem(element: HTMLDivElement): ElementInfo {
     const classList = element.classList;
     const classes = element.className;
     if (classes.includes("image") || classList.contains("sidebar-icon")) {
-        const border = element.getAttribute("border") !== null || classList.contains("border");
-        const captionElement = element.querySelector("p");
-        const caption = captionElement ? captionElement.innerText : "";
-        let className: string;
-        for (let i = 0; i < classList.length; ++i) {
-            if (classList.item(i).includes("image")) {
-                className = classList.item(i);
-                if (className.includes("sidebyside")) {
-                    let leftSrc = element.querySelectorAll("img")[0].src;
-                    let rightSrc = element.querySelectorAll("img")[1].src;
-                    return {
-                        elementState: {
-                            value: {
-                                border,
-                                caption,
-                                leftSrc,
-                                rightSrc,
-                                className,
-                            },
-                        },
-                        elementType: "SideBySideImage",
-                    };
-                } else {
-                    let src = element.querySelector("img")!.src;
-                    return {
-                        elementState: {
-                            value: {
-                                border,
-                                caption,
-                                src,
-                                className,
-                            },
-                        },
-                        elementType: "SideBySideImage",
-                    };
-                }
-            }
-        }
-        throw new Error("Impossible error: Class-list does not contain an image class, but the className attribute does.");
+        return generateImageItem(element);
     } else if (classList.contains("sidebar-note")) {
         const title = element.querySelector("h2")!.innerText;
         const content = convertToRaw(ContentState.createFromBlockArray(convertFromHTML(element.querySelector("h2")!.outerHTML)));
@@ -220,6 +229,16 @@ function generateDivItem(element: HTMLDivElement): ElementInfo {
             elementType: "RawHtml",
         };
     }
+}
+
+function importImagePath(imagePath: string) {
+    if (imagePath.startsWith(legacyImagesFolder)) {
+        return imagePath.substr(legacyImagesFolder.length);
+    }
+    if (imagePath.startsWith(legacyKeyboardIconsFolder)) {
+        return imagePath.substr(legacyKeyboardIconsFolder.length);
+    }
+    return imagePath;
 }
 
 export default function importManualHtml(html: string): Document {

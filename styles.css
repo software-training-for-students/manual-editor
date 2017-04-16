@@ -23,6 +23,7 @@ input[type=text].h2 {
     top: 0;
     padding-top: 3em;
     padding-bottom: 1em;
+    z-index: 100;
 }
 
 @media print {
@@ -108,4 +109,14 @@ div.removable:hover > button {
 }
 div.removable:not(:hover) > button {
   display: none;
+}
+
+.instruction-list div.DraftEditor-root {
+    margin-left: 2.25em;
+    margin-top: 0.75em;
+}
+
+.instruction-list .instruction-list div.DraftEditor-root {
+    margin-left: 2.25em;
+    margin-top: 1em;
 }
