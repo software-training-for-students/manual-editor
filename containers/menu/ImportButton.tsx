@@ -16,17 +16,15 @@ interface Props {
 class ImportButton extends React.Component<Props, void> {
     public render() {
         return (
-            <div>
-                <div className="has-flyout">
-                    <button data-flyout-id="import-flyout" onClick={this.toggleImportFlyout}>Import</button>
-                    <Flyout id="import-flyout" options={{align: "bottom middle"}}>
-                        <div>
-                            <header>Import Legacy (HTML) Manual</header>
-                            <input type="file" accept=".zip" onChange={this.fileChanged} />
-                            <button onClick={this.onImport}>Load</button>
-                        </div>
-                    </Flyout>
-                </div>
+            <div className="has-flyout">
+                <button data-flyout-id="import-flyout" onClick={this.toggleImportFlyout}>Import</button>
+                <Flyout id="import-flyout" options={{align: "bottom middle"}}>
+                    <div>
+                        <header>Import Legacy (HTML) Manual</header>
+                        <input type="file" accept=".zip" onChange={this.fileChanged} />
+                        <button onClick={this.onImport}>Load</button>
+                    </div>
+                </Flyout>
             </div>
         );
     }

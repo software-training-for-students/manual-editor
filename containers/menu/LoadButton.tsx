@@ -7,28 +7,23 @@ import {Store} from "stores";
 
 interface Props {
     toggleFlyout: (id: string) => void;
-    onSave: () => void;
     onLoad: (file: File) => void;
     onFileChanged: (file: File) => void;
     fileToLoad: File;
 }
 
-class SaveLoadButtons extends React.Component<Props, void> {
+class LoadButton extends React.Component<Props, void> {
     public render() {
         return (
-            <div>
-                <button onClick={this.onSave}>Save</button>
-                
-                <div className="has-flyout">
-                    <button data-flyout-id="load-flyout" onClick={this.toggleLoadFlyout}>Load</button>
-                    <Flyout id="load-flyout" options={{align: "bottom middle"}}>
-                        <div>
-                            <header>Load Manual</header>
-                            <input type="file" accept=".uwstsmanual" onChange={this.fileChanged} />
-                            <button onClick={this.onLoad}>Load</button>
-                        </div>
-                    </Flyout>
-                </div>
+            <div className="has-flyout">
+                <button data-flyout-id="load-flyout" onClick={this.toggleLoadFlyout}>Load</button>
+                <Flyout id="load-flyout" options={{align: "bottom middle"}}>
+                    <div>
+                        <header>Load Manual</header>
+                        <input type="file" accept=".uwstsmanual" onChange={this.fileChanged} />
+                        <button onClick={this.onLoad}>Load</button>
+                    </div>
+                </Flyout>
             </div>
         );
     }
@@ -42,8 +37,6 @@ class SaveLoadButtons extends React.Component<Props, void> {
             this.props.onFileChanged(event.currentTarget.files[0]);
         }
     }
-
-    private onSave = () => this.props.onSave();
 
     private onLoad = () => this.props.onLoad(this.props.fileToLoad);
 }
@@ -60,11 +53,10 @@ let mapActionsToProps = ({
         type: "load-file-changed",
     } as SaveLoadActions.FileChangedAction),
     onLoad : SaveLoadActions.loadThunkAction,
-    onSave : SaveLoadActions.saveAsThunkAction,
     toggleFlyout : (id: string) => ({
         type: "flyout-toggle",
         id,
     } as FlyoutToggle),
 });
 
-export default connect(mapStateToProps, mapActionsToProps)(SaveLoadButtons);
+export default connect(mapStateToProps, mapActionsToProps)(LoadButton);

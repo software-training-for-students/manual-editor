@@ -34,7 +34,7 @@ function convertCurrentElement(currentElement: Element) {
                     {
                         elementState: {
                             level: parseInt(currentElement.tagName[1], 10),
-                            value: decode(currentElement.innerHTML),
+                            value: (<HTMLElement> currentElement).innerText,
                         },
                         elementType: "Heading",
                     },
@@ -185,8 +185,9 @@ function generateDivItem(element: HTMLDivElement): ElementInfo {
     if (classes.includes("image") || classList.contains("sidebar-icon")) {
         return generateImageItem(element);
     } else if (classList.contains("sidebar-note")) {
-        const title = element.querySelector("h2")!.innerText;
-        const content = convertToRaw(ContentState.createFromBlockArray(convertFromHTML(element.querySelector("h2")!.outerHTML)));
+        const titleElement = element.querySelector("h2");
+        const title = titleElement ? titleElement.innerText : "";
+        const content = convertToRaw(ContentState.createFromBlockArray(convertFromHTML(element.querySelector("p")!.outerHTML)));
         const imageElement = element.querySelector("img");
         const imgSource = imageElement ? imageElement.src : "";
         return {

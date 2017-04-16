@@ -130,6 +130,8 @@ div.removable:not(:hover) > button {
 
 div.DraftEditor-root {
     font-family: 'Lora', serif;
+    line-height: 1.5em;
+    padding-bottom: 1.5em;
 }
 
 @media print {

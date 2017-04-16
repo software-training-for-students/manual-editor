@@ -6,7 +6,8 @@ import * as ListButtons from "containers/menu/ListButtons";
 import ListItemButton from "containers/menu/ListItemButton";
 import ParagraphButton from "containers/menu/ParagraphButton";
 import HtmlButton from "containers/menu/RawHtmlButton";
-import SaveLoadButtons from "containers/menu/SaveLoadButtons";
+import SaveButton from "containers/menu/SaveButton";
+import LoadButton from "containers/menu/LoadButton";
 import SidebarNoteButton from "containers/menu/SidebarNoteButton";
 import TableButton from "containers/menu/TableButton";
 import ToolboxButton from "containers/menu/ToolboxButton";
@@ -29,8 +30,11 @@ export default class Menu extends React.Component<void, void> {
                 <ListButtons.InstructionListButton />
                 <ListItemButton />
                 <TableButton />
-                <SaveLoadButtons />
-                <ImportButton />
+                <div>
+                    <SaveButton />
+                    <LoadButton />
+                    <ImportButton />
+                </div>
             </div>
         );
     }
