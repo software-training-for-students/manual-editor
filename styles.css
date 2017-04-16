@@ -107,8 +107,15 @@ div.removable:hover > button {
     top: 0%;
     right: 0%;
 }
+
 div.removable:not(:hover) > button {
   display: none;
+}
+
+@media print  {
+    div.removable > button {
+        display: none;
+    }
 }
 
 .instruction-list div.DraftEditor-root {
@@ -119,4 +126,14 @@ div.removable:not(:hover) > button {
 .instruction-list .instruction-list div.DraftEditor-root {
     margin-left: 2.25em;
     margin-top: 1em;
+}
+
+div.DraftEditor-root {
+    font-family: 'Lora', serif;
+}
+
+@media print {
+    div.public-DraftEditorPlaceholder-root {
+        display: none;
+    }
 }

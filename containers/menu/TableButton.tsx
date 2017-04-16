@@ -1,6 +1,6 @@
 import {UpdateTableColumns, UpdateTableRows} from "actions/MenuActions";
 import MenuItem from "containers/MenuItem";
-import {convertFromHTML} from "draft-js";
+import {convertToRaw, EditorState} from "draft-js";
 import * as React from "react";
 import {connect} from "react-redux";
 import {initialState, Store} from "stores";
@@ -33,7 +33,7 @@ function generateItems(rows: number, columns: number): ItemInformation[] {
             items.push({
                 componentTypeName: "RichText",
                 defaultProps: {
-                    value: {blocks: convertFromHTML("<p>Text</p>"), entityMap: {}},
+                    value: convertToRaw(EditorState.createEmpty().getCurrentContent()),
                 },
             });
             items.push({
@@ -82,7 +82,6 @@ class TableButton extends React.Component<Props, State> {
             });
         }
     }
-
 
     public render() {
         return (
