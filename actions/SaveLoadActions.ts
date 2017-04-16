@@ -41,6 +41,9 @@ export function loadThunkAction(zipFile: File): ThunkAction<void, Store, void> {
                     type : "set-document",
                 });
             }).then(() => {
+                dispatcher(<ClearImagesAction> {
+                    type: "clear-images",
+                });
                 for (let fileName in loadedZip.files) {
                     if (loadedZip.files.hasOwnProperty(fileName)) {
                         let file = loadedZip.files[fileName];
@@ -55,18 +58,6 @@ export function loadThunkAction(zipFile: File): ThunkAction<void, Store, void> {
             });
         });
     };
-    // return (dispatcher) => {
-    //     let loader = new FileReader();
-    //     loader.onload = () => {
-    //         let manual: Document = JSON.parse(loader.result);
-
-    //         dispatcher(<SetDocumentAction> {
-    //             document : manual,
-    //             type : "set-document",
-    //         });
-    //     };
-    //     loader.readAsText(zipFile);
-    // };
 }
 
 export interface SetDocumentAction extends Action {

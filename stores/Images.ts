@@ -14,9 +14,9 @@ export function emptyImagesStore(store: ImagesStore) {
         if (store.hasOwnProperty(key)) {
             let element = store[key];
             URL.revokeObjectURL(element.imageUrl);
-            delete store[key];
         }
     }
+    return {};
 }
 
 export function addOrUpdateBlobImageToStore(store: ImagesStore, friendlyUrl: string, image: Blob): ImagesStore {

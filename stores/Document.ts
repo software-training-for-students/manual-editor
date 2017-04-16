@@ -18,9 +18,12 @@ export interface Document {
     elementOrdering: ItemOrdering[];
 }
 
-interface ElementInfo {
+export interface ElementInfo {
     elementType: string;
-    elementState: EditableProps<any>;
+    elementState?: {
+        value: any,
+        [key: string]: any
+    };
     metaItemType?: MetaItemType;
 }
 
@@ -94,7 +97,7 @@ export function addElements(
     let idStack: number[] = [];
     elements.forEach((element, idx) => {
         let itemId = element.metaItemType === "close" ? idStack.pop()! : document.nextItemId;
-        document[itemId] = {... element.elementState, editing : idx === elementToEdit};
+        document[itemId] = {... element.elementState, editing : idx === elementToEdit, itemId};
         if (element.metaItemType === "open") {
             idStack.push(itemId);
         }
