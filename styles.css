@@ -148,6 +148,10 @@ div.DraftEditor-root {
     }
 }
 
+.sidebar-note h2:empty {
+    display: none;
+}
+
 @media print {
     div.public-DraftEditorPlaceholder-root {
         display: none;
