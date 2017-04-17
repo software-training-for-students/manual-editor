@@ -12,7 +12,7 @@ function extractElements(parentElement: Element): ElementInfo[] {
     for (let i = 0; i < parentElement.childNodes.length; ++i) {
         let currentElement = parentElement.childNodes.item(i);
         if (!encounteredIntro) {
-            if (currentElement instanceof Element && currentElement.innerHTML === "Introduction") {
+            if (currentElement.textContent === "Introduction") {
                 encounteredIntro = true;
             }
             continue;
