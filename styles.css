@@ -134,6 +134,20 @@ div.DraftEditor-root {
     padding-bottom: 1.5em;
 }
 
+.edit-hint {
+    text-align: right;
+    color: grey;
+    margin-left: auto;
+    margin-right: 1em;
+    display: block;
+}
+
+@media print {
+    .edit-hint {
+        display:none;
+    }
+}
+
 @media print {
     div.public-DraftEditorPlaceholder-root {
         display: none;

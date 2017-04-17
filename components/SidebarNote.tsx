@@ -15,10 +15,15 @@ interface Props {
 const SidebarNote: React.StatelessComponent<Props> = (props: Props) => {
     let {value, ...rest} = props;
     return (
-        <div className="sidebar-note" {...rest}>
-            <h2>{value.title}</h2>
-            <RichTextPresenter value={value.content} />
-            <SmartImagePresenter src={value.imgSource} />
+        <div {...rest}>
+            <span className="edit-hint">
+                Click here to edit note below.
+            </span>
+            <div className="sidebar-note">
+                <h2>{value.title}</h2>
+                <RichTextPresenter value={value.content} />
+                <SmartImagePresenter src={value.imgSource} />
+            </div>
         </div>
     );
 };

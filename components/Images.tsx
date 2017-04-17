@@ -18,7 +18,7 @@ export type SideBySideImageCssClass =
 
 interface SingleImageComponentProps {
     value: SingleImageProps | undefined;
-    onClick?: (e: React.SyntheticEvent<HTMLImageElement>) => void;
+    onClick?: (e: React.SyntheticEvent<HTMLDivElement>) => void;
 }
 
 export interface SingleImageProps {
@@ -51,13 +51,20 @@ export class SingleImage extends React.Component<SingleImageComponentProps, void
             source: "",
         };
         return (
-        <div className={value.className + (value.border ? " border" : "")}>
-            <SmartImagePresenter src={value.source} onClick={this.onClick} />
-            <p>{value.caption}</p>
+        <div onClick={this.onClick}>
+            {value.className.startsWith("side") ? (
+                <span className="edit-hint">
+                    Click here to edit image below.
+                </span>
+            ) : null}
+            <div className={value.className + (value.border ? " border" : "")}>
+                <SmartImagePresenter src={value.source} />
+                <p>{value.caption}</p>
+            </div>
          </div>);
     }
 
-    private onClick = (event: React.SyntheticEvent<HTMLImageElement>) => {
+    private onClick = (event: React.SyntheticEvent<HTMLDivElement>) => {
         if (this.props.onClick) {
           this.props.onClick(event);
         }
