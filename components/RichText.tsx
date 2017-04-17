@@ -1,6 +1,7 @@
+import "es6-shim";
+
 import * as Draft from "draft-js";
 import "draft-js/dist/Draft.css";
-import "es6-shim";
 import * as React from "react";
 import {findDOMNode} from "react-dom";
 
