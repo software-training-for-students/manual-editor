@@ -9,15 +9,25 @@ const legacyKeyboardIconsFolder = "keyboard-icons/";
 function extractElements(parentElement: Element): ElementInfo[] {
     let encounteredIntro = !(parentElement instanceof HTMLBodyElement);
     let items: ElementInfo[] = [];
-    for (let i = 0; i < parentElement.children.length; ++i) {
-        let currentElement = parentElement.children.item(i);
+    for (let i = 0; i < parentElement.childNodes.length; ++i) {
+        let currentElement = parentElement.childNodes.item(i);
         if (!encounteredIntro) {
-            if (currentElement.innerHTML === "Introduction") {
+            if (currentElement instanceof Element && currentElement.innerHTML === "Introduction") {
                 encounteredIntro = true;
             }
             continue;
         }
-        items = items.concat(convertCurrentElement(currentElement));
+        if (currentElement.nodeType === Node.ELEMENT_NODE) {
+            items = items.concat(convertCurrentElement(<Element> currentElement));
+        }
+        if (currentElement.nodeType === Node.TEXT_NODE && currentElement.textContent && currentElement.textContent.trim().length) {
+            items.push({
+                elementState: {
+                    value: convertToRaw(ContentState.createFromBlockArray(convertFromHTML(currentElement.textContent))),
+                },
+                elementType: "RichText",
+            });
+        }
     }
     return items;
 }
@@ -40,20 +50,7 @@ function convertCurrentElement(currentElement: Element) {
                     },
                 ];
             case "ul":
-            {
-                let listElements: ElementInfo[] = [
-                    {
-                        elementType: "UnorderedList",
-                        metaItemType: "open",
-                    },
-                    {
-                        elementType: "UnorderedList",
-                        metaItemType: "close",
-                    },
-                ];
-                Array.prototype.splice.apply(listElements, (<any[]> [1, 0]).concat(extractElements(currentElement)));
-                return listElements;
-            }
+            return generateMetaItem("UnorderedList", currentElement);
             case "li":
             {
                 let content = ContentState.createFromBlockArray(convertFromHTML(currentElement.innerHTML));
@@ -69,18 +66,7 @@ function convertCurrentElement(currentElement: Element) {
             case "ol":
             {
                 let elementType = currentElement.classList.contains("instruction-list") ? "InstructionList" : "OrderedList";
-                let listElements: ElementInfo[] = [
-                    {
-                        elementType,
-                        metaItemType: "open",
-                    },
-                    {
-                        elementType,
-                        metaItemType: "close",
-                    },
-                ];
-                Array.prototype.splice.apply(listElements, (<any[]> [1, 0]).concat(extractElements(currentElement)));
-                return listElements;
+                return generateMetaItem(elementType, currentElement);
             }
             case "p":
             {
@@ -123,6 +109,18 @@ function convertCurrentElement(currentElement: Element) {
             return [
                 generateDivItem(<HTMLDivElement> currentElement),
             ];
+            case "br":
+            return [];
+            case "table":
+            return generateMetaItem("Table", currentElement);
+            case "tbody":
+            return extractElements(currentElement);
+            case "tr":
+            return generateMetaItem("TableRow", currentElement);
+            case "th":
+            return generateMetaItem("TableHeader", currentElement);
+            case "td":
+            return generateMetaItem("TableCell", currentElement);
             default: // TODO: make default case output RawHTML control.
                 console.warn(`Unsupported Tag ${currentElement.tagName}. Imported into a Raw HTML element.`);
                 return [
@@ -134,6 +132,21 @@ function convertCurrentElement(currentElement: Element) {
                     },
                 ];
         }
+}
+
+function generateMetaItem(elementType: string, currentElement: Element) {
+    let listElements: ElementInfo[] = [
+        {
+            elementType,
+            metaItemType: "open",
+        },
+        {
+            elementType,
+            metaItemType: "close",
+        },
+    ];
+    Array.prototype.splice.apply(listElements, (<any[]> [1, 0]).concat(extractElements(currentElement)));
+    return listElements;
 }
 
 function generateImageItem(element: HTMLDivElement): ElementInfo {
