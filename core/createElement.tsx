@@ -1,3 +1,4 @@
+import removable from "components/higher-order/removable";
 import * as Lists from "components/Lists";
 import Table from "components/Table";
 import TableCell from "components/TableCell";
@@ -7,12 +8,12 @@ import EditableCode from "containers/editors/EditableCode";
 import EditableHeading from "containers/editors/EditableHeading";
 import EditableHtml from "containers/editors/EditableHtml";
 import EditableImage from "containers/editors/EditableImage";
+import EditableKeyboardShortcut from "containers/editors/EditableKeyboardShortcut";
 import EditableListItem from "containers/editors/EditableListItem";
 import EditableRichText from "containers/editors/EditableRichText";
 import EditableSidebarNote from "containers/editors/EditableSidebarNote";
 import EditableToolbox from "containers/editors/EditableToolbox";
 import * as React from "react";
-import removable from "components/higher-order/removable";
 import { ItemTree } from "./../stores/Document";
 
 type EditableProps = {
@@ -41,6 +42,7 @@ let elementTypes: ElementTypes = {
     ["TableRow"] : TableRow,
     ["TableCell"] : TableCell,
     ["TableHeader"] : TableHeader,
+    ["KeyboardShortcut"]: removable(EditableKeyboardShortcut),
 };
 
 function createElement(props: ItemTree) {
