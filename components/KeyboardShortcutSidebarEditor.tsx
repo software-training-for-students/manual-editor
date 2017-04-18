@@ -40,20 +40,20 @@ export default class KeyboardShortcutSidebarEditor extends React.Component<Props
     private renderShortcut() {
         switch (this.props.value.type) {
             case "no-shortcut":
-            return null;
+                return null;
             case "shortcut":
-            return <KeyboardShortcutEditor os="" keys={this.props.value.shortcuts[0]} onShortcutChanged={this.shortcutChanged} />;
+                return <KeyboardShortcutEditor os="" keys={this.props.value.shortcuts[0]} onShortcutChanged={this.shortcutChanged} />;
             case "multi-shortcut":
-            return (
-                <div>
-                    <h3>Mac:</h3>
-                    <KeyboardShortcutEditor os="mac" keys={this.props.value.shortcuts[0]} onShortcutChanged={this.shortcutChanged} />
-                    <h3>Windows:</h3>
-                    <KeyboardShortcutEditor os="win" keys={this.props.value.shortcuts[1]} onShortcutChanged={this.shortcutChanged} />
-                </div>
-            );
+                return (
+                    <div>
+                        <h3>Mac:</h3>
+                        <KeyboardShortcutEditor os="mac" keys={this.props.value.shortcuts[0]} onShortcutChanged={this.shortcutChanged} />
+                        <h3>Windows:</h3>
+                        <KeyboardShortcutEditor os="win" keys={this.props.value.shortcuts[1]} onShortcutChanged={this.shortcutChanged} />
+                    </div>
+                );
             default:
-            throw new Error(`Invalid shortcut type ${this.props.value.type}`);
+                throw new Error(`Invalid shortcut type ${this.props.value.type}`);
         }
     }
 
