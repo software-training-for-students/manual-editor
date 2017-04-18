@@ -7,13 +7,11 @@ type Props = {
     onValueChange: (value: RawDraftContentState) => void;
 };
 
-export default function(props: Props) {
+export default function ListItemEditor(props: Props) {
     let {value, onValueChange, ...rest} = props;
     return (
         <li {...rest} >
-            <p>
-                <RichTextEditor value={value} onValueChange={onValueChange} />
-            </p>
+            <RichTextEditor value={value} onValueChange={onValueChange} />
         </li>
     );
 }

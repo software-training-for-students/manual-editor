@@ -7,7 +7,7 @@ type Props = {
     onClick: (e: React.SyntheticEvent<HTMLLIElement>) => void;
 };
 
-export default function(props: Props) {
+export default function ListItem(props: Props) {
     return (
         <li onClick={props.onClick}>
             <RichTextPresenter {... props} />
