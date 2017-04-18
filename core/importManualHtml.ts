@@ -234,6 +234,61 @@ function generateDivItem(element: HTMLDivElement): ElementInfo {
             },
             elementType: "Toolbox",
         };
+    } else if (classList.contains("keyboard-shortcut")) {
+        const titleElement = element.querySelector("h2");
+        const title = titleElement ? titleElement.innerText : "";
+        const content = convertToRaw(ContentState.createFromBlockArray(convertFromHTML(element.querySelector("p")!.outerHTML)));
+        const labels = element.querySelectorAll("h3");
+        switch (labels.length) {
+            case 0:
+            case 1:
+            {
+                let keyImages = element.getElementsByTagName("img");
+                let keys: string[] = [];
+                for (let i = 0; i < keyImages.length; ++i) {
+                    let image = keyImages.item(i);
+                    let regexMatch = image.getAttribute("src")!.match(/icon-([a-z0-9]+).svg/i)!;
+                    keys.push(regexMatch[1]);
+                }
+                return {
+                    elementState: {
+                        value: {
+                            title,
+                            content,
+                            shortcuts: [keys],
+                            type: keys.length ? "shortcut" : "no-shortcut",
+                        },
+                    },
+                    elementType: "KeyboardShortcut",
+                };
+            }
+            default:
+                console.warn("Unsupported number of labels. Only importing first 2 shortcuts");
+            case 2:
+                let firstLabel = labels.item(0);
+                let secondLabel = labels.item(1);
+                let firstKeys: string[] = [];
+                for (let image = firstLabel.nextElementSibling; image !== secondLabel; image = image!.nextElementSibling) {
+                    let regexMatch = image!.getAttribute("src")!.match(/icon-([a-z0-9]+).svg/i)!;
+                    firstKeys.push(regexMatch[1]);
+                }
+                let secondKeys: string[] = [];
+                for (let image = secondLabel.nextElementSibling; image && image !== labels.item(2); image = image.nextElementSibling) {
+                    let regexMatch = image.getAttribute("src")!.match(/icon-([a-z0-9]+).svg/i)!;
+                    secondKeys.push(regexMatch[1]);
+                }
+                return {
+                    elementState: {
+                        value: {
+                            title,
+                            content,
+                            shortcuts: [firstKeys, secondKeys],
+                            type: "multi-shortcut",
+                        },
+                    },
+                    elementType: "KeyboardShortcut",
+                };
+        }
     } else {
         console.warn(`Unsupported div classes: ${classes}. Imported into a Raw HTML element`);
         return {
