@@ -6,17 +6,17 @@ type ComponentType<TProps> = React.StatelessComponent<TProps> | React.ComponentC
 interface InputProps<T> {
     autoFocus?: boolean;
     onValueChange: (value: T) => void;
-    value: T | undefined;
+    value: T;
 }
 
 interface StaticProps<T> {
-    value: T | undefined;
+    value: T ;
     onClick?: ((event: React.SyntheticEvent<HTMLElement>) => void);
 }
 
 interface Props<T> {
-    editing: boolean | undefined;
-    value: T | undefined;
+    editing: boolean;
+    value: T;
     inputProps?: any;
     staticProps?: any;
     inputComponentClass: ComponentType<InputProps<T>>;

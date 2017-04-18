@@ -14,12 +14,15 @@ function mapItemStateToAdditionalPropsDefault<TProps extends EditableProps<any>>
     return {... itemState, ... updatedBaseProps};
 }
 
+type OldProps<TProps> = Partial<TProps> & {itemId: number};
+
 export function createEditableStateToPropsMapper<TProps extends EditableProps<any>>(
     mapItemStateToAdditionalProps: (itemState: TProps, updatedBaseProps: Partial<EditableProps<any>>) => Partial<TProps>
      = mapItemStateToAdditionalPropsDefault) {
 
-    return (state: Store = initialState, oldProps: TProps) : Partial<TProps> => {
-        const itemState = state.document[oldProps.itemId] as TProps;
+    return (state: Store = initialState, oldProps: OldProps<TProps>) : Partial<TProps> => {
+        let itemId: number = oldProps.itemId;
+        const itemState = state.document[itemId] as TProps;
         if (itemState) {
             const updatedBaseProps = mapItemStateToDefaultProps(itemState);
             return mapItemStateToAdditionalProps(itemState, updatedBaseProps);

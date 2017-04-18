@@ -1,13 +1,13 @@
 
 export interface EditableProps<T> {
     itemId: number;
-    editing?: boolean;
-    value?: T;
+    editing: boolean;
+    value: T;
 }
 
 interface EditableCallbacks<T> {
-    setIsEditing?: (id: number, mode: boolean) => void;
-    onEdited?: (id: number, newValue: T) => void;
+    setIsEditing: (id: number, mode: boolean) => void;
+    onEdited: (id: number, newValue: T) => void;
 }
 
 export type EditableActionsMap<T> = {

@@ -260,16 +260,19 @@ export default function importManualHtml(html: string): Document {
     let oldManual = parser.parseFromString(html, "text/html");
     let newManual: Document = {
         1: {
+            editing: false,
             itemId: 1,
             level: 1,
-            value: oldManual.querySelector("#coverpage-title h1")!.textContent,
+            value: oldManual.querySelector("#coverpage-title h1")!.textContent!,
         },
         2: {
+            editing: false,
             itemId: 2,
             level: 2,
-            value: oldManual.querySelector("#coverpage-title h2")!.textContent,
+            value: oldManual.querySelector("#coverpage-title h2")!.textContent!,
         },
         3: {
+            editing: false,
             itemId: 3,
             level: 1,
             value: "Introduction",

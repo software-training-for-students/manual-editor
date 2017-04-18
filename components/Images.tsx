@@ -17,7 +17,7 @@ export type SideBySideImageCssClass =
     | "sidebyside-image-large";
 
 interface SingleImageComponentProps {
-    value: SingleImageProps | undefined;
+    value: SingleImageProps;
     onClick?: (e: React.SyntheticEvent<HTMLDivElement>) => void;
 }
 
@@ -29,7 +29,7 @@ export interface SingleImageProps {
 }
 
 interface SideBySideImageComponentProps {
-    value: SideBySideImageProps | undefined;
+    value: SideBySideImageProps ;
     onClick: (e: React.SyntheticEvent<HTMLDivElement>) => void;
 }
 

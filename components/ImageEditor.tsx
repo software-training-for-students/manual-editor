@@ -3,7 +3,7 @@ import ImagePicker from "containers/ImagePicker";
 import * as React from "react";
 
 interface ImageEditorProps<TImageProps> {
-    value: TImageProps | undefined;
+    value: TImageProps;
     onValueChange: (newProps: TImageProps) => void;
 }
 
