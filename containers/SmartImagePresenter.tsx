@@ -10,7 +10,8 @@ interface Props {
 
 class Image extends React.Component<Props, void> {
     public render() {
-        return <img {...this.props} src={this.props.actualSource} />;
+        let {actualSource, ...rest} = this.props;
+        return <img {...rest} src={actualSource} />;
     }
 }
 
@@ -22,4 +23,4 @@ function mapStateToProps(store: Store, props: Props): Props {
     };
 }
 
-export default connect(mapStateToProps)(Image);
+export default connect(mapStateToProps, {})(Image);

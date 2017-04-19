@@ -12,7 +12,9 @@ function autoUnfocus<TProps>(Component: React.ComponentClass<TProps> | React.Sta
         }
 
         public render() {
-            return <Component {... this.props} />;
+            let childProps: any = Object.assign({}, this.props);
+            delete childProps.onComplete;
+            return <Component {... childProps} />;
         }
 
         private onWindowClick = (e: MouseEvent) => {
