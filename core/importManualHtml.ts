@@ -1,6 +1,7 @@
+import ElementInfo, * as ElementTypes from "core/ElementInfo";
 import { ContentState, convertFromHTML, convertToRaw } from "draft-js";
 import {decode} from "he";
-import {addElements, Document, ElementInfo} from "stores/Document";
+import {addElements, Document} from "stores/Document";
 
 // These are used for images in the old manual style.
 const legacyImagesFolder = "images/";
@@ -32,7 +33,7 @@ function extractElements(parentElement: Element): ElementInfo[] {
     return items;
 }
 
-function convertCurrentElement(currentElement: Element) {
+function convertCurrentElement(currentElement: Element): ElementInfo[] {
             switch (currentElement.tagName.toLowerCase()) {
             case "h1":
             case "h2":
@@ -43,7 +44,7 @@ function convertCurrentElement(currentElement: Element) {
                 return [
                     {
                         elementState: {
-                            level: parseInt(currentElement.tagName[1], 10),
+                            level: <ElementTypes.Heading["level"]> parseInt(currentElement.tagName[1], 10),
                             value: (<HTMLElement> currentElement).innerText,
                         },
                         elementType: "Heading",
@@ -65,7 +66,7 @@ function convertCurrentElement(currentElement: Element) {
             }
             case "ol":
             {
-                let elementType = currentElement.classList.contains("instruction-list") ? "InstructionList" : "OrderedList";
+                let elementType: ElementTypes.MetaElement = currentElement.classList.contains("instruction-list") ? "InstructionList" : "OrderedList";
                 return generateMetaItem(elementType, currentElement);
             }
             case "p":
@@ -134,7 +135,7 @@ function convertCurrentElement(currentElement: Element) {
         }
 }
 
-function generateMetaItem(elementType: string, currentElement: Element) {
+function generateMetaItem(elementType: ElementTypes.MetaElement, currentElement: Element) {
     let listElements: ElementInfo[] = [
         {
             elementType,
@@ -159,16 +160,16 @@ function generateImageItem(element: HTMLDivElement): ElementInfo {
         if (classList.item(i).includes("image")) {
             className = classList.item(i);
             if (className.includes("sidebyside")) {
-                let leftSrc = importImagePath(element.querySelectorAll("img")[0].getAttribute("src")!);
-                let rightSrc = importImagePath(element.querySelectorAll("img")[1].getAttribute("src")!);
+                let leftSource = importImagePath(element.querySelectorAll("img")[0].getAttribute("src")!);
+                let rightSource = importImagePath(element.querySelectorAll("img")[1].getAttribute("src")!);
                 return {
                     elementState: {
                         value: {
                             border,
                             caption,
-                            leftSrc,
-                            rightSrc,
-                            className,
+                            leftSource,
+                            rightSource,
+                            className: <ElementTypes.SideBySideImageCssClass> className,
                         },
                     },
                     elementType: "SideBySideImage",
@@ -181,7 +182,7 @@ function generateImageItem(element: HTMLDivElement): ElementInfo {
                             border,
                             caption,
                             source,
-                            className,
+                            className: <ElementTypes.SingleImageCssClass> className,
                         },
                     },
                     elementType: "SingleImage",
@@ -255,7 +256,7 @@ function generateDivItem(element: HTMLDivElement): ElementInfo {
                         value: {
                             title,
                             content,
-                            shortcuts: [keys],
+                            shortcuts: <ElementTypes.Keys[][]> [keys],
                             type: keys.length ? "shortcut" : "no-shortcut",
                         },
                     },
@@ -282,7 +283,7 @@ function generateDivItem(element: HTMLDivElement): ElementInfo {
                         value: {
                             title,
                             content,
-                            shortcuts: [firstKeys, secondKeys],
+                            shortcuts: <ElementTypes.Keys[][]>[firstKeys, secondKeys],
                             type: "multi-shortcut",
                         },
                     },
