@@ -1,8 +1,8 @@
 {
   "name": "sts-manual-editor",
-  "version": "0.0.0",
-  "description": "Editor for STS Manuals (React/Typescript based)",
-  "main": "app.js",
+  "version": "1.0.0",
+  "description": "Editor for STS Manuals",
+  "main": "app.tsx",
   "scripts": {
     "build": "webpack",
     "pack": "webpack --env.production",
@@ -13,7 +13,7 @@
     "type": "git",
     "url": "https://github.com/software-training-for-students/manual-editor"
   },
-  "author": "",
+  "author": "UW STS",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/software-training-for-students/manual-editor/issues"
