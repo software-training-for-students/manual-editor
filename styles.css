@@ -19,7 +19,7 @@ input[type=text].h2 {
     position: fixed;
     background: white;
     width: 100%;
-    margin : 0 auto;
+    left: 15%;
     top: 0;
     padding-top: 3em;
     padding-bottom: 1em;
