@@ -12,8 +12,6 @@ const EditableSingleImage = (props: InteractivePropsFromElementInfo<SingleImage>
         {... props}
         inputComponentClass={ImageEditor.SingleImageEditor}
         staticComponentClass={Images.SingleImage}
-        inputProps = {props.value}
-        staticProps = {props.value}
     />;
 };
 
@@ -23,8 +21,6 @@ const EditableSideBySideImage = (props: InteractivePropsFromElementInfo<SideBySi
         {... props}
         inputComponentClass={ImageEditor.SideBySideImageEditor}
         staticComponentClass={Images.SideBySideImages}
-        inputProps = {props.value}
-        staticProps = {props.value}
     />;
 };
 
