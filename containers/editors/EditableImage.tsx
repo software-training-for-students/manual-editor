@@ -2,8 +2,8 @@ import EditableElement from "components/EditableElement";
 import ImageEditor from "components/ImageEditor";
 import * as Images from "components/Images";
 import connectEditable from "core/connectEditable";
-import {InteractivePropsFromElementInfo} from "core/EditableBase";
 import {SideBySideImage, SingleImage} from "core/ElementInfo";
+import InteractivePropsFromElementInfo from "core/InteractivePropsFromElementInfo";
 import * as React from "react";
 
 const EditableSingleImage = (props: InteractivePropsFromElementInfo<SingleImage>) => {

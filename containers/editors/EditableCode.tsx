@@ -2,8 +2,8 @@ import CodePresenter from "components/CodePresenter";
 import EditableElement from "components/EditableElement";
 import PlainTextEditor from "components/PlainTextEditor";
 import connectEditable from "core/connectEditable";
-import {InteractivePropsFromElementInfo} from "core/EditableBase";
 import {Code} from "core/ElementInfo";
+import InteractivePropsFromElementInfo from "core/InteractivePropsFromElementInfo";
 import * as React from "react";
 
 const EditableCode = (props: InteractivePropsFromElementInfo<Code>) => {

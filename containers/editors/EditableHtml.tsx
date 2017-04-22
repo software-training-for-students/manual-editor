@@ -2,8 +2,8 @@ import EditableElement from "components/EditableElement";
 import HtmlPresenter from "components/HtmlPresenter";
 import PlainTextEditor from "components/PlainTextEditor";
 import connectEditable from "core/connectEditable";
-import {InteractivePropsFromElementInfo} from "core/EditableBase";
 import {RawHtml} from "core/ElementInfo";
+import InteractivePropsFromElementInfo from "core/InteractivePropsFromElementInfo";
 import * as React from "react";
 
 const EditableHtml = (props: InteractivePropsFromElementInfo<RawHtml>) => {

@@ -2,8 +2,8 @@ import EditableElement from "components/EditableElement";
 import KeyboardShortcutSidebarEditor from "components/KeyboardShortcutSidebarEditor";
 import KeyboardShortcutSidebarPresenter from "components/KeyboardShortcutSidebarPresenter";
 import connectEditable from "core/connectEditable";
-import {InteractivePropsFromElementInfo} from "core/EditableBase";
 import {KeyboardShortcut} from "core/ElementInfo";
+import InteractivePropsFromElementInfo from "core/InteractivePropsFromElementInfo";
 import * as React from "react";
 
 const EditableKeyboardShortcut = (props: InteractivePropsFromElementInfo<KeyboardShortcut>) => {

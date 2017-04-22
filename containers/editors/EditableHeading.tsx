@@ -2,8 +2,8 @@ import EditableElement from "components/EditableElement";
 import Heading from "components/Heading";
 import SingleLineEditor from "components/SingleLineEditor";
 import connectEditable from "core/connectEditable";
-import {InteractivePropsFromElementInfo} from "core/EditableBase";
 import {Heading as ElementInfo} from "core/ElementInfo";
+import InteractivePropsFromElementInfo from "core/InteractivePropsFromElementInfo";
 import * as React from "react";
 
 type Props = InteractivePropsFromElementInfo<ElementInfo>;
