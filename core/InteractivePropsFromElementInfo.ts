@@ -1,4 +1,4 @@
-import {EditableProps} from "core/connectEditable";
+import EditableProps from "core/EditableProps";
 
 interface EditableCallbacks<T> {
     setIsEditing: (id: number, mode: boolean) => void;

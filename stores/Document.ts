@@ -1,4 +1,4 @@
-import { EditableProps } from "core/EditableBase";
+import EditableProps from "core/EditableProps";
 
 type MetaItemType = "open" | "close";
 

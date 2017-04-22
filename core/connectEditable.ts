@@ -1,12 +1,7 @@
 import * as BaseActions from "actions/BaseEditActions";
+import EditableProps from "core/EditableProps";
 import { connect } from "react-redux";
 import {initialState, Store} from "stores";
-
-export interface EditableProps<T> {
-    itemId: number;
-    editing: boolean;
-    value: T;
-}
 
 function mapItemStateToDefaultProps(state: EditableProps<any>): EditableProps<any> {
     return {... state};
