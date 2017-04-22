@@ -3,11 +3,8 @@ import { connect } from "react-redux";
 import {initialState, Store} from "stores";
 import { EditableProps } from "./EditableBase";
 
-function mapItemStateToDefaultProps(state: EditableProps<any>): Partial<EditableProps<any>> {
-    return {
-        editing : state.editing,
-        value : state.value,
-    };
+function mapItemStateToDefaultProps(state: EditableProps<any>): EditableProps<any> {
+    return {... state};
 }
 
 function mapItemStateToAdditionalPropsDefault<TProps extends EditableProps<any>>(itemState: any, updatedBaseProps: Partial<EditableProps<any>>):
@@ -18,7 +15,7 @@ function mapItemStateToAdditionalPropsDefault<TProps extends EditableProps<any>>
 type OldProps<TProps> = Partial<TProps> & {itemId: number};
 
 function createEditableStateToPropsMapper<TProps extends EditableProps<any>>(
-    mapItemStateToAdditionalProps: (itemState: TProps, updatedBaseProps: Partial<EditableProps<any>>) => Partial<TProps>) {
+    mapItemStateToAdditionalProps: (itemState: TProps, updatedBaseProps: EditableProps<any>) => Partial<TProps>) {
 
     return (state: Store = initialState, oldProps: OldProps<TProps>) : Partial<TProps> => {
         let itemId: number = oldProps.itemId;
