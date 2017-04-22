@@ -1,7 +1,7 @@
 import MenuItem from "containers/MenuItem";
 import * as React from "react";
 
-const ToolboxButton = () => {
+export default function ToolboxButton() {
     return (
         <MenuItem
             menuItemId="toolbox"
@@ -25,5 +25,3 @@ const ToolboxButton = () => {
         />
     );
 };
-
-export default ToolboxButton;

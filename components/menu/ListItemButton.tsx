@@ -2,7 +2,7 @@ import MenuItem from "containers/MenuItem";
 import {convertToRaw, EditorState} from "draft-js";
 import * as React from "react";
 
-const ListItemButton = () => {
+export default function ListItemButtion() {
     return <MenuItem
         insertEnabled
         menuItemText="List Item"
@@ -18,5 +18,3 @@ const ListItemButton = () => {
         ]}
     />;
 };
-
-export default ListItemButton;

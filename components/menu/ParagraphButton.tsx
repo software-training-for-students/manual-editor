@@ -2,7 +2,7 @@ import MenuItem from "containers/MenuItem";
 import {convertToRaw, EditorState} from "draft-js";
 import * as React from "react";
 
-const ParagraphButton = () => {
+export default function ParagraphButton() {
 
     return <MenuItem
         insertEnabled
@@ -19,5 +19,3 @@ const ParagraphButton = () => {
         ]}
     />;
 };
-
-export default ParagraphButton;

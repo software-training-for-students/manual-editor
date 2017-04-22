@@ -1,17 +1,17 @@
+import ImageButtons from "components/menu/ImageButtons";
+import KeyboardShortcutButton from "components/menu/KeyboardShortcutButton";
+import * as ListButtons from "components/menu/ListButtons";
+import ListItemButton from "components/menu/ListItemButton";
+import ParagraphButton from "components/menu/ParagraphButton";
+import HtmlButton from "components/menu/RawHtmlButton";
+import SidebarNoteButton from "components/menu/SidebarNoteButton";
+import ToolboxButton from "components/menu/ToolboxButton";
 import CodeSnippetButton from "containers/menu/CodeSnippetButton";
 import HeadingButton from "containers/menu/HeadingButton";
-import ImageButtons from "containers/menu/ImageButtons";
 import ImportButton from "containers/menu/ImportButton";
-import KeyboardShortcutButton from "containers/menu/KeyboardShortcutButton";
-import * as ListButtons from "containers/menu/ListButtons";
-import ListItemButton from "containers/menu/ListItemButton";
 import LoadButton from "containers/menu/LoadButton";
-import ParagraphButton from "containers/menu/ParagraphButton";
-import HtmlButton from "containers/menu/RawHtmlButton";
 import SaveButton from "containers/menu/SaveButton";
-import SidebarNoteButton from "containers/menu/SidebarNoteButton";
 import TableButton from "containers/menu/TableButton";
-import ToolboxButton from "containers/menu/ToolboxButton";
 import * as React from "react";
 
 export default class Menu extends React.Component<void, void> {

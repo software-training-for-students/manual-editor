@@ -1,7 +1,7 @@
 import MenuItem from "containers/MenuItem";
 import * as React from "react";
 
-const HtmlButton = () => {
+export default function HtmlButton() {
 
     return <MenuItem
         insertEnabled
@@ -18,5 +18,3 @@ const HtmlButton = () => {
         ]}
     />;
 };
-
-export default HtmlButton;
