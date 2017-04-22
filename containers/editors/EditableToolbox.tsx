@@ -1,20 +1,14 @@
 import EditableContent from "components/EditableContent";
 import Toolbox from "components/Toolbox";
 import ToolboxEditor from "components/ToolboxEditor";
-import {createEditableStateToPropsMapper, mapBaseActionsToProps} from "core/DocumentMappers";
-import {getCommonInteractiveEditableProps, InteractiveEditableProps} from "core/EditableBase";
+import connectEditable from "core/connectEditable";
+import {getCommonInteractiveEditableProps, InteractivePropsFromElementInfo} from "core/EditableBase";
+import {Toolbox as ToolboxInfo} from "core/ElementInfo";
 import * as React from "react";
-import * as ReactRedux from "react-redux";
 
-interface ToolboxEntry {
-    imgSrc: string;
-    name: string;
-    description: string;
-}
+class EditableToolboxContainer extends EditableContent<ToolboxInfo["value"]> {};
 
-class EditableToolboxContainer extends EditableContent<ToolboxEntry[]> {};
-
-type Props = InteractiveEditableProps<ToolboxEntry[]>;
+type Props = InteractivePropsFromElementInfo<ToolboxInfo>;
 
 const EditableToolbox = (props: Props) => {
     return <EditableToolboxContainer
@@ -25,4 +19,4 @@ const EditableToolbox = (props: Props) => {
     />;
 };
 
-export default ReactRedux.connect(createEditableStateToPropsMapper(), mapBaseActionsToProps)(EditableToolbox);
+export default connectEditable()(EditableToolbox);

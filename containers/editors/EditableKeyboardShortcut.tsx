@@ -1,23 +1,14 @@
 import EditableContent from "components/EditableContent";
 import KeyboardShortcutSidebarEditor from "components/KeyboardShortcutSidebarEditor";
 import KeyboardShortcutSidebarPresenter from "components/KeyboardShortcutSidebarPresenter";
-import {createEditableStateToPropsMapper, mapBaseActionsToProps} from "core/DocumentMappers";
-import {getCommonInteractiveEditableProps, InteractiveEditableProps} from "core/EditableBase";
-import KeyToImageMap from "core/KeyToImageMap";
-import {RawDraftContentState} from "draft-js";
+import connectEditable from "core/connectEditable";
+import {getCommonInteractiveEditableProps, InteractivePropsFromElementInfo} from "core/EditableBase";
+import {KeyboardShortcut} from "core/ElementInfo";
 import * as React from "react";
-import * as ReactRedux from "react-redux";
 
-interface Value {
-    title: string;
-    content: RawDraftContentState;
-    shortcuts: Array<Array<keyof typeof KeyToImageMap>>;
-    type: "no-shortcut" | "shortcut" | "multi-shortcut";
-}
+class EditableShortcut extends EditableContent<KeyboardShortcut["value"]> {};
 
-class EditableShortcut extends EditableContent<Value> {};
-
-const EditableKeyboardShortcut = (props: InteractiveEditableProps<Value>) => {
+const EditableKeyboardShortcut = (props: InteractivePropsFromElementInfo<KeyboardShortcut>) => {
     return <EditableShortcut
         {...props}
         {... getCommonInteractiveEditableProps(props)}
@@ -27,4 +18,4 @@ const EditableKeyboardShortcut = (props: InteractiveEditableProps<Value>) => {
 };
 
 
-export default ReactRedux.connect(createEditableStateToPropsMapper(), mapBaseActionsToProps)(EditableKeyboardShortcut);
+export default connectEditable()(EditableKeyboardShortcut);

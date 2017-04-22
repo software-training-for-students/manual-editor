@@ -1,5 +1,6 @@
 import "es6-shim";
 
+import {RichText as Props} from "core/ElementInfo";
 import * as Draft from "draft-js";
 import "draft-js/dist/Draft.css";
 import * as React from "react";
@@ -47,10 +48,9 @@ const decorator = new Draft.CompositeDecorator([
     },
 ]);
 
-interface EditorProps {
-    value: Draft.RawDraftContentState;
-    onValueChange: (value: Draft.RawDraftContentState) => void;
-}
+type EditorProps = Props & {
+    onValueChange: (value: Props["value"]) => void;
+};
 
 interface EditorState {
     editorState: Draft.EditorState;
@@ -215,17 +215,13 @@ class RichTextEditor extends React.Component<EditorProps, EditorState> {
     }
 }
 
-interface PresenterProps {
-    value: Draft.RawDraftContentState;
-    onClick?: (e: React.SyntheticEvent<HTMLElement>) => void;
-}
 
 interface PresenterState {
     editorState: Draft.EditorState;
 }
 
 // tslint:disable-next-line:max-classes-per-file
-class RichTextPresenter extends React.Component<PresenterProps, PresenterState> {
+class RichTextPresenter extends React.Component<Props, PresenterState> {
     constructor(props: EditorProps, context?: any) {
         super(props, context);
         const content = Draft.convertFromRaw(props.value);
@@ -235,22 +231,20 @@ class RichTextPresenter extends React.Component<PresenterProps, PresenterState> 
         };
     }
 
-    public componentWillReceiveProps(props: PresenterProps) {
+    public componentWillReceiveProps(props: Props) {
         this.setState({
             editorState: Draft.EditorState.createWithContent(Draft.convertFromRaw(props.value), decorator),
         });
     }
 
     public render() {
-        return <div onClick={this.props.onClick}>
-            <Draft.Editor
+        return <Draft.Editor
                 readOnly
                 editorState={this.state.editorState}
                 placeholder={"Empty Paragraph"}
                 customStyleMap={styleMap}
                 onChange={this.onChange}
-            />
-        </div>;
+        />;
     }
 
     private onChange= () => {

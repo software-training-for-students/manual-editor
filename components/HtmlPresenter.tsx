@@ -1,25 +1,16 @@
+import {RawHtml as Props} from "core/ElementInfo";
 import * as React from "react";
 
-interface Props {
-    value: string | undefined;
-    onClick?: (e: React.SyntheticEvent<HTMLDivElement>) => void;
-}
+const onClickHandler = (e: React.SyntheticEvent<HTMLDivElement>) => {
+    for (let target = e.target as HTMLElement; target !== e.currentTarget; target = target.parentElement!) {
+        if (target.tagName === "A") {
+            e.stopPropagation();
+        }
+    }
+};
 
 const HtmlPresenter = (props: Props) => {
-    const {value, onClick, ...rest} = props;
-    if (value === undefined) {
-        return <div />;
-    }
-    const onClickHandler = (e: React.SyntheticEvent<HTMLDivElement>) => {
-        for (let target = e.target as HTMLElement; target !== e.currentTarget; target = target.parentElement!) {
-            if (target.tagName === "A") {
-                return;
-            }
-        }
-        if (onClick) {
-            onClick(e);
-        }
-    };
+    const {value, ...rest} = props;
 
     return <div onClick={onClickHandler} dangerouslySetInnerHTML={{ __html : value}} {...rest} />;
 };

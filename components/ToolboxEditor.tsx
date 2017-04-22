@@ -1,15 +1,9 @@
 import ImagePicker from "containers/ImagePicker";
+import {Toolbox as ToolboxProps} from "core/ElementInfo";
 import * as React from "react";
 
-interface ToolboxEntry {
-    imgSrc: string;
-    name: string;
-    description: string;
-}
-
-interface Props {
-    onValueChange: (value: ToolboxEntry[]) => void;
-    value: ToolboxEntry[];
+type Props = ToolboxProps & {
+    onValueChange: (value: ToolboxProps["value"]) => void;
 }
 
 // I can't think of a way to do the callbacks without lambdas or bind (which both have the same perf problem)

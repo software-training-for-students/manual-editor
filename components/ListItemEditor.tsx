@@ -1,10 +1,9 @@
 import {Editor as RichTextEditor} from "components/RichText";
-import {RawDraftContentState} from "draft-js";
+import {ListItem as ListItemProps} from "core/ElementInfo";
 import * as React from "react";
 
-type Props = {
-    value: RawDraftContentState;
-    onValueChange: (value: RawDraftContentState) => void;
+type Props = ListItemProps & {
+    onValueChange: (value: ListItemProps["value"]) => void;
 };
 
 export default function ListItemEditor(props: Props) {

@@ -1,21 +1,14 @@
 import {Editor as RichTextEditor} from "components/RichText";
 import ImagePicker from "containers/ImagePicker";
+import {SidebarNote as SidebarInfo} from "core/ElementInfo";
 import {RawDraftContentState} from "draft-js";
 import * as React from "react";
 
-interface Value {
-    title: string;
-    content: RawDraftContentState;
-    imgSource: string;
-}
-
-interface Props {
-    value: Value;
-    onValueChange: (value: Value) => void;
-}
+type Props = SidebarInfo & {
+    onValueChange: (value: SidebarInfo["value"]) => void;
+};
 
 class SidebarEditor extends React.PureComponent<Props, void> {
-
     public render() {
         return(
             <div className="sidebar-note">
@@ -32,12 +25,10 @@ class SidebarEditor extends React.PureComponent<Props, void> {
 
     private contentChanged = (state: RawDraftContentState) => {
         this.props.onValueChange({... this.props.value, content: state});
-
     }
 
     private imgSourceChanged = (src: string) => {
         this.props.onValueChange({... this.props.value, imgSource: src});
-
     }
 }
 

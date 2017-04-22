@@ -1,15 +1,14 @@
 import EditableContent from "components/EditableContent";
 import ListItem from "components/ListItem";
 import ListItemEditor from "components/ListItemEditor";
-import {createEditableStateToPropsMapper, mapBaseActionsToProps} from "core/DocumentMappers";
-import {getCommonInteractiveEditableProps, InteractiveEditableProps} from "core/EditableBase";
-import {RawDraftContentState} from "draft-js";
+import connectEditable from "core/connectEditable";
+import {getCommonInteractiveEditableProps, InteractivePropsFromElementInfo} from "core/EditableBase";
+import {ListItem as ListItemInfo} from "core/ElementInfo";
 import * as React from "react";
-import * as ReactRedux from "react-redux";
 
-class EditableListItemContainer extends EditableContent<RawDraftContentState> {};
+class EditableListItemContainer extends EditableContent<ListItemInfo["value"]> {};
 
-const EditableListItem = (props: InteractiveEditableProps<RawDraftContentState>) => {
+const EditableListItem = (props: InteractivePropsFromElementInfo<ListItemInfo>) => {
     return <EditableListItemContainer
         {...props}
         {... getCommonInteractiveEditableProps(props)}
@@ -18,4 +17,4 @@ const EditableListItem = (props: InteractiveEditableProps<RawDraftContentState>)
     />;
 };
 
-export default ReactRedux.connect(createEditableStateToPropsMapper(), mapBaseActionsToProps)(EditableListItem);
+export default connectEditable()(EditableListItem);

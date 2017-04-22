@@ -1,20 +1,10 @@
 import SmartImagePresenter from "containers/SmartImagePresenter";
+import {Toolbox as Props} from "core/ElementInfo";
 import * as React from "react";
-
-interface ToolboxEntry {
-    imgSrc: string;
-    name: string;
-    description: string;
-}
-
-interface Props {
-    value: ToolboxEntry[];
-    onClick: (e: React.SyntheticEvent<HTMLDivElement>) => void;
-}
 
 const Toolbox = (props: Props) => {
     return (
-        <div className="toolbox" onClick={props.onClick}>
+        <div className="toolbox">
             {
                 props.value.map((entry, idx) => (
                     <div key={idx}>

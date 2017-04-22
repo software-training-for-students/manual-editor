@@ -7,10 +7,10 @@ export interface Code {
 }
 
 export interface RawHtml {
-    value: string | undefined;
+    value: string;
 }
 
-export type SingleImageCssClass =
+export type SingleImageClassName =
     "centered-image-tiny"
     | "centered-image-small"
     | "centered-image-medium"
@@ -21,13 +21,13 @@ export type SingleImageCssClass =
     | "side-image-large"
     | "sidebar-icon";
 
-export type SideBySideImageCssClass =
+export type SideBySideImageClassName =
     "sidebyside-image-small"
     | "sidebyside-image-large";
 
 export interface SingleImage {
     value: {
-        className: SingleImageCssClass;
+        className: SingleImageClassName;
         border?: boolean;
         source: string;
         caption?: string;
@@ -36,7 +36,7 @@ export interface SingleImage {
 
 export interface SideBySideImage {
     value: {
-        className: SideBySideImageCssClass;
+        className: SideBySideImageClassName;
         border?: boolean;
         leftSource: string;
         rightSource: string;
@@ -57,7 +57,7 @@ export interface KeyboardShortcut {
         content: RawDraftContentState;
         shortcuts: Array<Array<keyof typeof KeyToImageMap>>;
         type: "no-shortcut" | "shortcut" | "multi-shortcut";
-    }
+    };
 }
 
 export interface RichText {

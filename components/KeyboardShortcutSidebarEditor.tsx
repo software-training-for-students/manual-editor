@@ -1,21 +1,14 @@
 import KeyboardShortcutEditor from "components/KeyboardShortcutEditor";
 import {Editor as RichTextEditor} from "components/RichText";
+import {KeyboardShortcut as KeyboardShortcutProps} from "core/ElementInfo";
 import KeyToImageMap from "core/KeyToImageMap";
 import {RawDraftContentState} from "draft-js";
 import * as React from "react";
 
 type ShortcutType = "no-shortcut" | "shortcut" | "multi-shortcut";
 
-interface Value {
-    title: string;
-    content: RawDraftContentState;
-    shortcuts: Array<Array<keyof typeof KeyToImageMap>>;
-    type: ShortcutType;
-}
-
-interface Props {
-    value: Value;
-    onValueChange: (value: Value) => void;
+type Props = KeyboardShortcutProps & {
+    onValueChange: (value: KeyboardShortcutProps["value"]) => void;
 }
 
 export default class KeyboardShortcutSidebarEditor extends React.Component<Props, void> {

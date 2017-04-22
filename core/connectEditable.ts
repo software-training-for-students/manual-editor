@@ -1,6 +1,7 @@
 import * as BaseActions from "actions/BaseEditActions";
+import { connect } from "react-redux";
 import {initialState, Store} from "stores";
-import { EditableActionsMap, EditableProps, InteractiveEditableProps } from "./EditableBase";
+import { EditableProps } from "./EditableBase";
 
 function mapItemStateToDefaultProps(state: EditableProps<any>): Partial<EditableProps<any>> {
     return {
@@ -16,9 +17,8 @@ function mapItemStateToAdditionalPropsDefault<TProps extends EditableProps<any>>
 
 type OldProps<TProps> = Partial<TProps> & {itemId: number};
 
-export function createEditableStateToPropsMapper<TProps extends EditableProps<any>>(
-    mapItemStateToAdditionalProps: (itemState: TProps, updatedBaseProps: Partial<EditableProps<any>>) => Partial<TProps>
-     = mapItemStateToAdditionalPropsDefault) {
+function createEditableStateToPropsMapper<TProps extends EditableProps<any>>(
+    mapItemStateToAdditionalProps: (itemState: TProps, updatedBaseProps: Partial<EditableProps<any>>) => Partial<TProps>) {
 
     return (state: Store = initialState, oldProps: OldProps<TProps>) : Partial<TProps> => {
         let itemId: number = oldProps.itemId;
@@ -31,7 +31,7 @@ export function createEditableStateToPropsMapper<TProps extends EditableProps<an
     };
 }
 
-export const mapBaseActionsToProps: EditableActionsMap<InteractiveEditableProps<any>> = {
+const mapBaseActionsToProps = {
     onEdited: (id: number, newValue: any) => (<BaseActions.OnEdited> {
         itemId : id,
         type : "onEdited",
@@ -43,3 +43,9 @@ export const mapBaseActionsToProps: EditableActionsMap<InteractiveEditableProps<
         type : "setIsEditing",
     }),
 };
+
+export default function connectEditable<TProps extends EditableProps<any>>(
+    mapItemStateToProps: (itemState: TProps, updateBaseProps: Partial<EditableProps<TProps["value"]>>) => Partial<TProps>
+        = mapItemStateToAdditionalPropsDefault) {
+    return connect(createEditableStateToPropsMapper(mapItemStateToProps), mapBaseActionsToProps);
+}

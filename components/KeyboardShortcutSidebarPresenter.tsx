@@ -1,25 +1,12 @@
 import KeyboardShortcutPresenter from "components/KeyboardShortcutPresenter";
 import {Presenter as RichTextPresenter} from "components/RichText";
-import KeyToImageMap from "core/KeyToImageMap";
-import {RawDraftContentState} from "draft-js";
+import {KeyboardShortcut as Props} from "core/ElementInfo";
 import * as React from "react";
-
-interface Value {
-    title: string;
-    content: RawDraftContentState;
-    shortcuts: Array<Array<keyof typeof KeyToImageMap>>;
-    type: "no-shortcut" | "shortcut" | "multi-shortcut";
-}
-
-interface Props {
-    value: Value;
-    onClick: (e: React.SyntheticEvent<HTMLElement>) => void;
-}
 
 export default class KeyboardShortcutSidebarPresenter extends React.Component<Props, void> {
     public render() {
         return (
-            <div onClick={this.props.onClick}>
+            <div>
                 <span className="edit-hint">
                     Click here to edit shortcut below.
                 </span>

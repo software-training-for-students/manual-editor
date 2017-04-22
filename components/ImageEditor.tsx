@@ -1,22 +1,14 @@
-import {SideBySideImageCssClass, SideBySideImageProps, SingleImageCssClass, SingleImageProps} from "components/Images";
 import ImagePicker from "containers/ImagePicker";
+import {SideBySideImage as SideBySideImageProps, SideBySideImageClassName, SingleImage as SingleImageProps, SingleImageClassName} from "core/ElementInfo";
 import * as React from "react";
 
-interface ImageEditorProps<TImageProps> {
-    value: TImageProps;
-    onValueChange: (newProps: TImageProps) => void;
+type ImageEditorProps<TImageProps extends {value: any}> = TImageProps & {
+    onValueChange: (newProps: TImageProps["value"]) => void;
 }
 
 class SingleImageEditor extends React.Component<ImageEditorProps<SingleImageProps>, void> {
-    private static readonly defaultImageProps: SingleImageProps = {
-        border : false,
-        caption : "",
-        className : "full-width-image",
-        source : "",
-    };
-
     public render() {
-        const imageProps = this.props.value || SingleImageEditor.defaultImageProps;
+        const imageProps = this.props.value;
         return (
             <div className="image-editor">
                 <section>
@@ -61,26 +53,15 @@ class SingleImageEditor extends React.Component<ImageEditorProps<SingleImageProp
     }
 
     private onCssClassChanged = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        this.props.onValueChange({... this.props.value, className : event.target.value as SingleImageCssClass});
+        this.props.onValueChange({... this.props.value, className : event.target.value as SingleImageClassName});
     }
 
 }
 
 // tslint:disable-next-line:max-classes-per-file
 class SideBySideImageEditor extends React.Component<ImageEditorProps<SideBySideImageProps>, void> {
-    private static readonly defaultImageProps: SideBySideImageProps = {
-        border : false,
-        caption : "",
-        className : "sidebyside-image-large",
-        leftSource : "",
-        rightSource : "",
-    };
-
-    private leftSource: string;
-    private rightSource: string;
-
     public render() {
-        const imageProps = this.props.value || SideBySideImageEditor.defaultImageProps;
+        const imageProps = this.props.value;
         return (
             <div className="image-editor">
                 <section className="leftSource">
@@ -110,18 +91,12 @@ class SideBySideImageEditor extends React.Component<ImageEditorProps<SideBySideI
         );
     }
 
-    private onLeftSourceChanged = (source: string) => {
-        this.leftSource = source;
-        this.updateSources(this.leftSource, this.rightSource);
+    private onLeftSourceChanged = (leftSource: string) => {
+        this.props.onValueChange({... this.props.value, leftSource});
     }
 
-    private onRightSourceChanged = (source: string) => {
-        this.rightSource = source;
-        this.updateSources(this.leftSource, this.rightSource);
-    }
-
-    private updateSources = (leftSource: string, rightSource: string) => {
-        this.props.onValueChange({... this.props.value, leftSource, rightSource});
+    private onRightSourceChanged = (rightSource: string) => {
+        this.props.onValueChange({... this.props.value, rightSource});
     }
 
     private onBorderChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -133,7 +108,7 @@ class SideBySideImageEditor extends React.Component<ImageEditorProps<SideBySideI
     }
 
     private onCssClassChanged = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        this.props.onValueChange({... this.props.value, className : event.target.value as SideBySideImageCssClass});
+        this.props.onValueChange({... this.props.value, className : event.target.value as SideBySideImageClassName});
     }
 }
 

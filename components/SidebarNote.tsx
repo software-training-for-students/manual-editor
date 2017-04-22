@@ -1,16 +1,7 @@
 import {Presenter as RichTextPresenter} from "components/RichText";
 import SmartImagePresenter from "containers/SmartImagePresenter";
-import {RawDraftContentState} from "draft-js";
+import {SidebarNote as Props} from "core/ElementInfo";
 import * as React from "react";
-
-interface Props {
-    value: {
-        title: string;
-        content: RawDraftContentState;
-        imgSource: string;
-    };
-    onClick: (e: React.SyntheticEvent<HTMLDivElement>) => void;
-}
 
 const SidebarNote: React.StatelessComponent<Props> = (props: Props) => {
     let {value, ...rest} = props;

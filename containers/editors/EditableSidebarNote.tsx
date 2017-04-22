@@ -1,21 +1,14 @@
 import EditableContent from "components/EditableContent";
 import SidebarEditor from "components/SidebarEditor";
 import SidebarNote from "components/SidebarNote";
-import {createEditableStateToPropsMapper, mapBaseActionsToProps} from "core/DocumentMappers";
-import {getCommonInteractiveEditableProps, InteractiveEditableProps} from "core/EditableBase";
-import {RawDraftContentState} from "draft-js";
+import connectEditable from "core/connectEditable";
+import {getCommonInteractiveEditableProps, InteractivePropsFromElementInfo} from "core/EditableBase";
+import {SidebarNote as SidebarNoteInfo} from "core/ElementInfo";
 import * as React from "react";
-import * as ReactRedux from "react-redux";
 
-interface Value {
-    title: string;
-    content: RawDraftContentState;
-    imgSource: string;
-}
+class EditableSidebar extends EditableContent<SidebarNoteInfo["value"]> {};
 
-class EditableSidebar extends EditableContent<Value> {};
-
-type Props = InteractiveEditableProps<Value>;
+type Props = InteractivePropsFromElementInfo<SidebarNoteInfo>;
 
 const EditableSidebarNote = (props: Props) => {
     return <EditableSidebar
@@ -26,4 +19,4 @@ const EditableSidebarNote = (props: Props) => {
     />;
 };
 
-export default ReactRedux.connect(createEditableStateToPropsMapper(), mapBaseActionsToProps)(EditableSidebarNote);
+export default connectEditable()(EditableSidebarNote);

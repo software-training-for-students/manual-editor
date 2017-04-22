@@ -1,14 +1,14 @@
 import EditableContent from "components/EditableContent";
 import HtmlPresenter from "components/HtmlPresenter";
 import PlainTextEditor from "components/PlainTextEditor";
-import {createEditableStateToPropsMapper, mapBaseActionsToProps} from "core/DocumentMappers";
-import {getCommonInteractiveEditableProps, InteractiveEditableProps} from "core/EditableBase";
+import connectEditable from "core/connectEditable";
+import {getCommonInteractiveEditableProps, InteractivePropsFromElementInfo} from "core/EditableBase";
+import {RawHtml} from "core/ElementInfo";
 import * as React from "react";
-import * as ReactRedux from "react-redux";
 
-class EditableRawHtml extends EditableContent<string> {};
+class EditableRawHtml extends EditableContent<RawHtml["value"]> {};
 
-const EditableHtml = (props: InteractiveEditableProps<string>) => {
+const EditableHtml = (props: InteractivePropsFromElementInfo<RawHtml>) => {
     return <EditableRawHtml
         {...props}
         {... getCommonInteractiveEditableProps(props)}
@@ -17,4 +17,4 @@ const EditableHtml = (props: InteractiveEditableProps<string>) => {
     />;
 };
 
-export default ReactRedux.connect(createEditableStateToPropsMapper(), mapBaseActionsToProps)(EditableHtml);
+export default connectEditable()(EditableHtml);

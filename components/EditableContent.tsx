@@ -10,8 +10,7 @@ interface InputProps<T> {
 }
 
 interface StaticProps<T> {
-    value: T ;
-    onClick?: ((event: React.SyntheticEvent<HTMLElement>) => void);
+    value: T;
 }
 
 interface Props<T> {
@@ -63,11 +62,14 @@ class EditableContent<T> extends React.Component<Props<T> , void> {
             />;
         } else {
             let StaticComponent = this.props.staticComponentClass;
-            return <StaticComponent
-                onClick = {this.onStaticClicked}
-                value = {this.props.value}
-                {... this.props.staticProps}
-            />;
+            return (
+                <div onClick={this.onStaticClicked}>
+                    <StaticComponent
+                        value = {this.props.value}
+                        {... this.props.staticProps}
+                    />
+                </div>
+            );
         }
     }
 

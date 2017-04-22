@@ -1,14 +1,14 @@
 import CodePresenter from "components/CodePresenter";
 import EditableContent from "components/EditableContent";
 import PlainTextEditor from "components/PlainTextEditor";
-import {createEditableStateToPropsMapper, mapBaseActionsToProps} from "core/DocumentMappers";
-import {getCommonInteractiveEditableProps, InteractiveEditableProps} from "core/EditableBase";
+import connectEditable from "core/connectEditable";
+import {getCommonInteractiveEditableProps, InteractivePropsFromElementInfo} from "core/EditableBase";
+import {Code} from "core/ElementInfo";
 import * as React from "react";
-import * as ReactRedux from "react-redux";
 
-class EditableCodeBlock extends EditableContent<string> {};
+class EditableCodeBlock extends EditableContent<Code["value"]> {};
 
-type Props = InteractiveEditableProps<string> & {language: string};
+type Props = InteractivePropsFromElementInfo<Code>;
 
 const EditableCode = (props: Props) => {
     return <EditableCodeBlock
@@ -25,4 +25,4 @@ const EditableCode = (props: Props) => {
     />;
 };
 
-export default ReactRedux.connect(createEditableStateToPropsMapper(), mapBaseActionsToProps)(EditableCode);
+export default connectEditable()(EditableCode);

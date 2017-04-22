@@ -1,19 +1,17 @@
 import EditableContent from "components/EditableContent";
-import * as Heading from "components/Heading";
+import Heading from "components/Heading";
 import SingleLineEditor from "components/SingleLineEditor";
-import {createEditableStateToPropsMapper, mapBaseActionsToProps} from "core/DocumentMappers";
-import {EditableProps, getCommonInteractiveEditableProps, InteractiveEditableProps} from "core/EditableBase";
+import connectEditable from "core/connectEditable";
+import {EditableProps, getCommonInteractiveEditableProps, InteractivePropsFromElementInfo} from "core/EditableBase";
+import {Heading as ElementInfo} from "core/ElementInfo";
 import * as React from "react";
-import {connect} from "react-redux";
 
-interface Props extends InteractiveEditableProps<string> {
-    level: 1 | 2 | 3 | 4 | 5 | 6;
-}
+type Props = InteractivePropsFromElementInfo<ElementInfo>;
 
-class EditableText extends EditableContent<string> {}
+class EditableText extends EditableContent<ElementInfo["value"]> {}
 
 const EditableHeading: React.StatelessComponent<Props> = (props: Props) => {
-    let headingProps: Partial<Heading.Props> = {
+    let headingProps: Pick<Props, "level"> = {
         level : props.level,
     };
     let inputProps = {
@@ -23,7 +21,7 @@ const EditableHeading: React.StatelessComponent<Props> = (props: Props) => {
         {...props}
         {...getCommonInteractiveEditableProps(props)}
         inputComponentClass = {SingleLineEditor}
-        staticComponentClass={Heading.Component}
+        staticComponentClass={Heading}
         inputProps = {inputProps}
         staticProps = {headingProps}
     />;
@@ -36,4 +34,4 @@ function mapHeadingStateToProps(itemState: Props, updatedBaseProps: Partial<Edit
     };
 }
 
-export default connect(createEditableStateToPropsMapper(mapHeadingStateToProps), mapBaseActionsToProps)(EditableHeading);
+export default connectEditable(mapHeadingStateToProps)(EditableHeading);
