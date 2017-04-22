@@ -283,7 +283,7 @@ function generateDivItem(element: HTMLDivElement): ElementInfo {
                         value: {
                             title,
                             content,
-                            shortcuts: <ElementTypes.Keys[][]>[firstKeys, secondKeys],
+                            shortcuts: <ElementTypes.Keys[][]> [firstKeys, secondKeys],
                             type: "multi-shortcut",
                         },
                     },

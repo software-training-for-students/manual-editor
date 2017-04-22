@@ -1,7 +1,7 @@
+import {RemoveFromDocument} from "actions/BaseEditActions";
 import * as React from "react";
 import {connect} from "react-redux";
 import {compose} from "redux";
-import {RemoveFromDocument} from "actions/BaseEditActions";
 
 interface Props {
     onRemove: (itemId: number) => void;

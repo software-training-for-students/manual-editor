@@ -9,7 +9,6 @@ const ToolboxButton = () => {
             menuItemHeading="Create Toolbox"
             items={[
                 {
-                    elementType: "Toolbox",
                     elementState: {
                         value: [
                             {
@@ -19,6 +18,7 @@ const ToolboxButton = () => {
                             },
                         ],
                     },
+                    elementType: "Toolbox",
                 },
             ]}
             insertEnabled

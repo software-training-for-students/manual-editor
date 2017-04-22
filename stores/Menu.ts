@@ -11,7 +11,7 @@ export interface MenuStore {
     table: {
         rows: number;
         columns: number;
-    }
+    };
 }
 
 export let initialState: MenuStore = {

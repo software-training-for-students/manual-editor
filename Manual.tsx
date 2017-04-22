@@ -5,7 +5,7 @@ import createElement from "core/createElement";
 import * as React from "react";
 import {connect} from "react-redux";
 import {Store} from "stores";
-import {ItemTree, ItemOrdering} from "stores/Document";
+import {ItemOrdering, ItemTree} from "stores/Document";
 
 interface Props {
     items: ItemOrdering[];

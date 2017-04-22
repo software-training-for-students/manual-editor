@@ -4,7 +4,7 @@ import * as React from "react";
 
 type Props = ToolboxProps & {
     onValueChange: (value: ToolboxProps["value"]) => void;
-}
+};
 
 // I can't think of a way to do the callbacks without lambdas or bind (which both have the same perf problem)
 // tslint:disable:jsx-no-lambda

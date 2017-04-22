@@ -22,7 +22,7 @@ export interface ElementInfo {
     elementType: string;
     elementState?: {
         value: any,
-        [key: string]: any
+        [key: string]: any,
     };
     metaItemType?: MetaItemType;
 }

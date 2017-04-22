@@ -1,5 +1,5 @@
 import MenuItem from "containers/MenuItem";
-import {SingleImage, SideBySideImage} from "core/ElementInfo";
+import {SideBySideImage, SingleImage} from "core/ElementInfo";
 import * as React from "react";
 
 class SingleImageButton extends React.Component<void, void> {
@@ -37,7 +37,7 @@ class SideBySideImageButton extends React.Component<void, void> {
             className: "sidebyside-image-large",
             leftSource: "",
             rightSource: "",
-        }
+        },
     };
 
     public render() {

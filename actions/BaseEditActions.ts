@@ -1,5 +1,5 @@
-import {Action} from "redux";
 import ElementInfo from "core/ElementInfo";
+import {Action} from "redux";
 
 export interface EditActionBase extends Action {
     itemId: number;

@@ -9,8 +9,7 @@ const Toolbox = (props: Props) => {
                 props.value.map((entry, idx) => (
                     <div key={idx}>
                         {
-                            entry.imgSrc ? <SmartImagePresenter src={entry.imgSrc} /> : null
-                        }
+                            entry.imgSrc ? <SmartImagePresenter src={entry.imgSrc} /> : null}
                         <p>
                             <strong>{entry.name}</strong>
                             {entry.description}

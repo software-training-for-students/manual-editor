@@ -1,7 +1,7 @@
 import * as BaseActions from "actions/BaseEditActions";
 import * as SaveLoadActions from "actions/SaveLoadActions";
 import * as Redux from "redux";
-import {addElements, removeElement, Document, initialState} from "stores/Document";
+import {addElements, Document, initialState, removeElement} from "stores/Document";
 
 let setIsEditing: Redux.Reducer<Document> =
     (state: Document = initialState, action: BaseActions.SetIsEditing) => {
@@ -60,7 +60,6 @@ let onSetDocument: Redux.Reducer<Document> = (state: Document = initialState, ac
     }
     return state;
 };
-
 
 let editReducers = (document: Document, action: Redux.Action) => {
     let newDoc = setIsEditing(document, action);

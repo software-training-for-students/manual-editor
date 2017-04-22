@@ -10,10 +10,10 @@ const HtmlButton = () => {
         menuItemId="raw-html"
         items={[
             {
-                elementType: "RawHtml",
                 elementState: {
                     value: "",
                 },
+                elementType: "RawHtml",
             },
         ]}
     />;

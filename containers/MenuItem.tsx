@@ -1,8 +1,8 @@
 import { AddToDocument } from "actions/BaseEditActions";
 import {FlyoutToggle} from "actions/FlyoutActions";
 import Flyout from "containers/Flyout";
-import * as React from "react";
 import ElementInfo from "core/ElementInfo";
+import * as React from "react";
 import {connect} from "react-redux";
 import { Store } from "stores";
 

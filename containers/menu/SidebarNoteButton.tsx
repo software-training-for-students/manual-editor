@@ -12,7 +12,6 @@ class SidebarNoteButton extends React.Component<void, void> {
                     menuItemText="Sidebar Note"
                     items={[
                         {
-                            elementType: "SidebarNote",
                             elementState: {
                                 value: {
                                     content: convertToRaw(EditorState.createEmpty().getCurrentContent()),
@@ -20,6 +19,7 @@ class SidebarNoteButton extends React.Component<void, void> {
                                     title: "",
                                 },
                             },
+                            elementType: "SidebarNote",
                         },
                     ]}
                 />

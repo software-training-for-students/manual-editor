@@ -9,7 +9,7 @@ type ShortcutType = "no-shortcut" | "shortcut" | "multi-shortcut";
 
 type Props = KeyboardShortcutProps & {
     onValueChange: (value: KeyboardShortcutProps["value"]) => void;
-}
+};
 
 export default class KeyboardShortcutSidebarEditor extends React.Component<Props, void> {
     public render() {

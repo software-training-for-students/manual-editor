@@ -15,5 +15,4 @@ const EditableKeyboardShortcut = (props: InteractivePropsFromElementInfo<Keyboar
     />;
 };
 
-
 export default connectEditable()(EditableKeyboardShortcut);

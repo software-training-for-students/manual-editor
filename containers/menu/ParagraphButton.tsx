@@ -11,10 +11,10 @@ const ParagraphButton = () => {
         menuItemId="paragraph"
         items={[
             {
-                elementType: "RichText",
                 elementState: {
                     value: convertToRaw(EditorState.createEmpty().getCurrentContent()),
                 },
+                elementType: "RichText",
             },
         ]}
     />;

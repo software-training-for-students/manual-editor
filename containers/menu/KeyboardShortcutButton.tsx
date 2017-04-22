@@ -12,7 +12,6 @@ class KeyboardShortcutButton extends React.Component<void, void> {
                     menuItemText="Keyboard Shortcut"
                     items={[
                         {
-                            elementType: "KeyboardShortcut",
                             elementState: {
                                 value: {
                                     content: convertToRaw(EditorState.createEmpty().getCurrentContent()),
@@ -21,6 +20,7 @@ class KeyboardShortcutButton extends React.Component<void, void> {
                                     type: "no-shortcut",
                                 },
                             },
+                            elementType: "KeyboardShortcut",
                         },
                     ]}
                 />

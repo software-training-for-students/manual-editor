@@ -215,7 +215,6 @@ class RichTextEditor extends React.Component<EditorProps, EditorState> {
     }
 }
 
-
 interface PresenterState {
     editorState: Draft.EditorState;
 }

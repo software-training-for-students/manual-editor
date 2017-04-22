@@ -4,7 +4,7 @@ import * as React from "react";
 
 type ImageEditorProps<TImageProps extends {value: any}> = TImageProps & {
     onValueChange: (newProps: TImageProps["value"]) => void;
-}
+};
 
 class SingleImageEditor extends React.Component<ImageEditorProps<SingleImageProps>, void> {
     public render() {

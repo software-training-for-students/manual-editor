@@ -10,10 +10,10 @@ const ListItemButton = () => {
         menuItemId="list-item"
         items={[
             {
-                elementType: "ListItem",
                 elementState: {
                     value: convertToRaw(EditorState.createEmpty().getCurrentContent()),
                 },
+                elementType: "ListItem",
             },
         ]}
     />;

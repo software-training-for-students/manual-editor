@@ -2,6 +2,8 @@ import MenuItem from "containers/MenuItem";
 import {convertToRaw, EditorState} from "draft-js";
 import * as React from "react";
 
+const defaultListItemValue = convertToRaw(EditorState.createEmpty().getCurrentContent());
+
 export let UnorderedListButton = () => {
     return <MenuItem
         insertEnabled
@@ -11,18 +13,16 @@ export let UnorderedListButton = () => {
         items={[
             {
                 elementType: "UnorderedList",
-                elementState: {},
                 metaItemType: "open",
             },
             {
-                elementType: "ListItem",
                 elementState: {
-                    value: convertToRaw(EditorState.createEmpty().getCurrentContent()),
+                    value: defaultListItemValue,
                 },
+                elementType: "ListItem",
             },
             {
                 elementType: "UnorderedList",
-                elementState: {},
                 metaItemType: "close",
             },
         ]}
@@ -38,18 +38,16 @@ export let OrderedListButton = () => {
         items={[
             {
                 elementType: "OrderedList",
-                elementState: {},
                 metaItemType: "open",
             },
             {
-                elementType: "ListItem",
                 elementState: {
-                    value: convertToRaw(EditorState.createEmpty().getCurrentContent()),
+                    value: defaultListItemValue,
                 },
+                elementType: "ListItem",
             },
             {
                 elementType: "OrderedList",
-                elementState: {},
                 metaItemType: "close",
             },
         ]}
@@ -66,18 +64,16 @@ export let InstructionListButton = () => {
         items={[
             {
                 elementType: "InstructionList",
-                elementState: {},
                 metaItemType: "open",
             },
             {
-                elementType: "ListItem",
                 elementState: {
-                    value: convertToRaw(EditorState.createEmpty().getCurrentContent()),
+                    value: defaultListItemValue,
                 },
+                elementType: "ListItem",
             },
             {
                 elementType: "InstructionList",
-                elementState: {},
                 metaItemType: "close",
             },
         ]}

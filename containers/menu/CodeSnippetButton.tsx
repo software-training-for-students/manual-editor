@@ -18,11 +18,11 @@ class CodeSnippetButton extends React.Component<Props, void> {
             menuItemText="Code Snippet"
             items={[
                 {
-                    elementType: "Code",
-                     elementState: {
+                    elementState: {
                         language: this.props.language,
                         value: "",
                     },
+                    elementType: "Code",
                 },
             ]}
         >
