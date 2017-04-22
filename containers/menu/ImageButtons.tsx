@@ -1,8 +1,15 @@
 import MenuItem from "containers/MenuItem";
+import {SingleImage, SideBySideImage} from "core/ElementInfo";
 import * as React from "react";
 
 class SingleImageButton extends React.Component<void, void> {
-    private static defaultValue = {value: {border: true, className: "full-width-image", source: ""}};
+    private static defaultValue: SingleImage = {
+        value: {
+            border: true,
+            className: "full-width-image",
+            source: "",
+        },
+    };
 
     public render() {
         return (
@@ -13,8 +20,8 @@ class SingleImageButton extends React.Component<void, void> {
                 insertEnabled
                 items={[
                     {
-                        componentTypeName: "SingleImage",
-                        defaultProps: SingleImageButton.defaultValue,
+                        elementState: SingleImageButton.defaultValue,
+                        elementType: "SingleImage",
                     },
                 ]}
             />
@@ -24,7 +31,14 @@ class SingleImageButton extends React.Component<void, void> {
 
 // tslint:disable-next-line:max-classes-per-file
 class SideBySideImageButton extends React.Component<void, void> {
-    private static defaultValue = {value: {border: true, className: "sidebyside-image-large", leftSource: "", rightSource: ""}};
+    private static defaultValue: SideBySideImage = {
+        value: {
+            border: true,
+            className: "sidebyside-image-large",
+            leftSource: "",
+            rightSource: "",
+        }
+    };
 
     public render() {
         return (
@@ -35,10 +49,8 @@ class SideBySideImageButton extends React.Component<void, void> {
                 insertEnabled
                 items={[
                     {
-                        componentTypeName: "SideBySideImage",
-                        defaultProps: {
-                            value: SideBySideImageButton.defaultValue,
-                        },
+                        elementState: SideBySideImageButton.defaultValue,
+                        elementType: "SideBySideImage",
                     },
                 ]}
             />

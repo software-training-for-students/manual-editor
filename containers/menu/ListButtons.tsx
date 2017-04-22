@@ -10,19 +10,19 @@ export let UnorderedListButton = () => {
         menuItemId="unordered-list"
         items={[
             {
-                componentTypeName: "UnorderedList",
-                defaultProps: {},
+                elementType: "UnorderedList",
+                elementState: {},
                 metaItemType: "open",
             },
             {
-                componentTypeName: "ListItem",
-                defaultProps: {
+                elementType: "ListItem",
+                elementState: {
                     value: convertToRaw(EditorState.createEmpty().getCurrentContent()),
                 },
             },
             {
-                componentTypeName: "UnorderedList",
-                defaultProps: {},
+                elementType: "UnorderedList",
+                elementState: {},
                 metaItemType: "close",
             },
         ]}
@@ -37,19 +37,19 @@ export let OrderedListButton = () => {
         menuItemId="ordered-list"
         items={[
             {
-                componentTypeName: "OrderedList",
-                defaultProps: {},
+                elementType: "OrderedList",
+                elementState: {},
                 metaItemType: "open",
             },
             {
-                componentTypeName: "ListItem",
-                defaultProps: {
+                elementType: "ListItem",
+                elementState: {
                     value: convertToRaw(EditorState.createEmpty().getCurrentContent()),
                 },
             },
             {
-                componentTypeName: "OrderedList",
-                defaultProps: {},
+                elementType: "OrderedList",
+                elementState: {},
                 metaItemType: "close",
             },
         ]}
@@ -65,19 +65,19 @@ export let InstructionListButton = () => {
         menuItemId="instruction-list"
         items={[
             {
-                componentTypeName: "InstructionList",
-                defaultProps: {},
+                elementType: "InstructionList",
+                elementState: {},
                 metaItemType: "open",
             },
             {
-                componentTypeName: "ListItem",
-                defaultProps: {
+                elementType: "ListItem",
+                elementState: {
                     value: convertToRaw(EditorState.createEmpty().getCurrentContent()),
                 },
             },
             {
-                componentTypeName: "InstructionList",
-                defaultProps: {},
+                elementType: "InstructionList",
+                elementState: {},
                 metaItemType: "close",
             },
         ]}

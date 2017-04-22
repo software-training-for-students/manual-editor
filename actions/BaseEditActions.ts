@@ -1,4 +1,5 @@
 import {Action} from "redux";
+import ElementInfo from "core/ElementInfo";
 
 export interface EditActionBase extends Action {
     itemId: number;
@@ -16,11 +17,7 @@ export interface OnEdited extends EditActionBase {
 
 export interface AddToDocument extends Action {
     type: "addToDocument";
-    items: Array<{
-        componentTypeName: string,
-        defaultProps: any,
-        metaItemType?: "open" | "close",
-    }>;
+    items: ElementInfo[];
     itemToEdit?: number;
     ordering: "before" | "after" | "end";
 }

@@ -24,8 +24,8 @@ class HeadingButton extends React.Component<Props, void> {
             insertEnabled={this.props.headingText.length !== 0}
             items={[
                 {
-                    componentTypeName: "Heading",
-                    defaultProps: {
+                    elementType: "Heading",
+                    elementState: {
                         level: this.props.headingLevel,
                         value: this.props.headingText,
                         },

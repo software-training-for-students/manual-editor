@@ -2,23 +2,19 @@ import { AddToDocument } from "actions/BaseEditActions";
 import {FlyoutToggle} from "actions/FlyoutActions";
 import Flyout from "containers/Flyout";
 import * as React from "react";
+import ElementInfo from "core/ElementInfo";
 import {connect} from "react-redux";
 import { Store } from "stores";
 
 type Ordering = "before" | "after" | "end";
-type ItemInformation = {
-    componentTypeName: string;
-    defaultProps: any;
-    metaItemType?: "open" | "close";
-};
 
 interface Props {
     menuItemId: string;
     menuItemText: string;
     menuItemHeading: string;
-    items: ItemInformation[];
+    items: ElementInfo[];
     itemToEdit?: number;
-    onCreate?: (items: ItemInformation[],
+    onCreate?: (items: ElementInfo[],
         itemToEdit: number,
         ordering: Ordering) => void;
     toggleFlyout?: (flyoutId: string) => void;
@@ -90,7 +86,7 @@ function mapStateToProps(state: Store, props: Props): Props {
 }
 
 let mapActionsToProps = ({
-    onCreate: (items: ItemInformation[],
+    onCreate: (items: ElementInfo[],
         itemToEdit: number,
         ordering: Ordering) => ({
             itemToEdit,

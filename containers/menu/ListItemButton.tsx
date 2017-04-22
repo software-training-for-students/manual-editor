@@ -10,8 +10,8 @@ const ListItemButton = () => {
         menuItemId="list-item"
         items={[
             {
-                componentTypeName: "ListItem",
-                defaultProps: {
+                elementType: "ListItem",
+                elementState: {
                     value: convertToRaw(EditorState.createEmpty().getCurrentContent()),
                 },
             },

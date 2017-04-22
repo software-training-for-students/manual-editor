@@ -9,8 +9,8 @@ const ToolboxButton = () => {
             menuItemHeading="Create Toolbox"
             items={[
                 {
-                    componentTypeName: "Toolbox",
-                    defaultProps: {
+                    elementType: "Toolbox",
+                    elementState: {
                         value: [
                             {
                                 description: "Tool description",

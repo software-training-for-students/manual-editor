@@ -12,8 +12,8 @@ class SidebarNoteButton extends React.Component<void, void> {
                     menuItemText="Sidebar Note"
                     items={[
                         {
-                            componentTypeName: "SidebarNote",
-                            defaultProps: {
+                            elementType: "SidebarNote",
+                            elementState: {
                                 value: {
                                     content: convertToRaw(EditorState.createEmpty().getCurrentContent()),
                                     imgSource: "",

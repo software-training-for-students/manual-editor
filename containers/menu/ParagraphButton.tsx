@@ -11,8 +11,8 @@ const ParagraphButton = () => {
         menuItemId="paragraph"
         items={[
             {
-                componentTypeName: "RichText",
-                defaultProps: {
+                elementType: "RichText",
+                elementState: {
                     value: convertToRaw(EditorState.createEmpty().getCurrentContent()),
                 },
             },

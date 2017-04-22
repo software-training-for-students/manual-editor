@@ -1,56 +1,45 @@
 import {UpdateTableColumns, UpdateTableRows} from "actions/MenuActions";
 import MenuItem from "containers/MenuItem";
+import ElementInfo from "core/ElementInfo";
 import {convertToRaw, EditorState} from "draft-js";
 import * as React from "react";
 import {connect} from "react-redux";
 import {initialState, Store} from "stores";
 
-type ItemInformation = {
-    componentTypeName: string;
-    defaultProps: any;
-    metaItemType?: "open" | "close";
-};
-
-function generateItems(rows: number, columns: number): ItemInformation[] {
-    let items: ItemInformation[] = [];
+function generateItems(rows: number, columns: number): ElementInfo[] {
+    let items: ElementInfo[] = [];
     items.push({
-        componentTypeName: "Table",
-        defaultProps: {},
+        elementType: "Table",
         metaItemType: "open",
     });
     for (let i = 0; i < rows; i++) {
         items.push({
-            componentTypeName: "TableRow",
-            defaultProps: {},
+            elementType: "TableRow",
             metaItemType: "open",
         });
         for (let j = 0; j < columns; j++) {
             items.push({
-                componentTypeName: i === 0 ? "TableHeader" : "TableCell",
-                defaultProps: {},
+                elementType: i === 0 ? "TableHeader" : "TableCell",
                 metaItemType: "open",
             });
             items.push({
-                componentTypeName: "RichText",
-                defaultProps: {
+                elementState: {
                     value: convertToRaw(EditorState.createEmpty().getCurrentContent()),
                 },
+                elementType: "RichText",
             });
             items.push({
-                componentTypeName: i === 0 ? "TableHeader" : "TableCell",
-                defaultProps: {},
+                elementType: i === 0 ? "TableHeader" : "TableCell",
                 metaItemType: "close",
             });
         }
         items.push({
-            componentTypeName: "TableRow",
-            defaultProps: {},
+            elementType: "TableRow",
             metaItemType: "close",
         });
     }
     items.push({
-        componentTypeName: "Table",
-        defaultProps: {},
+        elementType: "Table",
         metaItemType: "close",
     });
     return items;
@@ -64,7 +53,7 @@ interface Props {
 }
 
 interface State {
-    items: ItemInformation[];
+    items: ElementInfo[];
 }
 
 class TableButton extends React.Component<Props, State> {
