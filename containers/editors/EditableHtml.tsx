@@ -1,17 +1,15 @@
-import EditableContent from "components/EditableContent";
+import EditableElement from "components/EditableElement";
 import HtmlPresenter from "components/HtmlPresenter";
 import PlainTextEditor from "components/PlainTextEditor";
 import connectEditable from "core/connectEditable";
-import {getCommonInteractiveEditableProps, InteractivePropsFromElementInfo} from "core/EditableBase";
+import {InteractivePropsFromElementInfo} from "core/EditableBase";
 import {RawHtml} from "core/ElementInfo";
 import * as React from "react";
 
-class EditableRawHtml extends EditableContent<RawHtml["value"]> {};
-
 const EditableHtml = (props: InteractivePropsFromElementInfo<RawHtml>) => {
-    return <EditableRawHtml
+    const EditableHtmlBlock: new(...args: any[]) => EditableElement<RawHtml> = EditableElement;
+    return <EditableHtmlBlock
         {...props}
-        {... getCommonInteractiveEditableProps(props)}
         inputComponentClass={PlainTextEditor}
         staticComponentClass={HtmlPresenter}
     />;

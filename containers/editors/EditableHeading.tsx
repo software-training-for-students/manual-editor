@@ -1,16 +1,15 @@
-import EditableContent from "components/EditableContent";
+import EditableElement from "components/EditableElement";
 import Heading from "components/Heading";
 import SingleLineEditor from "components/SingleLineEditor";
 import connectEditable from "core/connectEditable";
-import {EditableProps, getCommonInteractiveEditableProps, InteractivePropsFromElementInfo} from "core/EditableBase";
+import {EditableProps, InteractivePropsFromElementInfo} from "core/EditableBase";
 import {Heading as ElementInfo} from "core/ElementInfo";
 import * as React from "react";
 
 type Props = InteractivePropsFromElementInfo<ElementInfo>;
 
-class EditableText extends EditableContent<ElementInfo["value"]> {}
-
 const EditableHeading: React.StatelessComponent<Props> = (props: Props) => {
+    const EditableText: new(...args: any[]) => EditableElement<ElementInfo> = EditableElement;
     let headingProps: Pick<Props, "level"> = {
         level : props.level,
     };
@@ -19,7 +18,6 @@ const EditableHeading: React.StatelessComponent<Props> = (props: Props) => {
     };
     return <EditableText
         {...props}
-        {...getCommonInteractiveEditableProps(props)}
         inputComponentClass = {SingleLineEditor}
         staticComponentClass={Heading}
         inputProps = {inputProps}
@@ -27,7 +25,7 @@ const EditableHeading: React.StatelessComponent<Props> = (props: Props) => {
     />;
 };
 
-function mapHeadingStateToProps(itemState: Props, updatedBaseProps: Partial<EditableProps<any>>) {
+function mapHeadingStateToProps(itemState: Props, updatedBaseProps: Partial<EditableProps<ElementInfo["value"]>>) {
     return {
         ... updatedBaseProps,
         level : itemState.level,

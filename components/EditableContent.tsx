@@ -19,9 +19,7 @@ interface Props<T> {
     inputProps?: any;
     staticProps?: any;
     inputComponentClass: ComponentType<InputProps<T>>;
-    staticComponentClass: string
-                             | React.StatelessComponent<StaticProps<T> & {[k: string]: any}>
-                             | React.ComponentClass<StaticProps<T> & {[k: string]: any}>;
+    staticComponentClass: ComponentType<StaticProps<T>>;
     toggleIsEditing: () => void;
     updateValue: (value: T) => void;
 }

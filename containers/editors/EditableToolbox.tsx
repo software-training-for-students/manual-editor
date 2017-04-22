@@ -1,19 +1,15 @@
-import EditableContent from "components/EditableContent";
+import EditableElement from "components/EditableElement";
 import Toolbox from "components/Toolbox";
 import ToolboxEditor from "components/ToolboxEditor";
 import connectEditable from "core/connectEditable";
-import {getCommonInteractiveEditableProps, InteractivePropsFromElementInfo} from "core/EditableBase";
+import {InteractivePropsFromElementInfo} from "core/EditableBase";
 import {Toolbox as ToolboxInfo} from "core/ElementInfo";
 import * as React from "react";
 
-class EditableToolboxContainer extends EditableContent<ToolboxInfo["value"]> {};
-
-type Props = InteractivePropsFromElementInfo<ToolboxInfo>;
-
-const EditableToolbox = (props: Props) => {
+const EditableToolbox = (props: InteractivePropsFromElementInfo<ToolboxInfo>) => {
+    const EditableToolboxContainer: new(...args: any[]) => EditableElement<ToolboxInfo> = EditableElement;
     return <EditableToolboxContainer
         {...props}
-        {... getCommonInteractiveEditableProps(props)}
         inputComponentClass={ToolboxEditor}
         staticComponentClass={Toolbox}
     />;
