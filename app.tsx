@@ -10,8 +10,17 @@ import Manual from "./Manual";
 import Menu from "./Menu";
 import "./styles.css";
 
-const store = Redux.createStore<Store>(reducer,
- ReduxDevTools.composeWithDevTools(Redux.applyMiddleware(ReduxThunkMiddleware)));
+declare const DEBUG: boolean;
+
+let enhancer: Redux.StoreEnhancer<Store>;
+
+if (DEBUG) {
+    enhancer = ReduxDevTools.composeWithDevTools(Redux.applyMiddleware(ReduxThunkMiddleware));
+} else {
+    enhancer = Redux.applyMiddleware(ReduxThunkMiddleware);
+}
+
+const store = Redux.createStore<Store>(reducer, enhancer);
 
 ReactDOM.render(
 <ReactRedux.Provider store={store}>

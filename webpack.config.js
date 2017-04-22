@@ -73,7 +73,8 @@ var basePlugins = [
 
 var devPlugins = [
   new webpack.DefinePlugin({
-    'process.env.NODE_ENV': "'development'"
+    'process.env.NODE_ENV': "'development'",
+    'DEBUG': "true"
   })
 ];
 
@@ -82,7 +83,8 @@ var productionPlugins = [
     sourceMap: true,
   }),
   new webpack.DefinePlugin({
-    'process.env.NODE_ENV': "'production'"
+    'process.env.NODE_ENV': "'production'",
+    'DEBUG' : "false"
   })
 ];
 
