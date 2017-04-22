@@ -8,7 +8,13 @@ function srcPath(subdir) {
   return path.join(__dirname, subdir);
 }
 
-var entry = ["./app.tsx"];
+var entry = {
+  app: "./app.tsx",
+  vendor: ["react", "react-dom", "redux", "draft-js", "jszip", "he",
+    "react-highlight.js", "react-redux", "redux-devtools-extension",
+    "redux-thunk", "@aneves/react-flyout"],
+    support: ["es6-shim", "tslib"]
+};
 
 var resolve = {
   extensions: [".ts", ".tsx", ".js"],
@@ -24,7 +30,7 @@ var resolve = {
 
 var output = {
   path: path.resolve(__dirname, "build"),
-  filename: "bundle.js",
+  filename: "[name].[chunkhash].js",
   devtoolModuleFilenameTemplate: function(info){
     return "file:///"+info.absoluteResourcePath;
   }
@@ -44,7 +50,13 @@ var modules = {
       test: /\.css$/,
       use: ExtractTextPlugin.extract({
           fallback: "style-loader",
-          use: "css-loader"
+          use: {
+            loader: "css-loader",
+            options: {
+              minimize: true,
+              sourceMap: true,
+            }
+          }
         })
     }
   ]
@@ -56,6 +68,7 @@ var basePlugins = [
     template: "index.html"
   }),
   new ExtractTextPlugin("styles.css"),
+  new webpack.optimize.CommonsChunkPlugin(["entry", "vendor", "support"])
 ];
 
 var devPlugins = [
