@@ -56,7 +56,11 @@ let onRemoveElement: Redux.Reducer<Document> =
 
 let onSetDocument: Redux.Reducer<Document> = (state: Document = initialState, action: SaveLoadActions.SetDocumentAction) => {
     if (action.type === "set-document") {
-        return action.document;
+        let document = action.document;
+        if (action.version && action.version !== SaveLoadActions.saveVersion) {
+            // Call document upgrade scripts here.
+        }
+        return document;
     }
     return state;
 };

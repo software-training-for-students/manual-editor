@@ -6,6 +6,8 @@ import {Store} from "stores";
 import {Document} from "stores/Document";
 import { UploadImage } from "./ImageActions";
 
+export const saveVersion: number = 1;
+
 export function saveAsThunkAction(): ThunkAction<void, Store, void> {
     return (_, getStore) => {
         // Clone the document object since we have to make changes.
@@ -21,6 +23,7 @@ export function saveAsThunkAction(): ThunkAction<void, Store, void> {
             manual[element.itemId] = {... document[element.itemId]};
         });
         manualFile.file("manual.json", JSON.stringify(manual));
+        manualFile.file("version", saveVersion.toString());
         for (let key in getStore().images) {
             if (getStore().images.hasOwnProperty(key)) {
                 let image = getStore().images[key];
@@ -36,9 +39,14 @@ export function loadThunkAction(zipFile: File): ThunkAction<void, Store, void> {
         let zip = new JSZip();
         zip.loadAsync(zipFile).then((loadedZip) => {
             loadedZip.file("manual.json").async("text").then((text: string) => {
-                dispatcher(<SetDocumentAction> {
-                    document : JSON.parse(text),
-                    type : "set-document",
+                loadedZip.file("version").async("text").then((versionString: string) => {
+                    let document: Document = JSON.parse(text);
+                    let version = parseInt(versionString, 10);
+                    dispatcher(<SetDocumentAction> {
+                        document,
+                        type : "set-document",
+                        version,
+                    });
                 });
             }).then(() => {
                 dispatcher(<ClearImagesAction> {
@@ -63,7 +71,7 @@ export function loadThunkAction(zipFile: File): ThunkAction<void, Store, void> {
 export interface SetDocumentAction extends Action {
     type: "set-document";
     document: Document;
-    clearImageStore: boolean;
+    version?: number;
 }
 
 export interface FileChangedAction extends Action {
