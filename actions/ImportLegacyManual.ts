@@ -1,5 +1,6 @@
 import importManualHtml from "core/importManualHtml";
 import * as JSZip from "jszip";
+import {closeDialog} from "redux-dialog";
 import {ThunkAction} from "redux-thunk";
 import {Store} from "stores";
 import {UploadImage} from "./ImageActions";
@@ -48,6 +49,7 @@ export default function(legacyFile: File): ThunkAction<void, Store, void> {
                     importing: false,
                     type: "set-import",
                 });
+                dispatch(closeDialog("import-wizard"));
             });
         });
     };
