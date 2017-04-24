@@ -12,7 +12,7 @@ var entry = {
   app: "./app.tsx",
   vendor: ["react", "react-dom", "redux", "draft-js", "jszip", "he",
     "react-highlight.js", "react-redux", "redux-devtools-extension",
-    "redux-thunk", "@aneves/react-flyout"],
+    "redux-thunk", "@aneves/react-flyout", "redux-dialog", "react-activity-indicator"],
     support: ["es6-shim", "tslib"]
 };
 

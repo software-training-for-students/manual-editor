@@ -26,6 +26,10 @@ input[type=text].h2 {
     z-index: 100;
 }
 
+.ReactModal__Body--open #menu {
+    display: none;
+}
+
 @media print {
     #menu {
         display : none;

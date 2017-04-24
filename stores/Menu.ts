@@ -6,7 +6,10 @@ export interface HeadingStore {
 export interface MenuStore {
     heading: HeadingStore;
     code: {language: string};
-    import: {file?: File};
+    import: {
+        file?: File;
+        importing: boolean;
+    };
     load: {file?: File};
     table: {
         rows: number;
@@ -22,7 +25,9 @@ export let initialState: MenuStore = {
         level : 1,
         text : "",
     },
-    import: {},
+    import: {
+        importing: false,
+    },
     load : {},
     table: {
         columns: 0,
