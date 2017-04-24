@@ -1,8 +1,9 @@
 import * as React from "react";
 import {Reducer, ActionCreator, Action} from "redux";
 import {ComponentDecorator} from "react-redux";
+import * as Modal from "react-modal";
 
-interface DialogProps {
+interface DialogProps extends Partial<Modal.Props> {
     name: string;
 }
 

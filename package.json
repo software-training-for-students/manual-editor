@@ -25,6 +25,7 @@
     "@types/jszip": "0.0.32",
     "@types/react": "^15.0.10",
     "@types/react-dom": "^0.14.23",
+    "@types/react-modal": "^1.6.6",
     "@types/react-redux": "^4.4.36",
     "awesome-typescript-loader": "^3.0.4-rc.2",
     "css-loader": "^0.26.2",

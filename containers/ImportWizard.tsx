@@ -19,13 +19,13 @@ class ImportWizard extends React.Component<Props, void> {
     public render() {
         if (this.props.importing) {
             return (
-                <div>
+                <div style={contentContainerStyle}>
                     <ActivityIndicator duration={100} />
                 </div>
             );
         } else {
             return (
-                <div>
+                <div style={contentContainerStyle}>
                     <button onClick={this.props.onRequestClose}>Close</button>
                     <header>Import Legacy (HTML) Manual</header>
                     <input type="file" accept=".zip" onChange={this.fileChanged} />
@@ -48,6 +48,13 @@ class ImportWizard extends React.Component<Props, void> {
     }
 };
 
+
+const contentContainerStyle = {
+    margin: "auto",
+    textAlign: "center",
+    width: "50%",
+};
+
 function mapStateToProps(store: Store): Partial<Props> {
     return {
         fileToImport: store.menu.import.file,
@@ -63,4 +70,7 @@ const mapActionsToProps = ({
     onImport: ImportLegacyManual,
 });
 
-export default compose(connectDialog({name: "import-wizard"}), connect(mapStateToProps, mapActionsToProps))(ImportWizard);
+export default compose(connectDialog({
+    contentLabel: "Import Wizard",
+    name: "import-wizard",
+}), connect(mapStateToProps, mapActionsToProps))(ImportWizard);
