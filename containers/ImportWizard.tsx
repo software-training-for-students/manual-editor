@@ -41,13 +41,12 @@ class ImportWizard extends React.Component<Props, void> {
         }
     }
 
-    private onImport = () =>{
+    private onImport = () => {
         if (this.props.fileToImport) {
             this.props.onImport(this.props.fileToImport);
         }
     }
 };
-
 
 const contentContainerStyle = {
     margin: "auto",
