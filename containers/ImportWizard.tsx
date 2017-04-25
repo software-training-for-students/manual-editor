@@ -6,6 +6,8 @@ import {connect} from "react-redux";
 import {compose} from "redux";
 import connectDialog from "redux-dialog";
 import {Store} from "stores";
+import * as boxFolder from "static/box-folder.png";
+import * as boxDownload from "static/box-download.png";
 
 interface Props {
     fileToImport?: File;
@@ -27,9 +29,22 @@ class ImportWizard extends React.Component<Props, void> {
             return (
                 <div style={contentContainerStyle}>
                     <button onClick={this.props.onRequestClose}>Close</button>
-                    <header>Import Legacy (HTML) Manual</header>
+                    <header>Import Legacy (HTML) Manual Zip File</header>
                     <input type="file" accept=".zip" onChange={this.fileChanged} />
                     <button disabled={!this.props.fileToImport} onClick={this.onImport}>Import</button>
+                    <h1>How to Create the Zip File</h1>
+                    <ol className="instruction-list">
+                        <li><p>Open your Box.com Account</p></li>
+                        <li><p>Navigate to the Current Manuals (HTML) folder</p></li>
+                        <li><p>Open the folder for the class manual you are importing</p></li>
+                        <li><p>Download the folder. This will create the Zip file.</p></li>
+                        <div className="full-width-image">
+                            <img src={boxFolder} />
+                        </div>
+                        <div className="full-width-image">
+                            <img src={boxDownload} />
+                        </div>
+                    </ol>
                 </div>
             );
         }
@@ -50,7 +65,7 @@ class ImportWizard extends React.Component<Props, void> {
 
 const contentContainerStyle = {
     margin: "auto",
-    textAlign: "center",
+    textAlign: "left",
     width: "50%",
 };
 

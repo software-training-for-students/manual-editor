@@ -24,7 +24,8 @@ var resolve = {
     stores : srcPath("stores"),
     actions : srcPath("actions"),
     reducers : srcPath("reducers"),
-    core: srcPath("core")
+    core: srcPath("core"),
+    static: srcPath("static"),
   }
 };
 
@@ -58,6 +59,10 @@ var modules = {
             }
           }
         })
+    },
+    {
+      test: /\.(jpe?g|gif|png|svg|woff|ttf|wav|mp3)$/,
+      use: "file-loader",
     }
   ]
 };
