@@ -7,10 +7,12 @@ let setIsEditing: Redux.Reducer<Document> =
     (state: Document = initialState, action: BaseActions.SetIsEditing) => {
     if (action.type === "setIsEditing") {
         let newState: Document = { ... state };
-        newState[action.itemId] = newState[action.itemId] || {itemId: action.itemId};
-        for (let itemId in newState) {
-            if (newState[itemId].editing) {
-                newState[itemId].editing = false;
+        newState[action.itemId] = {... newState[action.itemId]} || {itemId: action.itemId};
+        if (action.editing) {
+            for (let itemId in newState) {
+                if (newState[itemId].editing) {
+                    newState[itemId] = {... newState[itemId], editing: false};
+                }
             }
         }
         newState[action.itemId].editing = action.editing;
@@ -23,7 +25,7 @@ let onEdited: Redux.Reducer<Document> =
     (state: Document = initialState, action: BaseActions.OnEdited) => {
     if (action.type === "onEdited") {
         let newState: Document = { ... state};
-        newState[action.itemId] = newState[action.itemId] || {itemId: action.itemId};
+        newState[action.itemId] = {... newState[action.itemId]} || {itemId: action.itemId};
         newState[action.itemId].value = action.value;
         return newState;
     }

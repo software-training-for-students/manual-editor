@@ -1,4 +1,5 @@
 import EditableProps from "core/EditableProps";
+import {convertToRaw, EditorState} from "draft-js";
 
 type MetaItemType = "open" | "close";
 
@@ -40,8 +41,28 @@ export let initialState: Document = {
         level : 2,
         value : "Small Tagline Description Here",
     },
-    elementOrdering : [],
-    nextItemId : 3,
+    3: {
+        editing: false,
+        itemId: 3,
+        level: 1,
+        value: "Introduction",
+    },
+    4: {
+        editing: false,
+        itemId: 4,
+        value: convertToRaw(EditorState.createEmpty().getCurrentContent()),
+    },
+    elementOrdering : [
+        {
+            elementType: "Heading",
+            itemId: 3,
+        },
+        {
+            elementType: "RichText",
+            itemId: 4,
+        },
+    ],
+    nextItemId : 5,
 };
 
 function exitEditModes(document: Document) {
