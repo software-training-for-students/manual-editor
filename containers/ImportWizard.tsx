@@ -87,4 +87,5 @@ const mapActionsToProps = ({
 export default compose(connectDialog({
     contentLabel: "Import Wizard",
     name: "import-wizard",
+    shouldCloseOnOverlayClick: false,
 }), connect(mapStateToProps, mapActionsToProps))(ImportWizard);

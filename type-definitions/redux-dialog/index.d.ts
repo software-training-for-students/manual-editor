@@ -1,6 +1,5 @@
 import * as React from "react";
 import {Reducer, ActionCreator, Action} from "redux";
-import {ComponentDecorator} from "react-redux";
 import * as Modal from "react-modal";
 
 interface DialogProps extends Partial<Modal.Props> {
@@ -16,4 +15,6 @@ export declare var dialogReducer: Reducer<Store>;
 export function openDialog(name: string): ActionCreator<Action>;
 export function closeDialog(name: string): ActionCreator<Action>;
 
-export default function<TProps>(props: DialogProps): ComponentDecorator<TProps, TProps>;
+type DialogDecorator<TProps> = (component: React.ComponentClass<TProps> | React.StatelessComponent<TProps>) => React.ComponentClass<TProps> | React.StatelessComponent<TProps>;
+
+export default function<TProps>(props: DialogProps): DialogDecorator<TProps>;
