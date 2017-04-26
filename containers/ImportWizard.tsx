@@ -5,9 +5,9 @@ import "react-activity-indicator/src/activityindicator.css";
 import {connect} from "react-redux";
 import {compose} from "redux";
 import connectDialog from "redux-dialog";
-import {Store} from "stores";
-import * as boxFolder from "static/box-folder.png";
 import * as boxDownload from "static/box-download.png";
+import * as boxFolder from "static/box-folder.png";
+import {Store} from "stores";
 
 interface Props {
     fileToImport?: File;
