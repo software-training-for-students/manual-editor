@@ -10,7 +10,10 @@ export interface MenuStore {
         file?: File;
         importing: boolean;
     };
-    load: {file?: File};
+    load: {
+        file?: File,
+        loading: boolean;
+    };
     table: {
         rows: number;
         columns: number;
@@ -28,7 +31,9 @@ export let initialState: MenuStore = {
     import: {
         importing: false,
     },
-    load : {},
+    load : {
+        loading: false,
+    },
     table: {
         columns: 0,
         rows: 0,

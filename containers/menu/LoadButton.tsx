@@ -1,62 +1,34 @@
-import {FlyoutToggle} from "actions/FlyoutActions";
-import * as SaveLoadActions from "actions/SaveLoadActions";
-import Flyout from "containers/Flyout";
+import LoadWizard from "containers/LoadWizard";
 import * as React from "react";
 import {connect} from "react-redux";
+import {openDialog} from "redux-dialog";
 import {Store} from "stores";
 
 interface Props {
-    toggleFlyout: (id: string) => void;
-    onLoad: (file: File) => void;
-    onFileChanged: (file: File) => void;
-    fileToLoad: File;
+    toggleWizard: () => void;
 }
 
 class LoadButton extends React.Component<Props, void> {
     public render() {
         return (
             <div className="has-flyout">
-                <button data-flyout-id="load-flyout" onClick={this.toggleLoadFlyout}>Load</button>
-                <Flyout id="load-flyout" options={{align: "bottom middle"}}>
-                    <div>
-                        <header>Load Manual</header>
-                        <input type="file" accept=".uwstsmanual" onChange={this.fileChanged} />
-                        <button onClick={this.onLoad}>Load</button>
-                    </div>
-                </Flyout>
+                <button onClick={this.toggleWizard}>Load</button>
+                <LoadWizard />
             </div>
         );
     }
 
-    private toggleLoadFlyout = () => {
-        this.props.toggleFlyout("load-flyout");
+    private toggleWizard = () => {
+        this.props.toggleWizard();
     }
-
-    private fileChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.currentTarget.files) {
-            this.props.onFileChanged(event.currentTarget.files[0]);
-        }
-    }
-
-    private onLoad = () => this.props.onLoad(this.props.fileToLoad);
 }
 
 function mapStateToProps(state: Store): Partial<Props> {
-    return {
-        fileToLoad : state.menu.load.file,
-    };
+    return {};
 }
 
 let mapActionsToProps = ({
-    onFileChanged : (file: File) => ({
-        file,
-        type: "load-file-changed",
-    } as SaveLoadActions.FileChangedAction),
-    onLoad : SaveLoadActions.loadThunkAction,
-    toggleFlyout : (id: string) => ({
-        type: "flyout-toggle",
-        id,
-    } as FlyoutToggle),
+    toggleWizard : () => openDialog("load-wizard"),
 });
 
 export default connect(mapStateToProps, mapActionsToProps)(LoadButton);

@@ -1,6 +1,7 @@
 import { saveAs } from "file-saver";
 import * as JSZip from "jszip";
 import { Action } from "redux";
+import {closeDialog} from "redux-dialog";
 import { ThunkAction } from "redux-thunk";
 import {Store} from "stores";
 import {Document} from "stores/Document";
@@ -36,17 +37,21 @@ export function saveAsThunkAction(): ThunkAction<void, Store, void> {
 }
 
 export function loadThunkAction(zipFile: File): ThunkAction<void, Store, void> {
-    return async (dispatcher) => {
+    return async (dispatch) => {
+        dispatch(<SetLoadingAction> {
+            loading: true,
+            type: "set-loading",
+        });
         let zip = new JSZip();
         zip = await zip.loadAsync(zipFile);
         let version = parseInt(await zip.file("version").async("text"), 10);
         let document: Document = JSON.parse(await zip.file("manual.json").async("text"));
-        dispatcher(<SetDocumentAction> {
+        dispatch(<SetDocumentAction> {
             document,
             type : "set-document",
             version,
         });
-        dispatcher(<ClearImagesAction> {
+        dispatch(<ClearImagesAction> {
             type: "clear-images",
         });
         await Promise.all(Object.getOwnPropertyNames(zip.files).map(async (file) => {
@@ -54,12 +59,17 @@ export function loadThunkAction(zipFile: File): ThunkAction<void, Store, void> {
                 return;
             } else {
                 let blob: Blob = await zip.files[file].async("blob");
-                dispatcher(<UploadImage> {
+                dispatch(<UploadImage> {
                     image: new File([blob], file),
                     type: "uploadImage",
                 });
             }
         }));
+        dispatch(<SetLoadingAction> {
+            loading: false,
+            type: "set-loading",
+        });
+        dispatch(closeDialog("import-wizard"));
     };
 }
 
@@ -76,4 +86,9 @@ export interface FileChangedAction extends Action {
 
 export interface ClearImagesAction extends Action {
     type: "clear-images";
+}
+
+export interface SetLoadingAction {
+    type: "set-loading";
+    loading: boolean;
 }

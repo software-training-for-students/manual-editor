@@ -15,7 +15,7 @@ class KeyboardKeyEditor extends React.Component<KeyProps, void> {
                 <select value={this.props.icon} onChange={this.onIconChanged}>
                     {
                         Object.getOwnPropertyNames(KeyToImageMap).map((image: keyof typeof KeyToImageMap) => (
-                            <option value={image} disabled={image === "none"} hidden={image === "none"}>{KeyToImageMap[image]}</option>
+                            <option key={image} value={image} disabled={image === "none"} hidden={image === "none"}>{KeyToImageMap[image]}</option>
                         ))
                     }
                 </select>

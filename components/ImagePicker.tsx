@@ -20,7 +20,7 @@ const ImagePicker = (props: Props) => {
                     <option value="" disabled hidden />
                     {
                         props.uploadedImages.map((image) => (
-                            <option value={image}>{image}</option>
+                            <option key={image} value={image}>{image}</option>
                         ))
                     }
                 </select>
