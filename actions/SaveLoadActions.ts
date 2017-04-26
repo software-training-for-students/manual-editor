@@ -9,7 +9,7 @@ import { UploadImage } from "./ImageActions";
 export const saveVersion: number = 1;
 
 export function saveAsThunkAction(): ThunkAction<void, Store, void> {
-    return (_, getStore) => {
+    return async (_, getStore) => {
         // Clone the document object since we have to make changes.
         let manualFile = new JSZip();
         let document = getStore().document;
@@ -30,41 +30,36 @@ export function saveAsThunkAction(): ThunkAction<void, Store, void> {
                 manualFile.file(key, image.image);
             }
         }
-        manualFile.generateAsync({type: "blob"}).then((blob: Blob) => saveAs(blob, manual[1].value.toString() + ".uwstsmanual"));
+        let blob: Blob = await manualFile.generateAsync({type: "blob"});
+        saveAs(blob, manual[1].value.toString() + ".uwstsmanual");
     };
 }
 
 export function loadThunkAction(zipFile: File): ThunkAction<void, Store, void> {
-    return (dispatcher) => {
+    return async (dispatcher) => {
         let zip = new JSZip();
-        zip.loadAsync(zipFile).then((loadedZip) => {
-            loadedZip.file("manual.json").async("text").then((text: string) => {
-                loadedZip.file("version").async("text").then((versionString: string) => {
-                    let document: Document = JSON.parse(text);
-                    let version = parseInt(versionString, 10);
-                    dispatcher(<SetDocumentAction> {
-                        document,
-                        type : "set-document",
-                        version,
-                    });
-                });
-            }).then(() => {
-                dispatcher(<ClearImagesAction> {
-                    type: "clear-images",
-                });
-                for (let fileName in loadedZip.files) {
-                    if (loadedZip.files.hasOwnProperty(fileName)) {
-                        let file = loadedZip.files[fileName];
-                        file.async("blob").then((data: Blob) => {
-                            dispatcher(<UploadImage> {
-                                image: new File([data], fileName),
-                                type: "uploadImage",
-                            });
-                        });
-                    }
-                }
-            });
+        zip = await zip.loadAsync(zipFile);
+        let version = parseInt(await zip.file("version").async("text"), 10);
+        let document: Document = JSON.parse(await zip.file("manual.json").async("text"));
+        dispatcher(<SetDocumentAction> {
+            document,
+            type : "set-document",
+            version,
         });
+        dispatcher(<ClearImagesAction> {
+            type: "clear-images",
+        });
+        await Promise.all(Object.getOwnPropertyNames(zip.files).map(async (file) => {
+            if (file === "manual.json" || file === "version") {
+                return;
+            } else {
+                let blob: Blob = await zip.files[file].async("blob");
+                dispatcher(<UploadImage> {
+                    image: new File([blob], file),
+                    type: "uploadImage",
+                });
+            }
+        }));
     };
 }
 
