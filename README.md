@@ -11,6 +11,6 @@ The `.uwstsmanual` format is actually just a zip file. The files within are as f
 * `version`: This file contains a version number of the file format. This enables the application to easily upgrade manuals when there are breaking changes.
 * Other files: Any other files are image files that are used in the manual.
 ## Developing the Manual Editor
-The manual editor currently uses Typescript, React, Redux, and Webpack, along with TSLint for linting. To start developing, clone the repository and check out the React branch
+The manual editor currently uses Typescript, React, Redux, and Webpack, along with TSLint for linting. To start developing, clone the repository and check out the master branch.
 
 Install a newer (v4.2.0 or newer) version of npm and run `npm install` in the repository. You should be able to develop now! There are config files for VSCode already checked in, so I suggest you use that to develop. To build from the command line, run `npm run build`. To build a release, run `npm run pack`. To test, open the index.html from the build folder in a browser.
