@@ -18,15 +18,10 @@ var entry = {
 
 var resolve = {
   extensions: [".ts", ".tsx", ".js"],
-  alias: {
-    components : srcPath("components"),
-    containers : srcPath("containers"),
-    stores : srcPath("stores"),
-    actions : srcPath("actions"),
-    reducers : srcPath("reducers"),
-    core: srcPath("core"),
-    static: srcPath("static"),
-  }
+  modules: [
+    __dirname,
+    "node_modules"
+  ]
 };
 
 var output = {
