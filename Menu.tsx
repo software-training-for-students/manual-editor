@@ -14,7 +14,7 @@ import SaveButton from "containers/menu/SaveButton";
 import TableButton from "containers/menu/TableButton";
 import * as React from "react";
 
-export default class Menu extends React.Component<void, void> {
+export default class Menu extends React.Component<{}, {}> {
     public render () {
         return (
             <div id="menu">

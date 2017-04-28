@@ -17,7 +17,7 @@ interface Props {
     onImport: (file: File) => void;
 }
 
-class ImportWizard extends React.Component<Props, void> {
+class ImportWizard extends React.Component<Props, {}> {
     public render() {
         if (this.props.importing) {
             return (

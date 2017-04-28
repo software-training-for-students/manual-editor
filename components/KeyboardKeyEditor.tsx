@@ -8,7 +8,7 @@ interface KeyProps {
     deleteKey: (index: number) => void;
 }
 
-class KeyboardKeyEditor extends React.Component<KeyProps, void> {
+class KeyboardKeyEditor extends React.Component<KeyProps, {}> {
      public render() {
          return (
             <span>

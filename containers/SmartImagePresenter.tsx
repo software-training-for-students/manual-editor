@@ -8,7 +8,7 @@ interface Props {
     [key: string]: any;
 }
 
-class Image extends React.Component<Props, void> {
+class Image extends React.Component<Props, {}> {
     public render() {
         let {actualSource, ...rest} = this.props;
         return <img {...rest} src={actualSource} />;

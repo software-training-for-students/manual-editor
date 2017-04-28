@@ -11,7 +11,7 @@ interface Props {
     currentImage?: string;
 }
 
-class ImagePickerWrapper extends React.Component<Props, void> {
+class ImagePickerWrapper extends React.Component<Props, {}> {
     constructor(props: Props, context?: any) {
         super(props, context);
     }

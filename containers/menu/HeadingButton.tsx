@@ -14,7 +14,7 @@ interface Props {
     headingText: string;
 }
 
-class HeadingButton extends React.Component<Props, void> {
+class HeadingButton extends React.Component<Props, {}> {
     public render() {
         return (
         <MenuItem

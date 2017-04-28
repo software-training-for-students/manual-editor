@@ -6,7 +6,7 @@ type ImageEditorProps<TImageProps extends {value: any}> = TImageProps & {
     onValueChange: (newProps: TImageProps["value"]) => void;
 };
 
-class SingleImageEditor extends React.Component<ImageEditorProps<SingleImageProps>, void> {
+class SingleImageEditor extends React.Component<ImageEditorProps<SingleImageProps>, {}> {
     public render() {
         const imageProps = this.props.value;
         return (
@@ -59,7 +59,7 @@ class SingleImageEditor extends React.Component<ImageEditorProps<SingleImageProp
 }
 
 // tslint:disable-next-line:max-classes-per-file
-class SideBySideImageEditor extends React.Component<ImageEditorProps<SideBySideImageProps>, void> {
+class SideBySideImageEditor extends React.Component<ImageEditorProps<SideBySideImageProps>, {}> {
     public render() {
         const imageProps = this.props.value;
         return (

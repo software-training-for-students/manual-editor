@@ -9,7 +9,7 @@ interface Props {
     onChangeLanguage: (language: string) => void;
 }
 
-class CodeSnippetButton extends React.Component<Props, void> {
+class CodeSnippetButton extends React.Component<Props, {}> {
     public render() {
         return <MenuItem
             insertEnabled={!!this.props.language}

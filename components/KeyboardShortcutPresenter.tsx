@@ -6,7 +6,7 @@ interface Props {
     keys: Array<keyof typeof KeyToImageMap>;
 }
 
-class KeyboardShortcutEditor extends React.Component<Props, void> {
+class KeyboardShortcutEditor extends React.Component<Props, {}> {
     public render() {
         return (
             <div>

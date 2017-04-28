@@ -8,12 +8,14 @@ interface Props {
 }
 
 function removableCore<TProps extends {itemId: number}>(Component: React.ComponentClass<TProps> | React.SFC<TProps>): React.ComponentClass<TProps & Props> {
-    return class extends React.Component<TProps & Props, void> {
+    return class extends React.Component<TProps & Props, {}> {
         public render() {
+            // Workaround until a Typescript version with Microsoft/Typescript#13288 is merged
+            let childProps: any = Object.assign({}, this.props);
             return (
                 <div className="removable">
                     <button onClick={this.onRemoveClick}>X</button>
-                    <Component {...this.props} />
+                    <Component {...childProps} />
                 </div>
             );
         }

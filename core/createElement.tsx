@@ -16,7 +16,7 @@ type EditableElementProps = {
     items?: ItemTree[];
 };
 
-function MetaElement(Container: React.ComponentClass<void> | React.SFC<void>) {
+function MetaElement(Container: React.ComponentClass<{}> | React.SFC<{}>) {
     return (props: EditableElementProps) => (
         <Container>
             {props.items && props.items.map(createElement)}

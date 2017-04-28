@@ -8,7 +8,7 @@ interface Props {
     onShortcutChanged: (os: string, keys: Array<keyof typeof KeyToImageMap>) => void;
 }
 
-class KeyboardShortcutEditor extends React.Component<Props, void> {
+class KeyboardShortcutEditor extends React.Component<Props, {}> {
     public render() {
         return (
             <div>

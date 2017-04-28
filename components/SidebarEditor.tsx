@@ -8,7 +8,7 @@ type Props = SidebarInfo & {
     onValueChange: (value: SidebarInfo["value"]) => void;
 };
 
-class SidebarEditor extends React.PureComponent<Props, void> {
+class SidebarEditor extends React.PureComponent<Props, {}> {
     public render() {
         return(
             <div className="sidebar-note">

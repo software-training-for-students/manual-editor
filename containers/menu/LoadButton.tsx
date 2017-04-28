@@ -8,7 +8,7 @@ interface Props {
     toggleWizard: () => void;
 }
 
-class LoadButton extends React.Component<Props, void> {
+class LoadButton extends React.Component<Props, {}> {
     public render() {
         return (
             <div className="has-flyout">

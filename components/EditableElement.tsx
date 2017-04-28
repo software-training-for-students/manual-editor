@@ -23,7 +23,11 @@ type Props<TElementInfo extends {value: any}> = TElementInfo & {
 export default class EditableElement<TElementInfo extends {value: any}> extends React.Component<Props<TElementInfo>, {}> {
     public render() {
         const Content: new(...args: any[]) => EditableContent<TElementInfo["value"]> = EditableContent;
-        return <Content {...this.props} toggleIsEditing={this.toggleIsEditing} updateValue={this.updateValue} />;
+        let childProps: any = Object.assign({}, this.props, {
+            toggleIsEditing: this.toggleIsEditing,
+            updateValue: this.updateValue,
+        });
+        return <Content {...childProps} />;
     }
 
     private toggleIsEditing = () => {

@@ -3,7 +3,7 @@ import {Presenter as RichTextPresenter} from "components/RichText";
 import {KeyboardShortcut as Props} from "core/ElementInfo";
 import * as React from "react";
 
-export default class KeyboardShortcutSidebarPresenter extends React.Component<Props, void> {
+export default class KeyboardShortcutSidebarPresenter extends React.Component<Props, {}> {
     public render() {
         return (
             <div>

@@ -11,7 +11,7 @@ type Props = KeyboardShortcutProps & {
     onValueChange: (value: KeyboardShortcutProps["value"]) => void;
 };
 
-export default class KeyboardShortcutSidebarEditor extends React.Component<Props, void> {
+export default class KeyboardShortcutSidebarEditor extends React.Component<Props, {}> {
     public render() {
         return (
             <div className="keyboard-shortcut">

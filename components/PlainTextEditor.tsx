@@ -6,9 +6,11 @@ interface Props {
     value: string;
 }
 
-class PlainTextEditor extends React.Component<Props, void> {
+class PlainTextEditor extends React.Component<Props, {}> {
 public render() {
-        return <textarea onChange={this.onChange} value={this.props.value} {... this.props} onKeyDownCapture={this.onKeyDown} />;
+        // tslint:disable-next-line:no-unused-variable
+        let {onValueChange, ...rest} = this.props;
+        return <textarea onChange={this.onChange} value={this.props.value} {... rest} onKeyDownCapture={this.onKeyDown} />;
     }
 
     private onChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {

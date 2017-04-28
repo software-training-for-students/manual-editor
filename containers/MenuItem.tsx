@@ -22,7 +22,7 @@ interface Props {
     insertEnabled: boolean;
 }
 
-class MenuItem extends React.Component<Props, void> {
+class MenuItem extends React.Component<Props, {}> {
     public render() {
         return (
             <div className="has-flyout">

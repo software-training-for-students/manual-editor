@@ -15,7 +15,7 @@ interface Props {
     onLoad: (file: File) => void;
 }
 
-class LoadWizard extends React.Component<Props, void> {
+class LoadWizard extends React.Component<Props, {}> {
     public render() {
         if (this.props.loading) {
             return (

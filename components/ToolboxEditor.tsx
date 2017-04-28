@@ -9,7 +9,7 @@ type Props = ToolboxProps & {
 // I can't think of a way to do the callbacks without lambdas or bind (which both have the same perf problem)
 // tslint:disable:jsx-no-lambda
 
-export class ToolboxEditor extends React.Component<Props, void> {
+export class ToolboxEditor extends React.Component<Props, {}> {
     public render() {
         return (
             <div className="toolbox">

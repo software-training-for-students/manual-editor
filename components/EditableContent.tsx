@@ -47,7 +47,7 @@ function enhanceComponent<T>(component: ComponentType<InputProps<T>>): Component
     return outputType;
 }
 
-class EditableContent<T> extends React.Component<Props<T> , void> {
+class EditableContent<T> extends React.Component<Props<T> , {}> {
     public render() {
         if (this.props.editing) {
             let InputComponent = enhanceComponent(this.props.inputComponentClass);

@@ -8,7 +8,7 @@ type EditorProps = React.HTMLAttributes<HTMLInputElement> & {
 const minInputSize = 20;
 const extraInputSpace = 2; // Extra whitespace at the end to account for any buttons in the text box.
 
-class SingleLineEditor extends React.Component<EditorProps, void> {
+class SingleLineEditor extends React.Component<EditorProps, {}> {
     public render() {
         const textLength = this.props.value.length;
         // tslint:disable-next-line:no-unused-variable
