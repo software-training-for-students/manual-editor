@@ -64,10 +64,6 @@ export interface RichText {
     value: RawDraftContentState;
 }
 
-export interface ListItem {
-    value: RawDraftContentState;
-}
-
 export interface SidebarNote {
     value: {
         title: string;
@@ -129,7 +125,7 @@ type ContentElementInfo = {
     elementState: RichText;
 } | {
     elementType: "ListItem";
-    elementState: ListItem;
+    elementState: RichText;
 } | {
     elementType: "SidebarNote";
     elementState: SidebarNote;

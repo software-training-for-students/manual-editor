@@ -8,6 +8,7 @@ import EditableListItem from "containers/editors/EditableListItem";
 import EditableRichText from "containers/editors/EditableRichText";
 import EditableSidebarNote from "containers/editors/EditableSidebarNote";
 import EditableToolbox from "containers/editors/EditableToolbox";
+import InstructionList from "containers/InstructionList";
 import {ContentElementType, MetaElementType} from "core/ElementInfo";
 import {isItemTreeLeaf, ItemTree} from "core/ItemTree";
 import * as React from "react";
@@ -46,7 +47,7 @@ let elementTypes: ElementTypes = {
     Toolbox: removable(EditableToolbox),
     UnorderedList: MetaElement(({children}) => <ul>{children}</ul>),
     OrderedList : MetaElement(({children}) => <ol>{children}</ol>),
-    InstructionList : MetaElement(({children}) => <ol className="instruction-list">{children}</ol>),
+    InstructionList,
     ListItem : removable(EditableListItem),
     Table : removable(MetaElement(({children}) => <table><tbody>{children}</tbody></table>)),
     TableRow : MetaElement(({children}) => <tr>{children}</tr>),
@@ -55,8 +56,6 @@ let elementTypes: ElementTypes = {
     KeyboardShortcut: removable(EditableKeyboardShortcut),
     Manual: MetaElement(({children}) => <div>{children}</div>),
 };
-
-type Test = ItemTree["elementType"] & keyof ElementTypes;
 
 export default function createElement(props: ItemTree) {
     if (isItemTreeLeaf(props)) {

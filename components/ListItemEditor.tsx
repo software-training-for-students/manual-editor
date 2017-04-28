@@ -1,5 +1,5 @@
 import {Editor as RichTextEditor} from "components/RichText";
-import {ListItem as ListItemProps} from "core/ElementInfo";
+import {RichText as ListItemProps} from "core/ElementInfo";
 import * as React from "react";
 
 type Props = ListItemProps & {

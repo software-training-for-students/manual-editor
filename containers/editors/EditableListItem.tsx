@@ -2,7 +2,7 @@ import EditableElement from "components/EditableElement";
 import ListItem from "components/ListItem";
 import ListItemEditor from "components/ListItemEditor";
 import connectEditable from "core/connectEditable";
-import {ListItem as ListItemInfo} from "core/ElementInfo";
+import {RichText as ListItemInfo} from "core/ElementInfo";
 import InteractivePropsFromElementInfo from "core/InteractivePropsFromElementInfo";
 import * as React from "react";
 
