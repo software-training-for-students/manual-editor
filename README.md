@@ -14,3 +14,6 @@ The `.uwstsmanual` format is actually just a zip file. The files within are as f
 The manual editor currently uses Typescript, React, Redux, and Webpack, along with TSLint for linting. To start developing, clone the repository and check out the master branch.
 
 Install a newer (v4.2.0 or newer) version of npm and run `npm install` in the repository. You should be able to develop now! There are config files for VSCode already checked in, so I suggest you use that to develop. To build from the command line, run `npm run build`. To build a release, run `npm run pack`. To test, open the index.html from the build folder in a browser.
+
+## Making a Release
+To make a release, first remove your build directory to ensure you don't release any old or unused files. Then run `npm run pack`. Open up a local copy of the `software-training-for-students.github.io` repository. Copy the files from the build directory and paste them in the `editor` directory of the `software-training-for-students.github.io` repository.
