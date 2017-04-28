@@ -14,30 +14,28 @@ import SaveButton from "containers/menu/SaveButton";
 import TableButton from "containers/menu/TableButton";
 import * as React from "react";
 
-export default class Menu extends React.Component<{}, {}> {
-    public render () {
-        return (
-            <div id="menu">
-                <HeadingButton />
-                <ImageButtons.SingleImageButton />
-                <ImageButtons.SideBySideImageButton />
-                <ParagraphButton />
-                <HtmlButton />
-                <CodeSnippetButton />
-                <SidebarNoteButton />
-                <KeyboardShortcutButton />
-                <ToolboxButton />
-                <ListButtons.UnorderedListButton />
-                <ListButtons.OrderedListButton />
-                <ListButtons.InstructionListButton />
-                <ListItemButton />
-                <TableButton />
-                <div>
-                    <SaveButton />
-                    <LoadButton />
-                    <ImportButton />
-                </div>
+export default function Menu () {
+    return (
+        <div id="menu">
+            <HeadingButton />
+            <ImageButtons.SingleImageButton />
+            <ImageButtons.SideBySideImageButton />
+            <ParagraphButton />
+            <HtmlButton />
+            <CodeSnippetButton />
+            <SidebarNoteButton />
+            <KeyboardShortcutButton />
+            <ToolboxButton />
+            <ListButtons.UnorderedListButton />
+            <ListButtons.OrderedListButton />
+            <ListButtons.InstructionListButton />
+            <ListItemButton />
+            <TableButton />
+            <div>
+                <SaveButton />
+                <LoadButton />
+                <ImportButton />
             </div>
-        );
-    }
+        </div>
+    );
 }
