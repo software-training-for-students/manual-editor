@@ -19,6 +19,7 @@
 		"jsx-wrap-multiline" : false,
 		"jsx-boolean-value" : false,
 		"max-line-length": [130],
-		"no-reference": true
+		"no-reference": true,
+		"object-literal-sort-keys": false
 	}
 }

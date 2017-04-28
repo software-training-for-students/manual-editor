@@ -66,7 +66,7 @@ function convertCurrentElement(currentElement: Element): ElementInfo[] {
             }
             case "ol":
             {
-                let elementType: ElementTypes.MetaElement = currentElement.classList.contains("instruction-list") ? "InstructionList" : "OrderedList";
+                let elementType: ElementTypes.MetaElementType = currentElement.classList.contains("instruction-list") ? "InstructionList" : "OrderedList";
                 return generateMetaItem(elementType, currentElement);
             }
             case "p":
@@ -135,7 +135,7 @@ function convertCurrentElement(currentElement: Element): ElementInfo[] {
         }
 }
 
-function generateMetaItem(elementType: ElementTypes.MetaElement, currentElement: Element) {
+function generateMetaItem(elementType: ElementTypes.MetaElementType, currentElement: Element) {
     let listElements: ElementInfo[] = [
         {
             elementType,

@@ -1,31 +1,12 @@
 import EditableProps from "core/EditableProps";
+import ElementInfo, {isMetaElement} from "core/ElementInfo";
+import {isMetaItemOrdering, ItemOrdering} from "core/ItemTree";
 import {convertToRaw, EditorState} from "draft-js";
-
-type MetaItemType = "open" | "close";
-
-export interface ItemOrdering {
-        itemId: number;
-        elementType: string;
-        metaItemType?: MetaItemType;
-}
-
-export interface ItemTree extends ItemOrdering {
-    items: ItemTree[];
-}
 
 export interface Document {
     [itemId: number]: EditableProps<any> & {[k: string]: any};
     nextItemId: number;
     elementOrdering: ItemOrdering[];
-}
-
-export interface ElementInfo {
-    elementType: string;
-    elementState?: {
-        value: any,
-        [key: string]: any,
-    };
-    metaItemType?: MetaItemType;
 }
 
 export let initialState: Document = {
@@ -117,13 +98,20 @@ export function addElements(
     let orderings: ItemOrdering[] = [];
     let idStack: number[] = [];
     elements.forEach((element, idx) => {
-        let itemId = element.metaItemType === "close" ? idStack.pop()! : document.nextItemId;
-        document[itemId] = {... element.elementState, editing : idx === elementToEdit, itemId};
-        if (element.metaItemType === "open") {
+        let metaItemType = isMetaElement(element) ? element.metaItemType : undefined;
+        let elementState = isMetaElement(element) ? undefined : element.elementState;
+        let itemId = metaItemType === "close" ? idStack.pop()! : document.nextItemId;
+
+        document[itemId] = {... elementState, editing : idx === elementToEdit, itemId};
+        if (metaItemType === "open") {
             idStack.push(itemId);
         }
         document.nextItemId++;
-        orderings.push({itemId, elementType: element.elementType, metaItemType: element.metaItemType});
+        if (isMetaElement(element)) {
+            orderings.push({itemId, elementType: element.elementType, metaItemType: element.metaItemType});
+        } else {
+            orderings.push({itemId, elementType: element.elementType});
+        }
     });
 
     let docOrdering = document.elementOrdering.slice();
@@ -140,7 +128,7 @@ export function removeElement(document: Document, itemId: number) {
             elementOrdering.push(element);
         }
         if (element.itemId === itemId) {
-            deletingRange = element.metaItemType === "open";
+            deletingRange = isMetaItemOrdering(element) && element.metaItemType === "open";
         }
     });
     document.elementOrdering = elementOrdering;

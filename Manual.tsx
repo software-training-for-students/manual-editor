@@ -2,10 +2,10 @@ import AboutPage from "components/AboutPage";
 import CoverPage from "components/CoverPage";
 import TableOfContents from "containers/TableOfContents";
 import createElement from "core/createElement";
+import {isItemTreeLeaf, isMetaItemOrdering, ItemOrdering, ItemTree} from "core/ItemTree";
 import * as React from "react";
 import {connect} from "react-redux";
 import {Store} from "stores";
-import {ItemOrdering, ItemTree} from "stores/Document";
 
 interface Props {
     items: ItemOrdering[];
@@ -35,9 +35,7 @@ class Manual extends React.Component<Props, State> {
                 <CoverPage date={new Date()} />
                 <AboutPage />
                 <TableOfContents />
-                {
-                    this.state.tree.items.map(createElement)
-                }
+                {createElement(this.state.tree)}
             </div>
         );
     }
@@ -53,16 +51,26 @@ function createElementTree(elementOrdering: ItemOrdering[]): ItemTree {
     let treeStack: ItemTree[] = [itemTree];
 
     elementOrdering.forEach((item) => {
-        let topTree = treeStack[treeStack.length - 1];
-        if (item.metaItemType === "open") {
-            let newSubTree = {... item, items: []};
-            topTree.items.push(newSubTree);
-            treeStack.push(newSubTree);
-        } else if (item.metaItemType === "close") {
-            if (topTree.elementType !== item.elementType) {
-                throw new Error("Mismatched closing element type");
+        const topTree = treeStack[treeStack.length - 1];
+        if (isItemTreeLeaf(topTree)) {
+            // Note: this should be impossible but with this Typescript can ensure
+            // that our logic below is correct within the type system.
+            throw new Error("Top tree on the stack is a leaf element (does not have children).");
+        }
+        if (isMetaItemOrdering(item)) {
+            if (item.metaItemType === "open") {
+                let newSubTree = {... item, items: []};
+                topTree.items.push(newSubTree);
+                treeStack.push(newSubTree);
+            } else if (item.metaItemType === "close") {
+                if (topTree.elementType !== item.elementType) {
+                    throw new Error("Mismatched closing element type");
+                }
+                if (topTree.itemId !== item.itemId) {
+                    throw new Error("Mismatched closing item id");
+                }
+                treeStack.pop();
             }
-            treeStack.pop();
         } else {
             topTree.items.push({... item, items: []});
         }

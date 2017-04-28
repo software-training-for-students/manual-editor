@@ -84,11 +84,29 @@ export interface Toolbox {
     }>;
 }
 
-type MetaItemType = "open" | "close";
+export type MetaItemType = "open" | "close";
 
-export type MetaElement = "Table" | "TableRow" | "TableHeader" | "TableCell" | "UnorderedList" | "OrderedList" | "InstructionList";
+// Make the list of meta elements available at runtime.
+const metaElements = {
+    InstructionList: "InstructionList",
+    OrderedList: "OrderedList",
+    Table: "Table",
+    TableCell: "TableCell",
+    TableHeader: "TableHeader",
+    TableRow: "TableRow",
+    UnorderedList: "UnorderedList",
+    // This element type represents the manual as a whole. It is used as the root when building the element tree in Manual.tsx
+    Manual: "Manual",
+};
 
-type ElementInfo = {
+export type MetaElementType = keyof typeof metaElements;
+
+ type MetaElementInfo = {
+    metaItemType: MetaItemType;
+    elementType: MetaElementType;
+};
+
+type ContentElementInfo = {
     elementType: "Code";
     elementState: Code;
 } | {
@@ -118,9 +136,18 @@ type ElementInfo = {
 } | {
     elementType: "Toolbox";
     elementState: Toolbox;
-} | {
-    metaItemType: MetaItemType;
-    elementType: MetaElement;
 };
+
+type ElementInfo = ContentElementInfo | MetaElementInfo;
+
+export type ContentElementType = ContentElementInfo["elementType"];
+
+export function isMetaElement(element: ElementInfo): element is MetaElementInfo {
+    return isMetaElementType(element.elementType);
+}
+
+export function isMetaElementType(elementType: string): elementType is MetaElementType {
+    return Object.getOwnPropertyNames(metaElements).find((value) => elementType === value) !== undefined;
+}
 
 export default ElementInfo;
