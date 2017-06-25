@@ -7,7 +7,8 @@
     "build": "webpack",
     "pack": "webpack --env.production",
     "lint-check": "tslint --project tsconfig.json",
-    "lint-fix": "tslint --fix --project tsconfig.json"
+    "lint-fix": "tslint --fix --project tsconfig.json",
+    "test": "mocha-webpack --webpack-config webpack.config-test.js \"tests/**/*.ts*\""
   },
   "repository": {
     "type": "git",
@@ -20,9 +21,13 @@
   },
   "homepage": "https://github.com/software-training-for-students/manual-editor",
   "devDependencies": {
+    "@types/chai": "^3.5.2",
     "@types/draft-js": "^0.9.1",
+    "@types/enzyme": "^2.8.0",
     "@types/he": "^0.5.29",
+    "@types/jsdom": "^11.0.0",
     "@types/jszip": "0.0.32",
+    "@types/mocha": "^2.2.41",
     "@types/react": "^15.0.10",
     "@types/react-dom": "^0.14.23",
     "@types/react-modal": "^1.6.6",
@@ -30,15 +35,21 @@
     "@types/redux-devtools-extension": "^2.13.0",
     "awesome-typescript-loader": "^3.0.4-rc.2",
     "css-loader": "^0.26.2",
+    "enzyme": "^2.8.2",
     "extract-text-webpack-plugin": "^2.1.0",
     "html-webpack-plugin": "^2.28.0",
+    "jsdom": "^11.0.0",
+    "mocha": "^3.3.0",
+    "mocha-webpack": "^0.7.0",
+    "null-loader": "^0.1.1",
     "source-map-loader": "^0.1.6",
     "style-loader": "^0.13.2",
     "tslint": "^4.5.1",
     "tslint-react": "^2.4.0",
     "typescript": "^2.2.2",
     "uglifyjs-webpack-plugin": "^0.4.3",
-    "webpack": "^2.2.1"
+    "webpack": "^2.2.1",
+    "webpack-node-externals": "^1.5.4"
   },
   "dependencies": {
     "@aneves/react-flyout": "^0.1.16",
