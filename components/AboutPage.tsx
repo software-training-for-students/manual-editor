@@ -12,11 +12,11 @@ const AboutPage = () => {
                      Our services include custom workshops, open-enrollment classes,
                       one-on-one project help, and access to Lynda.com.
                       For more information on the Software Training for Students (STS) program,
-                       visit our website at <strong><a href="http://wisc.edu/sts">wisc.edu/sts</a></strong>.</p>
+                       visit our website at <strong><a href="https://wisc.edu/sts">wisc.edu/sts</a></strong>.</p>
                 <Images.SingleImage
                     value ={{
                         className: "full-width-image",
-                        source: "http://software-training-for-students.github.io/manual-master-files/sts-services.png",
+                        source: "https://software-training-for-students.github.io/manual-master-files/sts-services.png",
                     }}
                 />
                 <p>
