@@ -219,7 +219,7 @@ function generateDivItem(element: HTMLDivElement): ElementInfo {
         let items = [];
         for (let i = 0; i < element.children.length; ++i) {
             let item = element.children.item(i);
-            let imgSrc = item.querySelector("img")!.getAttribute("src")!;
+            let imgSrc = importImagePath(item.querySelector("img")!.getAttribute("src")!);
             let content = item.querySelector("p")!;
             let name = content.querySelector("b")!.innerText;
             content.removeChild(content.querySelector("b")!);
