@@ -3,7 +3,7 @@ import * as SaveLoadActions from "actions/SaveLoadActions";
 import * as Redux from "redux";
 import {addElements, Document, initialState, removeElement} from "stores/Document";
 
-let setIsEditing: Redux.Reducer<Document> =
+let setIsEditing =
     (state: Document = initialState, action: BaseActions.SetIsEditing) => {
     if (action.type === "setIsEditing") {
         let newState: Document = { ... state };
@@ -21,7 +21,7 @@ let setIsEditing: Redux.Reducer<Document> =
     return state;
 };
 
-let onEdited: Redux.Reducer<Document> =
+let onEdited =
     (state: Document = initialState, action: BaseActions.OnEdited) => {
     if (action.type === "onEdited") {
         let newState: Document = { ... state};
@@ -32,7 +32,7 @@ let onEdited: Redux.Reducer<Document> =
     return state;
 };
 
-let onAddDocument: Redux.Reducer<Document> =
+let onAddDocument =
     (state: Document = initialState, action: BaseActions.AddToDocument) => {
     if (action.type === "addToDocument") {
         let newState: Document = {
@@ -44,7 +44,7 @@ let onAddDocument: Redux.Reducer<Document> =
     return state;
 };
 
-let onRemoveElement: Redux.Reducer<Document> =
+let onRemoveElement =
     (state: Document= initialState, action: BaseActions.RemoveFromDocument) => {
     if (action.type === "removeFromDocument") {
         let newState: Document = {
@@ -56,7 +56,7 @@ let onRemoveElement: Redux.Reducer<Document> =
     return state;
 };
 
-let onSetDocument: Redux.Reducer<Document> = (state: Document = initialState, action: SaveLoadActions.SetDocumentAction) => {
+let onSetDocument = (state: Document = initialState, action: SaveLoadActions.SetDocumentAction) => {
     if (action.type === "set-document") {
         let document = action.document;
         if (action.version && action.version !== SaveLoadActions.saveVersion) {
@@ -68,11 +68,11 @@ let onSetDocument: Redux.Reducer<Document> = (state: Document = initialState, ac
 };
 
 let editReducers = (document: Document, action: Redux.Action) => {
-    let newDoc = setIsEditing(document, action);
-    newDoc = onEdited(newDoc, action);
-    newDoc = onAddDocument(newDoc, action);
-    newDoc = onRemoveElement(newDoc, action);
-    newDoc = onSetDocument(newDoc, action);
+    let newDoc = setIsEditing(document, action as BaseActions.SetIsEditing);
+    newDoc = onEdited(newDoc, action as BaseActions.OnEdited);
+    newDoc = onAddDocument(newDoc, action as BaseActions.AddToDocument);
+    newDoc = onRemoveElement(newDoc, action as BaseActions.RemoveFromDocument);
+    newDoc = onSetDocument(newDoc, action as SaveLoadActions.SetDocumentAction);
     return newDoc;
 };
 

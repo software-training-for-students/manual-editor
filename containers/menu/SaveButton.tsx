@@ -11,7 +11,7 @@ const SaveButton = (props: Props) => {
     return <button onClick={props.onSave}>Save</button>;
 };
 
-function mapStateToProps(state: Store) {
+function mapStateToProps(state: Store, props: Partial<Props>) {
     return {};
 }
 

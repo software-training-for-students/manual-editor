@@ -1,5 +1,6 @@
 import importManualHtml from "core/importManualHtml";
 import * as JSZip from "jszip";
+import { Action } from "redux";
 import {closeDialog} from "redux-dialog";
 import {ThunkAction} from "redux-thunk";
 import {Store} from "stores";
@@ -56,7 +57,15 @@ export interface FileChangedAction {
     file?: File;
 }
 
+export function isFileChanged(action: Action): action is FileChangedAction {
+    return action.type === "import-file-changed";
+}
+
 export interface SetImportingAction {
     type: "set-import";
     importing: boolean;
+}
+
+export function isSetImporting(action: Action): action is SetImportingAction {
+    return action.type === "set-import";
 }

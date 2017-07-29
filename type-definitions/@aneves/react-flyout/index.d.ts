@@ -15,7 +15,7 @@ export declare interface Props {
     options? : Options;
 }
 
-declare class Flyout extends React.Component<Props, void> {}
+declare class Flyout extends React.Component<Props, {}> {}
 
 export declare interface WrapperProps {
     id : string | null;
@@ -24,6 +24,6 @@ export declare interface WrapperProps {
     onWindowClick? : () => void;
 }
 
-declare class FlyoutWrapper extends React.Component<WrapperProps, void>{}
+declare class FlyoutWrapper extends React.Component<WrapperProps, {}>{}
 
 export default FlyoutWrapper;

@@ -1,7 +1,7 @@
 export interface EditableProps<T> {
     itemId: number;
     editing: boolean;
-    value: T;
+    value?: T;
 }
 
 export default EditableProps;

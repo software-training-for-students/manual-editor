@@ -6,4 +6,4 @@ interface Props {
     style? : object;
 }
 
-export default class Highlight extends React.Component<Props, void> {}
+export default class Highlight extends React.Component<Props, {}> {}

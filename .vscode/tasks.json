@@ -17,7 +17,8 @@
         },
         {
             "taskName": "build",
-            "args": ["run", "build"]
+            "args": ["run", "build"],
+            "isBuildCommand": true
         },
         {
             "taskName": "pack",
@@ -30,6 +31,11 @@
         {
             "taskName": "lint-fix",
             "args" : ["run", "lint-fix"]
+        },
+        {
+            "taskName": "test",
+            "args": ["test"],
+            "isTestCommand": true
         }
     ]
 }

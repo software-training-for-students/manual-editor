@@ -1,16 +1,16 @@
-import * as MenuActions from "actions/MenuActions";
-import * as Redux from "redux";
+import {isUpdateHeadingLevel, isUpdateHeadingText} from "actions/MenuActions";
+import {Action, Reducer} from "redux";
 import {HeadingStore, initialState} from "stores/Menu";
 
-let reducer: Redux.Reducer<HeadingStore> =
-(store: HeadingStore = initialState.heading, action: MenuActions.UpdateHeadingLevel | MenuActions.UpdateHeadingText) => {
-    if (action.type === "update-heading-level") {
+let reducer: Reducer<HeadingStore> =
+(store: HeadingStore = initialState.heading, action: Action) => {
+    if (isUpdateHeadingLevel(action)) {
         let newStore: HeadingStore = {
             ... store,
             level : action.level,
         };
         return newStore;
-    } else if (action.type === "update-heading-text") {
+    } else if (isUpdateHeadingText(action)) {
         let newStore: HeadingStore = {
             ... store,
             text : action.text,

@@ -9,7 +9,8 @@
             "request": "launch",
             "name": "Launch",
             "file": "${workspaceRoot}/build/index.html",
-            "sourceMaps": true
+            "sourceMaps": true,
+            "preLaunchTask": "build"
         }
     ]
 }

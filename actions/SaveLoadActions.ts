@@ -1,5 +1,4 @@
 import { saveAs } from "file-saver";
-import * as JSZip from "jszip";
 import { Action } from "redux";
 import {closeDialog} from "redux-dialog";
 import { ThunkAction } from "redux-thunk";
@@ -12,6 +11,7 @@ export const saveVersion: number = 1;
 export function saveAsThunkAction(): ThunkAction<void, Store, void> {
     return async (_, getStore) => {
         // Clone the document object since we have to make changes.
+        let JSZip = await import("jszip");
         let manualFile = new JSZip();
         let document = getStore().document;
         let manual: Document = {
@@ -42,6 +42,7 @@ export function loadThunkAction(zipFile: File): ThunkAction<void, Store, void> {
             loading: true,
             type: "set-loading",
         });
+        let JSZip = await import("jszip");
         let zip = new JSZip();
         zip = await zip.loadAsync(zipFile);
         let version = parseInt(await zip.file("version").async("text"), 10);
@@ -69,7 +70,7 @@ export function loadThunkAction(zipFile: File): ThunkAction<void, Store, void> {
             loading: false,
             type: "set-loading",
         });
-        dispatch(closeDialog("import-wizard"));
+        dispatch(closeDialog("load-wizard"));
     };
 }
 
@@ -79,16 +80,32 @@ export interface SetDocumentAction extends Action {
     version?: number;
 }
 
+export function isSetDocument(action: Action): action is SetDocumentAction {
+    return action.type === "set-document";
+}
+
 export interface FileChangedAction extends Action {
     type: "load-file-changed";
     file: File;
+}
+
+export function isFileChanged(action: Action): action is FileChangedAction {
+    return action.type === "load-file-changed";
 }
 
 export interface ClearImagesAction extends Action {
     type: "clear-images";
 }
 
+export function isClearImages(action: Action): action is ClearImagesAction {
+    return action.type === "clear-images";
+}
+
 export interface SetLoadingAction {
     type: "set-loading";
     loading: boolean;
+}
+
+export function isSetLoading(action: Action): action is SetLoadingAction {
+    return action.type === "set-loading";
 }

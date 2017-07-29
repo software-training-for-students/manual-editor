@@ -89,4 +89,4 @@ function mapStateToProps(state: Store): Props {
     };
 }
 
-export default connect(mapStateToProps)(Manual);
+export default connect(mapStateToProps, {})(Manual);

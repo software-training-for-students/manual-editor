@@ -1,10 +1,11 @@
-import * as SaveLoadActions from "actions/SaveLoadActions";
+import { isFileChanged, isSetLoading } from "actions/SaveLoadActions";
+import { Action } from "redux";
 import { initialState } from "stores/Menu";
 
-function fileChanged(state = initialState.load, action: SaveLoadActions.FileChangedAction | SaveLoadActions.SetLoadingAction) {
-    if (action.type === "load-file-changed") {
+function fileChanged(state = initialState.load, action: Action) {
+    if (isFileChanged(action)) {
         return {... state, file: action.file};
-    } else if (action.type === "set-loading") {
+    } else if (isSetLoading(action)) {
         return {... state, loading: action.loading};
     }
     return state;

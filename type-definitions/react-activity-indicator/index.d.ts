@@ -11,4 +11,4 @@ interface Props {
     borderColor: string;
 }
 
-export default class ActivityIndicator extends React.Component<Partial<Props>, void> {}
+export default class ActivityIndicator extends React.Component<Partial<Props>, {}> {}
