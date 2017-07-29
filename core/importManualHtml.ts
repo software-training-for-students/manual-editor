@@ -54,15 +54,16 @@ function convertCurrentElement(currentElement: Element): ElementInfo[] {
             return generateMetaItem("UnorderedList", currentElement);
             case "li":
             {
-                let content = ContentState.createFromBlockArray(convertFromHTML(currentElement.innerHTML));
-                return [
-                    {
-                        elementState: {
-                            value: convertToRaw(content),
-                        },
-                        elementType: "ListItem",
-                    },
-                ];
+                return extractElements(currentElement).map((element) => {
+                    if (element.elementType === "RichText") {
+                        element = {
+                            elementType : "ListItem",
+                            elementState : element.elementState,
+                        };
+                    }
+
+                    return element;
+                });
             }
             case "ol":
             {
@@ -122,7 +123,7 @@ function convertCurrentElement(currentElement: Element): ElementInfo[] {
             return generateMetaItem("TableHeader", currentElement);
             case "td":
             return generateMetaItem("TableCell", currentElement);
-            default: // TODO: make default case output RawHTML control.
+            default:
                 console.warn(`Unsupported Tag ${currentElement.tagName}. Imported into a Raw HTML element.`);
                 return [
                     {
