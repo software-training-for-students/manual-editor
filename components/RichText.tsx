@@ -41,11 +41,17 @@ const Link = (props: any) => {
     );
 };
 
+const Kbd = (props: any) => <kbd>{props.children}</kbd>;
+
 const decorator = new Draft.CompositeDecorator([
     {
         component: Link,
         strategy: findEntityRanges("LINK"),
     },
+    {
+        component: Kbd,
+        strategy: findEntityRanges("KBD"),
+    }
 ]);
 
 type EditorProps = Props & {
@@ -96,8 +102,9 @@ class RichTextEditor extends React.Component<EditorProps, EditorState> {
                         <li tabIndex={6} onClick={this.toggleUnderline}>Underline</li>
                         <li tabIndex={7} onClick={this.toggleTeletype}>Teletype</li>
                         <li tabIndex={8} onClick={this.toggleHighlight}>Highlight</li>
-                        <li tabIndex={9} onClick={this.promptForLink}>Add Link</li>
-                        <li tabIndex={10} onClick={this.removeLink}>Remove Link</li>
+                        <li tabIndex={9} onClick={this.createKeyboard}>Kbd</li>
+                        <li tabIndex={10} onClick={this.promptForLink}>Add Link</li>
+                        <li tabIndex={11} onClick={this.removeLink}>Remove Link</li>
                     </ul>
                 </div>
                 <hr />
@@ -188,6 +195,11 @@ class RichTextEditor extends React.Component<EditorProps, EditorState> {
                urlValue: "",
             }, () => setTimeout(this.urlInput.focus(), 0));
         }
+    }
+
+    private createKeyboard = (e: React.SyntheticEvent<HTMLElement>) => {
+        const entityKey = Draft.Entity.create("KBD", "IMMUTABLE");
+        this.onChangeEditorState(Draft.RichUtils.toggleLink(this.state.editorState, this.state.editorState.getSelection(), entityKey));
     }
 
     private confirmLink = (e: React.SyntheticEvent<HTMLElement>) => {
