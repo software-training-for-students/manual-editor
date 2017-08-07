@@ -1,5 +1,4 @@
 import ImageButtons from "components/menu/ImageButtons";
-import KeyboardShortcutButton from "components/menu/KeyboardShortcutButton";
 import * as ListButtons from "components/menu/ListButtons";
 import ListItemButton from "components/menu/ListItemButton";
 import ParagraphButton from "components/menu/ParagraphButton";
@@ -24,7 +23,6 @@ export default function Menu () {
             <HtmlButton />
             <CodeSnippetButton />
             <SidebarNoteButton />
-            <KeyboardShortcutButton />
             <ToolboxButton />
             <ListButtons.UnorderedListButton />
             <ListButtons.OrderedListButton />
