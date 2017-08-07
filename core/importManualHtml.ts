@@ -312,7 +312,7 @@ function extractToolboxChildren(toolbox: HTMLDivElement) {
             currentChild = document.createElement("div");
             children.push(element);
         } else {
-            currentChild.appendChild(element);
+            currentChild.appendChild(element.cloneNode(true));
             if (element instanceof HTMLParagraphElement) {
                 children.push(currentChild);
                 currentChild = document.createElement("div");
