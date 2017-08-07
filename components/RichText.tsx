@@ -32,6 +32,13 @@ function findEntityRanges(entityKey: string) {
     };
 }
 
+function handleKeyBindings(e: React.KeyboardEvent<any>): any {
+    if (e.keyCode === 75 /* k */ && Draft.KeyBindingUtil.hasCommandModifier(e)) {
+        return "toggle-kbd";
+    }
+    return Draft.getDefaultKeyBinding(e);
+}
+
 const Link = (props: any) => {
     const {url} = Draft.Entity.get(props.entityKey).getData();
     return (
@@ -51,7 +58,7 @@ const decorator = new Draft.CompositeDecorator([
     {
         component: Kbd,
         strategy: findEntityRanges("KBD"),
-    }
+    },
 ]);
 
 type EditorProps = Props & {
@@ -118,6 +125,7 @@ class RichTextEditor extends React.Component<EditorProps, EditorState> {
                         handleKeyCommand={this.handleKeyCommand}
                         onBlur={this.onBlur}
                         customStyleMap={styleMap}
+                        keyBindingFn={handleKeyBindings}
                     />
                 </div>
             </div>
@@ -179,6 +187,11 @@ class RichTextEditor extends React.Component<EditorProps, EditorState> {
     }
 
     private handleKeyCommand: (command: string) => "handled" | "not-handled" = (command: string) => {
+        if (command === "toggle-kbd") {
+            this.createKeyboard();
+            return "handled";
+        }
+
         let state = Draft.RichUtils.handleKeyCommand(this.state.editorState, command);
         if (state) {
             this.onChangeEditorState(state);
@@ -197,7 +210,7 @@ class RichTextEditor extends React.Component<EditorProps, EditorState> {
         }
     }
 
-    private createKeyboard = (e: React.SyntheticEvent<HTMLElement>) => {
+    private createKeyboard = (e?: React.SyntheticEvent<HTMLElement>) => {
         const entityKey = Draft.Entity.create("KBD", "IMMUTABLE");
         this.onChangeEditorState(Draft.RichUtils.toggleLink(this.state.editorState, this.state.editorState.getSelection(), entityKey));
     }
