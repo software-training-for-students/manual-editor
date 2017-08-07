@@ -158,7 +158,7 @@ function generateImageItem(element: HTMLDivElement): ElementInfo {
     const caption = captionElement ? captionElement.innerText : "";
     let className: string;
     for (let i = 0; i < classList.length; ++i) {
-        if (classList.item(i).includes("image")) {
+        if (classList.item(i).includes("image") || classList.item(i) === "sidebar-icon") {
             className = classList.item(i);
             if (className.includes("sidebyside")) {
                 let leftSource = importImagePath(element.querySelectorAll("img")[0].getAttribute("src")!);
@@ -217,9 +217,10 @@ function generateDivItem(element: HTMLDivElement): ElementInfo {
         };
     } else if (classList.contains("toolbox")) {
         let items = [];
-        for (let i = 0; i < element.children.length; ++i) {
-            let item = element.children.item(i);
-            let imgSrc = importImagePath(item.querySelector("img")!.getAttribute("src")!);
+        let children = extractToolboxChildren(element);
+        for (let item of children) {
+            let image = item.querySelector("img");
+            let imgSrc = image !== null ? importImagePath(image.getAttribute("src")!) : "";
             let content = item.querySelector("p")!;
             let name = content.querySelector("b")!.innerText;
             content.removeChild(content.querySelector("b")!);
@@ -300,6 +301,25 @@ function generateDivItem(element: HTMLDivElement): ElementInfo {
             elementType: "RawHtml",
         };
     }
+}
+
+function extractToolboxChildren(toolbox: HTMLDivElement) {
+    let children = [];
+    let currentChild = document.createElement("div");
+    for (let i = 0; i < toolbox.children.length; i++) {
+        let element = toolbox.children.item(i);
+        if (element instanceof HTMLDivElement) {
+            currentChild = document.createElement("div");
+            children.push(element);
+        } else {
+            currentChild.appendChild(element);
+            if (element instanceof HTMLParagraphElement) {
+                children.push(currentChild);
+                currentChild = document.createElement("div");
+            }
+        }
+    }
+    return children;
 }
 
 function importImagePath(imagePath: string) {
