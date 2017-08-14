@@ -1,7 +1,7 @@
 import importManualHtml from "core/importManualHtml";
 import * as JSZip from "jszip";
 import { Action } from "redux";
-import {closeDialog} from "redux-dialog";
+import {closeDialog} from "redux-dialog-extended";
 import {ThunkAction} from "redux-thunk";
 import {Store} from "stores";
 import {UploadImage} from "./ImageActions";

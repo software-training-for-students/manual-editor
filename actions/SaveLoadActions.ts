@@ -1,6 +1,6 @@
 import { saveAs } from "file-saver";
 import { Action } from "redux";
-import {closeDialog} from "redux-dialog";
+import {closeDialog} from "redux-dialog-extended";
 import { ThunkAction } from "redux-thunk";
 import {Store} from "stores";
 import {Document} from "stores/Document";
