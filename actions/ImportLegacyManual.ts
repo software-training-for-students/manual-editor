@@ -30,7 +30,7 @@ export default function(legacyFile: File): ThunkAction<void, Store, void> {
             if (!file.dir) {
                 promises.push(file.async("blob").then((image: Blob) => {
                     dispatch(<UploadImage> {
-                        image: new File([image], path),
+                        image: new File([image], path.toLowerCase()),
                         type: "uploadImage",
                     });
                 }));

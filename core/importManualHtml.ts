@@ -111,6 +111,10 @@ function convertCurrentElement(currentElement: Element): ElementInfo[] {
             return [
                 generateDivItem(<HTMLDivElement> currentElement),
             ];
+            case "img":
+            return [
+                generateImageItem(<HTMLImageElement> currentElement),
+            ];
             case "br":
             return [];
             case "table":
@@ -151,7 +155,7 @@ function generateMetaItem(elementType: ElementTypes.MetaElementType, currentElem
     return listElements;
 }
 
-function generateImageItem(element: HTMLDivElement): ElementInfo {
+function generateImageItem(element: HTMLDivElement | HTMLImageElement): ElementInfo {
     let classList = element.classList;
     const border = element.getAttribute("border") !== null || classList.contains("border");
     const captionElement = element.querySelector("p");
@@ -176,7 +180,8 @@ function generateImageItem(element: HTMLDivElement): ElementInfo {
                     elementType: "SideBySideImage",
                 };
             } else {
-                let source = importImagePath(element.querySelector("img")!.getAttribute("src")!);
+                let imgElement = element instanceof HTMLImageElement ? element : element.querySelector("img")!;
+                let source = importImagePath(imgElement.getAttribute("src")!);
                 return {
                     elementState: {
                         value: {
@@ -197,7 +202,7 @@ function generateImageItem(element: HTMLDivElement): ElementInfo {
 function generateDivItem(element: HTMLDivElement): ElementInfo {
     const classList = element.classList;
     const classes = element.className;
-    if (classes.includes("image") || classList.contains("sidebar-icon")) {
+    if (classes.includes("image") || classes.includes("sidebar-icon")) {
         return generateImageItem(element);
     } else if (classList.contains("sidebar-note")) {
         const titleElement = element.querySelector("h2");
@@ -324,10 +329,10 @@ function extractToolboxChildren(toolbox: HTMLDivElement) {
 
 function importImagePath(imagePath: string) {
     if (imagePath.startsWith(legacyImagesFolder)) {
-        return imagePath.substr(legacyImagesFolder.length);
+        return imagePath.substr(legacyImagesFolder.length).toLowerCase();
     }
     if (imagePath.startsWith(legacyKeyboardIconsFolder)) {
-        return imagePath.substr(legacyKeyboardIconsFolder.length);
+        return imagePath.substr(legacyKeyboardIconsFolder.length).toLowerCase();
     }
     return imagePath;
 }
