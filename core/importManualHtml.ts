@@ -22,9 +22,10 @@ function extractElements(parentElement: Element): ElementInfo[] {
             items = items.concat(convertCurrentElement(<Element> currentElement));
         }
         if (currentElement.nodeType === Node.TEXT_NODE && currentElement.textContent && currentElement.textContent.trim().length) {
+            let parsedHtml = convertFromHTML(currentElement.textContent);
             items.push({
                 elementState: {
-                    value: convertToRaw(ContentState.createFromBlockArray(convertFromHTML(currentElement.textContent))),
+                    value: convertToRaw(ContentState.createFromBlockArray(parsedHtml.contentBlocks, parsedHtml.entityMap)),
                 },
                 elementType: "RichText",
             });
@@ -72,7 +73,8 @@ function convertCurrentElement(currentElement: Element): ElementInfo[] {
             }
             case "p":
             {
-                let content = ContentState.createFromBlockArray(convertFromHTML(currentElement.outerHTML));
+                let parsedHtml = convertFromHTML(currentElement.outerHTML);
+                let content = ContentState.createFromBlockArray(parsedHtml.contentBlocks, parsedHtml.entityMap);
                 return [
                     {
                         elementState: {
@@ -207,7 +209,8 @@ function generateDivItem(element: HTMLDivElement): ElementInfo {
     } else if (classList.contains("sidebar-note")) {
         const titleElement = element.querySelector("h2");
         const title = titleElement ? titleElement.innerText : "";
-        const content = convertToRaw(ContentState.createFromBlockArray(convertFromHTML(element.querySelector("p")!.outerHTML)));
+        const parsedHtml = convertFromHTML(element.querySelector("p")!.outerHTML);
+        const content = convertToRaw(ContentState.createFromBlockArray(parsedHtml.contentBlocks, parsedHtml.entityMap));
         const imageElement = element.querySelector("img");
         const imgSource = imageElement ? imageElement.src : "";
         return {
@@ -245,7 +248,8 @@ function generateDivItem(element: HTMLDivElement): ElementInfo {
     } else if (classList.contains("keyboard-shortcut")) {
         const titleElement = element.querySelector("h2");
         const title = titleElement ? titleElement.innerText : "";
-        const content = convertToRaw(ContentState.createFromBlockArray(convertFromHTML(element.querySelector("p")!.outerHTML)));
+        const parsedHtml = convertFromHTML(element.querySelector("p")!.outerHTML);
+        const content = convertToRaw(ContentState.createFromBlockArray(parsedHtml.contentBlocks, parsedHtml.entityMap));
         const labels = element.querySelectorAll("h3");
         switch (labels.length) {
             case 0:

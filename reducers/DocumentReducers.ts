@@ -1,5 +1,6 @@
 import * as BaseActions from "actions/BaseEditActions";
 import * as SaveLoadActions from "actions/SaveLoadActions";
+import * as UpgradeScripts from "core/UpgradeScripts";
 import * as Redux from "redux";
 import {addElements, Document, initialState, removeElement} from "stores/Document";
 
@@ -59,8 +60,8 @@ let onRemoveElement =
 let onSetDocument = (state: Document = initialState, action: SaveLoadActions.SetDocumentAction) => {
     if (action.type === "set-document") {
         let document = action.document;
-        if (action.version && action.version !== SaveLoadActions.saveVersion) {
-            // Call document upgrade scripts here.
+        if (action.version && action.version !== UpgradeScripts.saveVersion) {
+            document = UpgradeScripts.upgradeDocument(document, action.version);
         }
         return document;
     }

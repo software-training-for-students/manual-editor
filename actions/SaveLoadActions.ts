@@ -1,5 +1,5 @@
 import { UploadImage } from "actions/ImageActions";
-import { saveVersion, upgradeDocument } from "core/UpgradeScripts";
+import { saveVersion } from "core/UpgradeScripts";
 import { saveAs } from "file-saver";
 import { Action } from "redux";
 import {closeDialog} from "redux-dialog-extended";
@@ -46,8 +46,6 @@ export function loadThunkAction(zipFile: File): ThunkAction<void, Store, void> {
         zip = await zip.loadAsync(zipFile);
         let version = parseInt(await zip.file("version").async("text"), 10);
         let document: Document = JSON.parse(await zip.file("manual.json").async("text"));
-
-        document = upgradeDocument(document, version);
         dispatch(<SetDocumentAction> {
             document,
             type : "set-document",
