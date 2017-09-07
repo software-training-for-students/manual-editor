@@ -1,7 +1,7 @@
 import importManualHtml from "core/importManualHtml";
 import * as JSZip from "jszip";
 import { Action } from "redux";
-import {closeDialog} from "redux-dialog";
+import {closeDialog} from "redux-dialog-extended";
 import {ThunkAction} from "redux-thunk";
 import {Store} from "stores";
 import {UploadImage} from "./ImageActions";
@@ -30,7 +30,7 @@ export default function(legacyFile: File): ThunkAction<void, Store, void> {
             if (!file.dir) {
                 promises.push(file.async("blob").then((image: Blob) => {
                     dispatch(<UploadImage> {
-                        image: new File([image], path),
+                        image: new File([image], path.toLowerCase()),
                         type: "uploadImage",
                     });
                 }));

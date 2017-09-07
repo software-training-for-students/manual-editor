@@ -65,7 +65,7 @@
     "react-highlight.js": "^1.0.5",
     "react-redux": "^5.0.2",
     "redux-devtools-extension": "^2.13.0",
-    "redux-dialog": "0.0.9",
+    "redux-dialog-extended": "^0.1.1",
     "redux-thunk": "^2.2.0",
     "tslib": "^1.6.1"
   }

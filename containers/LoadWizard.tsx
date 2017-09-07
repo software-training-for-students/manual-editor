@@ -4,7 +4,7 @@ import ActivityIndicator from "react-activity-indicator";
 import "react-activity-indicator/src/activityindicator.css";
 import {connect} from "react-redux";
 import {compose} from "redux";
-import connectDialog from "redux-dialog";
+import connectDialog from "redux-dialog-extended";
 import {Store} from "stores";
 
 interface Props {
@@ -73,4 +73,10 @@ export default compose(connectDialog({
     contentLabel: "Load Wizard",
     name: "load-wizard",
     shouldCloseOnOverlayClick: false,
+    style: {
+        overlay:
+        {
+            zIndex: 100,
+        },
+    },
 }), connect(mapStateToProps, mapActionsToProps))(LoadWizard);

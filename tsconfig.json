@@ -18,7 +18,7 @@
       "@aneves/react-flyout" : ["type-definitions/@aneves/react-flyout"],
       "file-saver" : ["type-definitions/file-saver"],
       "react-highlight.js" : ["type-definitions/react-highlight"],
-      "redux-dialog": ["type-definitions/redux-dialog"],
+      "redux-dialog-extended": ["type-definitions/redux-dialog-extended"],
       "react-activity-indicator": ["type-definitions/react-activity-indicator"],
       "static/*": ["type-definitions/static"]
     }

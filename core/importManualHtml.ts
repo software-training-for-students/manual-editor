@@ -111,6 +111,10 @@ function convertCurrentElement(currentElement: Element): ElementInfo[] {
             return [
                 generateDivItem(<HTMLDivElement> currentElement),
             ];
+            case "img":
+            return [
+                generateImageItem(<HTMLImageElement> currentElement),
+            ];
             case "br":
             return [];
             case "table":
@@ -151,14 +155,14 @@ function generateMetaItem(elementType: ElementTypes.MetaElementType, currentElem
     return listElements;
 }
 
-function generateImageItem(element: HTMLDivElement): ElementInfo {
+function generateImageItem(element: HTMLDivElement | HTMLImageElement): ElementInfo {
     let classList = element.classList;
     const border = element.getAttribute("border") !== null || classList.contains("border");
     const captionElement = element.querySelector("p");
     const caption = captionElement ? captionElement.innerText : "";
     let className: string;
     for (let i = 0; i < classList.length; ++i) {
-        if (classList.item(i).includes("image")) {
+        if (classList.item(i).includes("image") || classList.item(i) === "sidebar-icon") {
             className = classList.item(i);
             if (className.includes("sidebyside")) {
                 let leftSource = importImagePath(element.querySelectorAll("img")[0].getAttribute("src")!);
@@ -176,7 +180,8 @@ function generateImageItem(element: HTMLDivElement): ElementInfo {
                     elementType: "SideBySideImage",
                 };
             } else {
-                let source = importImagePath(element.querySelector("img")!.getAttribute("src")!);
+                let imgElement = element instanceof HTMLImageElement ? element : element.querySelector("img")!;
+                let source = importImagePath(imgElement.getAttribute("src")!);
                 return {
                     elementState: {
                         value: {
@@ -197,7 +202,7 @@ function generateImageItem(element: HTMLDivElement): ElementInfo {
 function generateDivItem(element: HTMLDivElement): ElementInfo {
     const classList = element.classList;
     const classes = element.className;
-    if (classes.includes("image") || classList.contains("sidebar-icon")) {
+    if (classes.includes("image") || classes.includes("sidebar-icon")) {
         return generateImageItem(element);
     } else if (classList.contains("sidebar-note")) {
         const titleElement = element.querySelector("h2");
@@ -217,9 +222,10 @@ function generateDivItem(element: HTMLDivElement): ElementInfo {
         };
     } else if (classList.contains("toolbox")) {
         let items = [];
-        for (let i = 0; i < element.children.length; ++i) {
-            let item = element.children.item(i);
-            let imgSrc = importImagePath(item.querySelector("img")!.getAttribute("src")!);
+        let children = extractToolboxChildren(element);
+        for (let item of children) {
+            let image = item.querySelector("img");
+            let imgSrc = image !== null ? importImagePath(image.getAttribute("src")!) : "";
             let content = item.querySelector("p")!;
             let name = content.querySelector("b")!.innerText;
             content.removeChild(content.querySelector("b")!);
@@ -302,12 +308,31 @@ function generateDivItem(element: HTMLDivElement): ElementInfo {
     }
 }
 
+function extractToolboxChildren(toolbox: HTMLDivElement) {
+    let children = [];
+    let currentChild = document.createElement("div");
+    for (let i = 0; i < toolbox.children.length; i++) {
+        let element = toolbox.children.item(i);
+        if (element instanceof HTMLDivElement) {
+            currentChild = document.createElement("div");
+            children.push(element);
+        } else {
+            currentChild.appendChild(element.cloneNode(true));
+            if (element instanceof HTMLParagraphElement) {
+                children.push(currentChild);
+                currentChild = document.createElement("div");
+            }
+        }
+    }
+    return children;
+}
+
 function importImagePath(imagePath: string) {
     if (imagePath.startsWith(legacyImagesFolder)) {
-        return imagePath.substr(legacyImagesFolder.length);
+        return imagePath.substr(legacyImagesFolder.length).toLowerCase();
     }
     if (imagePath.startsWith(legacyKeyboardIconsFolder)) {
-        return imagePath.substr(legacyKeyboardIconsFolder.length);
+        return imagePath.substr(legacyKeyboardIconsFolder.length).toLowerCase();
     }
     return imagePath;
 }
