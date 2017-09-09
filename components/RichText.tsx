@@ -24,10 +24,10 @@ const styleMap: {[style: string]: React.CSSProperties} = {
 };
 
 function findEntityRanges(entityKey: string) {
-    return (block: Draft.ContentBlock, callback: (start: number, end: number) => void) => {
+    return (block: Draft.ContentBlock, callback: (start: number, end: number) => void, content: Draft.ContentState) => {
         block.findEntityRanges((character: Draft.CharacterMetadata) => {
             const key = character.getEntity();
-            return key !== null && Draft.Entity.get(key).getType() === entityKey;
+            return key !== null && content.getEntity(key).getType() === entityKey;
         }, callback);
     };
 }
@@ -40,7 +40,7 @@ function handleKeyBindings(e: React.KeyboardEvent<any>): any {
 }
 
 const Link = (props: any) => {
-    const {url} = Draft.Entity.get(props.entityKey).getData();
+    const {url} = props.contentState.getEntity(props.entityKey).getData();
     return (
         <a href={url} target="_blank">
             {props.children}
@@ -211,14 +211,30 @@ class RichTextEditor extends React.Component<EditorProps, EditorState> {
     }
 
     private createKeyboard = (e?: React.SyntheticEvent<HTMLElement>) => {
-        const entityKey = Draft.Entity.create("KBD", "IMMUTABLE");
-        this.onChangeEditorState(Draft.RichUtils.toggleLink(this.state.editorState, this.state.editorState.getSelection(), entityKey));
+        const contentStateWithEntity = this.state.editorState.getCurrentContent().createEntity(
+            "KBD",
+            "IMMUTABLE",
+            {},
+          );
+        const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+        const editorState = Draft.EditorState.set(this.state.editorState, {
+            currentContent: contentStateWithEntity,
+        });
+        this.onChangeEditorState(Draft.RichUtils.toggleLink(editorState, editorState.getSelection(), entityKey));
     }
 
     private confirmLink = (e: React.SyntheticEvent<HTMLElement>) => {
         e.preventDefault();
-        const entityKey = Draft.Entity.create("LINK", "MUTABLE", {url: this.state.urlValue});
-        this.onChangeEditorState(Draft.RichUtils.toggleLink(this.state.editorState, this.state.editorState.getSelection(), entityKey));
+        const contentStateWithEntity = this.state.editorState.getCurrentContent().createEntity(
+            "LINK",
+            "MUTABLE",
+            {url: this.state.urlValue},
+          );
+        const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+        const editorState = Draft.EditorState.set(this.state.editorState, {
+            currentContent: contentStateWithEntity,
+        });
+        this.onChangeEditorState(Draft.RichUtils.toggleLink(editorState, editorState.getSelection(), entityKey));
         this.setState({
             showURLInput: false,
             urlValue: "",
