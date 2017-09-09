@@ -39,7 +39,7 @@ let onAddDocument =
         let newState: Document = {
             ... state,
         };
-        addElements(newState, action.items, action.itemToEdit, action.ordering);
+        addElements(newState, action.items, false, action.itemToEdit, action.ordering);
         return newState;
     }
     return state;

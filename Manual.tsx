@@ -2,7 +2,8 @@ import AboutPage from "components/AboutPage";
 import CoverPage from "components/CoverPage";
 import TableOfContents from "containers/TableOfContents";
 import createElement from "core/createElement";
-import {isItemTreeLeaf, isMetaItemOrdering, ItemOrdering, ItemTree} from "core/ItemTree";
+
+import {isItemTreeLeaf, isLegacyItemOrdering, isMetaItemOrdering, ItemOrdering, ItemTree} from "core/ItemTree";
 import * as React from "react";
 import {connect} from "react-redux";
 import {Store} from "stores";
@@ -52,12 +53,14 @@ function createElementTree(elementOrdering: ItemOrdering[]): ItemTree {
 
     elementOrdering.forEach((item) => {
         const topTree = treeStack[treeStack.length - 1];
+        if (isLegacyItemOrdering(item)) {
+            throw new Error(`Cannot present a ${item.elementType} item in this version of the editor.`);
+        }
         if (isItemTreeLeaf(topTree)) {
             // Note: this should be impossible but with this Typescript can ensure
             // that our logic below is correct within the type system.
             throw new Error("Top tree on the stack is a leaf element (does not have children).");
-        }
-        if (isMetaItemOrdering(item)) {
+        } else if (isMetaItemOrdering(item)) {
             if (item.metaItemType === "open") {
                 let newSubTree = {... item, items: []};
                 topTree.items.push(newSubTree);

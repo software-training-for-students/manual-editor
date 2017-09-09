@@ -368,6 +368,6 @@ export default function importManualHtml(html: string): Document {
         ],
         nextItemId: 4,
     };
-    addElements(newManual, extractElements(oldManual.body));
+    addElements(newManual, extractElements(oldManual.body), true);
     return newManual;
 }

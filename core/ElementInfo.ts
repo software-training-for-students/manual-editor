@@ -118,9 +118,6 @@ type ContentElementInfo = {
     elementType: "Heading";
     elementState: Heading;
 } | {
-    elementType: "KeyboardShortcut";
-    elementState: KeyboardShortcut;
-} | {
     elementType: "RichText";
     elementState: RichText;
 } | {
@@ -134,9 +131,24 @@ type ContentElementInfo = {
     elementState: Toolbox;
 };
 
-type ElementInfo = ContentElementInfo | MetaElementInfo;
+export type LegacyContentElementInfo = {
+    elementType: "KeyboardShortcut";
+    elementState: KeyboardShortcut;
+};
+
+type ElementInfo = ContentElementInfo | MetaElementInfo | LegacyContentElementInfo;
 
 export type ContentElementType = ContentElementInfo["elementType"];
+
+export type LegacyContentElementType = LegacyContentElementInfo["elementType"];
+
+export function isLegacyContentElement(element: ElementInfo): element is LegacyContentElementInfo {
+    return isLegacyContentElementType(element.elementType);
+}
+
+export function isLegacyContentElementType(elementType: string): elementType is LegacyContentElementType {
+    return elementType === "KeyboardShortcut";
+}
 
 export function isMetaElement(element: ElementInfo): element is MetaElementInfo {
     return isMetaElementType(element.elementType);

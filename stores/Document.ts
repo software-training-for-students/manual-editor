@@ -1,5 +1,5 @@
 import EditableProps from "core/EditableProps";
-import ElementInfo, {isMetaElement} from "core/ElementInfo";
+import ElementInfo, {isMetaElement, isLegacyContentElement} from "core/ElementInfo";
 import {isMetaItemOrdering, ItemOrdering} from "core/ItemTree";
 import {convertToRaw, EditorState} from "draft-js";
 
@@ -89,6 +89,7 @@ function findLocation(
 export function addElements(
     document: Document,
     elements: ElementInfo[],
+    supportLegacyElements: boolean,
     elementToEdit: number = 0,
     relativeLocation: "before" | "after" | "end" = "end") {
 
@@ -109,6 +110,12 @@ export function addElements(
         document.nextItemId++;
         if (isMetaElement(element)) {
             orderings.push({itemId, elementType: element.elementType, metaItemType: element.metaItemType});
+        } else if (isLegacyContentElement(element)) {
+            if (supportLegacyElements) {
+                orderings.push({itemId, elementType: element.elementType});
+            } else {
+                throw new Error(`You cannot add a ${element.elementType} element to this document.`);
+            }
         } else {
             orderings.push({itemId, elementType: element.elementType});
         }
