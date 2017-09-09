@@ -68,7 +68,7 @@ export interface SidebarNote {
     value: {
         title: string;
         content: RawDraftContentState;
-        imgSource: string;
+        imgSource?: string;
     };
 }
 

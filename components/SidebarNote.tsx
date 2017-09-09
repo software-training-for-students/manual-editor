@@ -13,7 +13,7 @@ const SidebarNote: React.StatelessComponent<Props> = (props: Props) => {
             <div className="sidebar-note">
                 <h2>{value.title}</h2>
                 <RichTextPresenter value={value.content} />
-                <SmartImagePresenter src={value.imgSource} />
+                <SmartImagePresenter src={value.imgSource || ""} />
             </div>
         </div>
     );
