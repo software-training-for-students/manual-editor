@@ -24,16 +24,23 @@ const styleMap: {[style: string]: React.CSSProperties} = {
 };
 
 function findEntityRanges(entityKey: string) {
-    return (block: Draft.ContentBlock, callback: (start: number, end: number) => void) => {
+    return (block: Draft.ContentBlock, callback: (start: number, end: number) => void, content: Draft.ContentState) => {
         block.findEntityRanges((character: Draft.CharacterMetadata) => {
             const key = character.getEntity();
-            return key !== null && Draft.Entity.get(key).getType() === entityKey;
+            return key !== null && content.getEntity(key).getType() === entityKey;
         }, callback);
     };
 }
 
+function handleKeyBindings(e: React.KeyboardEvent<any>): any {
+    if (e.keyCode === 75 /* k */ && Draft.KeyBindingUtil.hasCommandModifier(e)) {
+        return "toggle-kbd";
+    }
+    return Draft.getDefaultKeyBinding(e);
+}
+
 const Link = (props: any) => {
-    const {url} = Draft.Entity.get(props.entityKey).getData();
+    const {url} = props.contentState.getEntity(props.entityKey).getData();
     return (
         <a href={url} target="_blank">
             {props.children}
@@ -41,10 +48,16 @@ const Link = (props: any) => {
     );
 };
 
+const Kbd = (props: any) => <kbd>{props.children}</kbd>;
+
 const decorator = new Draft.CompositeDecorator([
     {
         component: Link,
         strategy: findEntityRanges("LINK"),
+    },
+    {
+        component: Kbd,
+        strategy: findEntityRanges("KBD"),
     },
 ]);
 
@@ -96,8 +109,9 @@ class RichTextEditor extends React.Component<EditorProps, EditorState> {
                         <li tabIndex={6} onClick={this.toggleUnderline}>Underline</li>
                         <li tabIndex={7} onClick={this.toggleTeletype}>Teletype</li>
                         <li tabIndex={8} onClick={this.toggleHighlight}>Highlight</li>
-                        <li tabIndex={9} onClick={this.promptForLink}>Add Link</li>
-                        <li tabIndex={10} onClick={this.removeLink}>Remove Link</li>
+                        <li tabIndex={9} onClick={this.createKeyboard}>Kbd</li>
+                        <li tabIndex={10} onClick={this.promptForLink}>Add Link</li>
+                        <li tabIndex={11} onClick={this.removeLink}>Remove Link</li>
                     </ul>
                 </div>
                 <hr />
@@ -111,6 +125,7 @@ class RichTextEditor extends React.Component<EditorProps, EditorState> {
                         handleKeyCommand={this.handleKeyCommand}
                         onBlur={this.onBlur}
                         customStyleMap={styleMap}
+                        keyBindingFn={handleKeyBindings}
                     />
                 </div>
             </div>
@@ -172,6 +187,11 @@ class RichTextEditor extends React.Component<EditorProps, EditorState> {
     }
 
     private handleKeyCommand: (command: string) => "handled" | "not-handled" = (command: string) => {
+        if (command === "toggle-kbd") {
+            this.createKeyboard();
+            return "handled";
+        }
+
         let state = Draft.RichUtils.handleKeyCommand(this.state.editorState, command);
         if (state) {
             this.onChangeEditorState(state);
@@ -190,10 +210,31 @@ class RichTextEditor extends React.Component<EditorProps, EditorState> {
         }
     }
 
+    private createKeyboard = (e?: React.SyntheticEvent<HTMLElement>) => {
+        const contentStateWithEntity = this.state.editorState.getCurrentContent().createEntity(
+            "KBD",
+            "IMMUTABLE",
+            {},
+          );
+        const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+        const editorState = Draft.EditorState.set(this.state.editorState, {
+            currentContent: contentStateWithEntity,
+        });
+        this.onChangeEditorState(Draft.RichUtils.toggleLink(editorState, editorState.getSelection(), entityKey));
+    }
+
     private confirmLink = (e: React.SyntheticEvent<HTMLElement>) => {
         e.preventDefault();
-        const entityKey = Draft.Entity.create("LINK", "MUTABLE", {url: this.state.urlValue});
-        this.onChangeEditorState(Draft.RichUtils.toggleLink(this.state.editorState, this.state.editorState.getSelection(), entityKey));
+        const contentStateWithEntity = this.state.editorState.getCurrentContent().createEntity(
+            "LINK",
+            "MUTABLE",
+            {url: this.state.urlValue},
+          );
+        const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+        const editorState = Draft.EditorState.set(this.state.editorState, {
+            currentContent: contentStateWithEntity,
+        });
+        this.onChangeEditorState(Draft.RichUtils.toggleLink(editorState, editorState.getSelection(), entityKey));
         this.setState({
             showURLInput: false,
             urlValue: "",

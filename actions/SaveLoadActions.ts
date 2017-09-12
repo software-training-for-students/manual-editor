@@ -1,12 +1,11 @@
+import { UploadImage } from "actions/ImageActions";
+import { saveVersion } from "core/UpgradeScripts";
 import { saveAs } from "file-saver";
 import { Action } from "redux";
 import {closeDialog} from "redux-dialog-extended";
 import { ThunkAction } from "redux-thunk";
 import {Store} from "stores";
 import {Document} from "stores/Document";
-import { UploadImage } from "./ImageActions";
-
-export const saveVersion: number = 1;
 
 export function saveAsThunkAction(): ThunkAction<void, Store, void> {
     return async (_, getStore) => {
@@ -52,6 +51,7 @@ export function loadThunkAction(zipFile: File): ThunkAction<void, Store, void> {
             type : "set-document",
             version,
         });
+
         dispatch(<ClearImagesAction> {
             type: "clear-images",
         });

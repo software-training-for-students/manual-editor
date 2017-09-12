@@ -3,7 +3,6 @@ import EditableCode from "containers/editors/EditableCode";
 import EditableHeading from "containers/editors/EditableHeading";
 import EditableHtml from "containers/editors/EditableHtml";
 import EditableImage from "containers/editors/EditableImage";
-import EditableKeyboardShortcut from "containers/editors/EditableKeyboardShortcut";
 import EditableListItem from "containers/editors/EditableListItem";
 import EditableRichText from "containers/editors/EditableRichText";
 import EditableSidebarNote from "containers/editors/EditableSidebarNote";
@@ -53,7 +52,6 @@ let elementTypes: ElementTypes = {
     TableRow : MetaElement(({children}) => <tr>{children}</tr>),
     TableCell : MetaElement(({children}) => <td>{children}</td>),
     TableHeader : MetaElement(({children}) => <th>{children}</th>),
-    KeyboardShortcut: removable(EditableKeyboardShortcut),
     Manual: MetaElement(({children}) => <div>{children}</div>),
 };
 

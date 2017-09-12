@@ -19,6 +19,7 @@ export default function(legacyFile: File): ThunkAction<void, Store, void> {
 
         dispatch(<SetDocumentAction> {
             document: importManualHtml(await legacyZip.file("manual.html").async("text")),
+            version: 1,
             type: "set-document",
         });
         dispatch(<ClearImagesAction> {

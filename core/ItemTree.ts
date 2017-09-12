@@ -1,4 +1,4 @@
-import {ContentElementType, isMetaElementType, MetaElementType, MetaItemType} from "core/ElementInfo";
+import {ContentElementType, isLegacyContentElementType, isMetaElementType, LegacyContentElementType, MetaElementType, MetaItemType} from "core/ElementInfo";
 
 type MetaItemOrdering = {
     itemId: number;
@@ -6,12 +6,17 @@ type MetaItemOrdering = {
     metaItemType: MetaItemType;
 };
 
+type LegacyItemOrdering = {
+    itemId: number;
+    elementType: LegacyContentElementType;
+};
+
 export type ItemOrdering = {
     itemId: number;
 } & (
     MetaItemOrdering | {
         elementType: ContentElementType;
-    }
+    } | LegacyItemOrdering
 );
 
 type ItemLeaf = {
@@ -24,6 +29,10 @@ export type ItemTree = ItemLeaf | {
     elementType: MetaElementType;
     items: ItemTree[];
 };
+
+export function isLegacyItemOrdering(ordering: ItemOrdering): ordering is LegacyItemOrdering {
+    return isLegacyContentElementType(ordering.elementType);
+}
 
 export function isMetaItemOrdering(ordering: ItemOrdering): ordering is MetaItemOrdering {
     return isMetaElementType(ordering.elementType);
