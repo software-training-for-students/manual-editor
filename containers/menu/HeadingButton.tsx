@@ -2,13 +2,13 @@ import {UpdateHeadingLevel, UpdateHeadingText} from "actions/MenuActions";
 import MenuItem from "containers/MenuItem";
 import * as React from "react";
 import {connect} from "react-redux";
-import {initialState, Store} from "stores";
+import {Store} from "stores";
 
 type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
 
 interface Props {
-    levelChanged?: (newLevel: HeadingLevel) => void;
-    textChanged?: (text: string) => void;
+    levelChanged: (newLevel: HeadingLevel) => any;
+    textChanged: (text: string) => any;
 
     headingLevel: HeadingLevel;
     headingText: string;
@@ -61,7 +61,7 @@ class HeadingButton extends React.Component<Props, {}> {
     }
 }
 
-function mapStateToProps(state: Store = initialState): Props {
+function mapStateToProps(state: Store) {
     return {
         headingLevel: state.menu.heading.level,
         headingText: state.menu.heading.text,

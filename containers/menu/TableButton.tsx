@@ -4,7 +4,7 @@ import ElementInfo from "core/ElementInfo";
 import {convertToRaw, EditorState} from "draft-js";
 import * as React from "react";
 import {connect} from "react-redux";
-import {initialState, Store} from "stores";
+import {Store} from "stores";
 
 function generateItems(rows: number, columns: number): ElementInfo[] {
     let items: ElementInfo[] = [];
@@ -46,8 +46,8 @@ function generateItems(rows: number, columns: number): ElementInfo[] {
 }
 
 interface Props {
-    rowsChanged?: (rows: number) => void;
-    columnsChanged?: (columns: number) => void;
+    rowsChanged: (rows: number) => any;
+    columnsChanged: (columns: number) => any;
     rows: number;
     columns: number;
 }
@@ -107,7 +107,7 @@ class TableButton extends React.Component<Props, State> {
     }
 }
 
-function mapStateToProps(state: Store = initialState): Props {
+function mapStateToProps(state: Store) {
     return {
         columns: state.menu.table.columns,
         rows: state.menu.table.rows,

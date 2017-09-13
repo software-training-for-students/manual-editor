@@ -99,14 +99,18 @@ export function addElements(
     let orderings: ItemOrdering[] = [];
     let idStack: number[] = [];
     elements.forEach((element, idx) => {
+
         let metaItemType = isMetaElement(element) ? element.metaItemType : undefined;
-        let elementState = isMetaElement(element) ? undefined : element.elementState;
         let itemId = metaItemType === "close" ? idStack.pop()! : document.nextItemId;
 
-        document[itemId] = {... elementState, editing : idx === elementToEdit, itemId};
+        if (!isMetaElement(element)) {
+            document[itemId] = {... element.elementState, editing : idx === elementToEdit, itemId};
+        }
+
         if (metaItemType === "open") {
             idStack.push(itemId);
         }
+
         document.nextItemId++;
         if (isMetaElement(element)) {
             orderings.push({itemId, elementType: element.elementType, metaItemType: element.metaItemType});

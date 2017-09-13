@@ -16,7 +16,7 @@ export class ToolboxEditor extends React.Component<Props, {}> {
                 {
                     this.props.value.map((entry, idx) => (
                         <div key={idx}>
-                            <ImagePicker currentImage={entry.imgSrc} onImageChanged={(source) => this.onChangeImage(source, idx)} />
+                            <ImagePicker currentImage={entry.imgSrc} onImageChanged={(source: string) => this.onChangeImage(source, idx)} />
                             <input type="text" placeholder="Tool Name" value={entry.name} onChange={(e) => this.onChangeName(e, idx)} onKeyPress={(e) => this.onKeyPress(e, idx)} />
                             <input type="text" placeholder="Tool Description" value={entry.description} onChange={(e) => this.onChangeDescription(e, idx)} onKeyPress={(e) => this.onKeyPress(e, idx)} />
                         </div>

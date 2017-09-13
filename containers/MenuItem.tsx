@@ -3,7 +3,7 @@ import {FlyoutToggle} from "actions/FlyoutActions";
 import Flyout from "containers/Flyout";
 import ElementInfo from "core/ElementInfo";
 import * as React from "react";
-import {connect} from "react-redux";
+import {connect, Dispatch} from "react-redux";
 import { Store } from "stores";
 
 type Ordering = "before" | "after" | "end";
@@ -14,11 +14,11 @@ interface Props {
     menuItemHeading: string;
     items: ElementInfo[];
     itemToEdit?: number;
-    onCreate?: (items: ElementInfo[],
+    onCreate: (items: ElementInfo[],
         itemToEdit: number,
         ordering: Ordering) => void;
-    toggleFlyout?: (flyoutId: string) => void;
-    enableRelativeInsert?: boolean | undefined;
+    toggleFlyout: (flyoutId: string) => void;
+    enableRelativeInsert: boolean;
     insertEnabled: boolean;
 }
 
@@ -67,13 +67,11 @@ class MenuItem extends React.Component<Props, {}> {
     }
 
     private onCreate = (e: React.SyntheticEvent<HTMLButtonElement>) => {
-        if (this.props.onCreate) {
-            this.props.onCreate(this.props.items, this.props.itemToEdit || 0, e.currentTarget.value as Ordering);
-        }
+        this.props.onCreate(this.props.items, this.props.itemToEdit || 0, e.currentTarget.value as Ordering);
     }
 }
 
-function mapStateToProps(state: Store, props: Props): Props {
+function mapStateToProps(state: Store) {
     let enableRelativeInsert: boolean = false;
      // Start at 3 because item ids 1 and 2 are the title and subtitle, which are special ids
     for (let i = 3; i < state.document.nextItemId; ++i) {
@@ -82,22 +80,30 @@ function mapStateToProps(state: Store, props: Props): Props {
             break;
         }
     }
-    return {... props, enableRelativeInsert};
+    return {enableRelativeInsert};
 }
 
-let mapActionsToProps = ({
-    onCreate: (items: ElementInfo[],
-        itemToEdit: number,
-        ordering: Ordering) => ({
-            itemToEdit,
-            items,
-            type: "addToDocument",
-            ordering,
-        } as AddToDocument),
-    toggleFlyout: (id: string) => ({
-        type: "flyout-toggle",
-        id,
-    } as FlyoutToggle),
-});
+function mapDispatchToProps(dispatch: Dispatch<Store>) {
+    return {
+        onCreate: (items: ElementInfo[],
+            itemToEdit: number,
+            ordering: Ordering) => {
+                let action: AddToDocument = {
+                    itemToEdit,
+                    items,
+                    type: "addToDocument",
+                    ordering,
+                };
+                dispatch(action);
+            },
+        toggleFlyout: (id: string) => {
+            let action: FlyoutToggle = {
+                id,
+                type: "flyout-toggle",
+            };
+            dispatch(action);
+        },
+    };
+}
 
-export default connect(mapStateToProps, mapActionsToProps)(MenuItem);
+export default connect(mapStateToProps, mapDispatchToProps)(MenuItem);

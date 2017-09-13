@@ -1,6 +1,6 @@
 import * as React from "react";
 
-declare interface Options {
+export declare interface Options {
         type? : "tooltip" | "menu";
         fixed? : boolean;
         mobile? : boolean;
@@ -15,15 +15,18 @@ export declare interface Props {
     options? : Options;
 }
 
-declare class Flyout extends React.Component<Props, {}> {}
+declare class Flyout extends React.Component<Props> {}
 
 export declare interface WrapperProps {
     id : string | null;
     open? : boolean;
     options? : Options;
-    onWindowClick? : () => void;
 }
 
-declare class FlyoutWrapper extends React.Component<WrapperProps, {}>{}
+interface WrapperDispatchProps {
+    onWindowClick : () => void;
+}
+
+declare class FlyoutWrapper extends React.Component<WrapperProps & WrapperDispatchProps>{}
 
 export default FlyoutWrapper;

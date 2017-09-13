@@ -6,7 +6,7 @@ import { Store } from "stores";
 
 interface Props {
     language: string;
-    onChangeLanguage: (language: string) => void;
+    onChangeLanguage: (language: string) => any;
 }
 
 class CodeSnippetButton extends React.Component<Props, {}> {

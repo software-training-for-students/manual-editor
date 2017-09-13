@@ -1,9 +1,4 @@
-import EditableProps from "core/EditableProps";
-
-interface EditableCallbacks<T> {
-    setIsEditing: (id: number, mode: boolean) => void;
-    onEdited: (id: number, newValue: T) => void;
-}
+import {EditableProps, EditableCallbacks} from "core/EditableProps";
 
 type InteractivePropsFromElementInfo<TElement extends {value: any}> =
     TElement & EditableProps<TElement["value"]> & EditableCallbacks<TElement["value"]>;

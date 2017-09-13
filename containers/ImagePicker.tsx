@@ -5,9 +5,9 @@ import {connect} from "react-redux";
 import {initialState, Store} from "stores";
 
 interface Props {
-    uploadedImages?: string[];
-    onImageChanged: (image: string) => void;
-    uploadImage?: (image: File) => void;
+    uploadedImages: string[];
+    onImageChanged: (image: string) => any;
+    uploadImage: (image: File) => any;
     currentImage?: string;
 }
 
@@ -40,7 +40,7 @@ class ImagePickerWrapper extends React.Component<Props, {}> {
     }
 }
 
-function mapStateToProps(state: Store = initialState, oldProps: Props): Partial<Props> {
+function mapStateToProps(state: Store = initialState) {
     return {
         uploadedImages: Object.getOwnPropertyNames(state.images),
     };
