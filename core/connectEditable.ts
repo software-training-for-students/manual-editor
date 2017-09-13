@@ -10,13 +10,9 @@ type EditableComponentProps = EditableProps<any> & EditableCallbacks<any>;
 
 type RequiredProps<TProps extends EditableComponentProps> = Omit<TProps, keyof EditableComponentProps> & {itemId: number};
 
-// This needs to be this function-returning-function setup. Otherwise the type inference happens too early
-// and TProps ends up being EditableComponentProps (and only the "value" member is passed along as a prop).
-function createEditableStateToPropsMapper<TProps extends EditableComponentProps>() {
-    return (state: Store, {itemId}: RequiredProps<TProps>) : MappedProps<TProps> => {
-        return state.document[itemId] as TProps;
-    };
-}
+function mapStateToProps <TProps extends EditableComponentProps>(state: Store, {itemId}: RequiredProps<TProps>): MappedProps<TProps> {
+    return state.document[itemId] as TProps;
+};
 
 const mapBaseActionsToProps = {
     onEdited: (id: number, newValue: any) => (<BaseActions.OnEdited> {
@@ -31,4 +27,7 @@ const mapBaseActionsToProps = {
     }),
 };
 
-export default connect(createEditableStateToPropsMapper(), mapBaseActionsToProps);
+// We need to do the two-stage mapStateToProps call because we need the generic parameter types to propogate through correctly.
+export default function connectEditable<TProps extends EditableComponentProps>(Component: React.SFC<TProps> | React.ComponentClass<TProps>) {
+    return connect((store: Store, props: RequiredProps<TProps>) => mapStateToProps(store, props), mapBaseActionsToProps)(Component);
+}
