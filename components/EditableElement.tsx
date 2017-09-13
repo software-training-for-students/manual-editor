@@ -1,4 +1,6 @@
 import EditableContent from "components/EditableContent";
+import connectEditable from "core/connectEditable";
+import InteractivePropsFromElementInfo from "core/InteractivePropsFromElementInfo";
 import * as React from "react";
 
 type ComponentType<TProps> = React.StatelessComponent<TProps> | React.ComponentClass<TProps>;
@@ -37,4 +39,23 @@ export default class EditableElement<TElementInfo extends {value: any}> extends 
     private updateValue = (value: TElementInfo["value"]) => {
         this.props.onEdited(this.props.itemId, value);
     }
+}
+
+function simpleConnectedElementInfoFactory<TElementInfo extends {value: any}>(
+    inputComponent: ComponentType<InputProps<TElementInfo["value"]>>,
+    staticComponent: ComponentType<TElementInfo>) {
+    return (props: InteractivePropsFromElementInfo<TElementInfo>) => {
+        return <EditableElement
+        {...props}
+        inputComponentClass={inputComponent}
+        staticComponentClass={staticComponent}
+        />;
+    };
+}
+
+export function createSimpleConnectedElementInfo<TElementInfo extends {value: any}>(
+    inputComponent: ComponentType<InputProps<TElementInfo["value"]>>,
+    staticComponent: ComponentType<TElementInfo>) {
+
+    return connectEditable(simpleConnectedElementInfoFactory(inputComponent, staticComponent));
 }
