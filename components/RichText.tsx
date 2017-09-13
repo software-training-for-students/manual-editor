@@ -85,6 +85,14 @@ class RichTextEditor extends React.Component<EditorProps, EditorState> {
         };
     }
 
+    public componentWillReceiveProps(props: Props) {
+        this.setState((prevState, newProps) => {
+            return {
+                editorState: Draft.EditorState.push(prevState.editorState, Draft.convertFromRaw(newProps.value), "insert-fragment"),
+            };
+        });
+    }
+
     public render() {
         let urlInput: JSX.Element | null = null;
         if (this.state.showURLInput) {
@@ -120,7 +128,7 @@ class RichTextEditor extends React.Component<EditorProps, EditorState> {
                     <Draft.Editor
                         ref={this.setEditor}
                         editorState={this.state.editorState}
-                        onChange={this.onChangeEditorStateAllowBlur}
+                        onChange={this.editorOnChange}
                         placeholder={"Type your content here."}
                         handleKeyCommand={this.handleKeyCommand}
                         onBlur={this.onBlur}
@@ -154,36 +162,36 @@ class RichTextEditor extends React.Component<EditorProps, EditorState> {
         this.editor = editor;
     }
 
-    private onChangeEditorStateAllowBlur = (value: Draft.EditorState) => {
-        this.setState({
+    private editorOnChange = (value: Draft.EditorState) => {
+        this.setState(() => ({
             editorState: value,
-        });
+        }));
     }
 
-    private onChangeEditorState = (value: Draft.EditorState) => {
-        this.setState({
+    private onUpdateEditorState = (value: Draft.EditorState) => {
+        this.setState(() => ({
             editorState: value,
-        }, () => setTimeout(() => this.editor && this.editor.focus(), 0));
+        }), () => setTimeout(() => this.editor && this.editor.focus(), 0));
     }
 
     private toggleBold = () => {
-        this.onChangeEditorState(Draft.RichUtils.toggleInlineStyle(this.state.editorState, "BOLD"));
+        this.onUpdateEditorState(Draft.RichUtils.toggleInlineStyle(this.state.editorState, "BOLD"));
     }
 
     private toggleItalic = () => {
-        this.onChangeEditorState(Draft.RichUtils.toggleInlineStyle(this.state.editorState, "ITALIC"));
+        this.onUpdateEditorState(Draft.RichUtils.toggleInlineStyle(this.state.editorState, "ITALIC"));
     }
 
     private toggleUnderline = () => {
-        this.onChangeEditorState(Draft.RichUtils.toggleInlineStyle(this.state.editorState, "UNDERLINE"));
+        this.onUpdateEditorState(Draft.RichUtils.toggleInlineStyle(this.state.editorState, "UNDERLINE"));
     }
 
     private toggleTeletype = () => {
-        this.onChangeEditorState(Draft.RichUtils.toggleInlineStyle(this.state.editorState, "TELETYPE"));
+        this.onUpdateEditorState(Draft.RichUtils.toggleInlineStyle(this.state.editorState, "TELETYPE"));
     }
 
     private toggleHighlight = () => {
-        this.onChangeEditorState(Draft.RichUtils.toggleInlineStyle(this.state.editorState, "HIGHLIGHT"));
+        this.onUpdateEditorState(Draft.RichUtils.toggleInlineStyle(this.state.editorState, "HIGHLIGHT"));
     }
 
     private handleKeyCommand: (command: string) => "handled" | "not-handled" = (command: string) => {
@@ -194,7 +202,7 @@ class RichTextEditor extends React.Component<EditorProps, EditorState> {
 
         let state = Draft.RichUtils.handleKeyCommand(this.state.editorState, command);
         if (state) {
-            this.onChangeEditorState(state);
+            this.onUpdateEditorState(state);
             return "handled";
         }
         return "not-handled";
@@ -220,7 +228,7 @@ class RichTextEditor extends React.Component<EditorProps, EditorState> {
         const editorState = Draft.EditorState.set(this.state.editorState, {
             currentContent: contentStateWithEntity,
         });
-        this.onChangeEditorState(Draft.RichUtils.toggleLink(editorState, editorState.getSelection(), entityKey));
+        this.onUpdateEditorState(Draft.RichUtils.toggleLink(editorState, editorState.getSelection(), entityKey));
     }
 
     private confirmLink = (e: React.SyntheticEvent<HTMLElement>) => {
@@ -234,7 +242,7 @@ class RichTextEditor extends React.Component<EditorProps, EditorState> {
         const editorState = Draft.EditorState.set(this.state.editorState, {
             currentContent: contentStateWithEntity,
         });
-        this.onChangeEditorState(Draft.RichUtils.toggleLink(editorState, editorState.getSelection(), entityKey));
+        this.onUpdateEditorState(Draft.RichUtils.toggleLink(editorState, editorState.getSelection(), entityKey));
         this.setState({
             showURLInput: false,
             urlValue: "",
@@ -251,7 +259,7 @@ class RichTextEditor extends React.Component<EditorProps, EditorState> {
         e.preventDefault();
         const selection = this.state.editorState.getSelection();
         if (!selection.isCollapsed()) {
-            this.onChangeEditorState(Draft.RichUtils.toggleLink(this.state.editorState, selection, null!));
+            this.onUpdateEditorState(Draft.RichUtils.toggleLink(this.state.editorState, selection, null!));
         }
     }
 }
@@ -272,8 +280,10 @@ class RichTextPresenter extends React.Component<Props, PresenterState> {
     }
 
     public componentWillReceiveProps(props: Props) {
-        this.setState({
-            editorState: Draft.EditorState.createWithContent(Draft.convertFromRaw(props.value), decorator),
+        this.setState((prevState, newProps) => {
+            return {
+                editorState: Draft.EditorState.push(prevState.editorState, Draft.convertFromRaw(newProps.value), "insert-fragment"),
+            };
         });
     }
 
@@ -287,8 +297,10 @@ class RichTextPresenter extends React.Component<Props, PresenterState> {
         />;
     }
 
-    private onChange= () => {
-        // No changes handled in read-only mode
+    private onChange = (value: Draft.EditorState) => {
+        this.setState(() => ({
+            editorState: value,
+        }));
     }
 }
 

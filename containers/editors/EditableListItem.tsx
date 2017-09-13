@@ -15,4 +15,4 @@ const EditableListItem = (props: InteractivePropsFromElementInfo<ListItemInfo>) 
     />;
 };
 
-export default connectEditable()(EditableListItem);
+export default connectEditable(EditableListItem);

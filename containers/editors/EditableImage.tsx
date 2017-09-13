@@ -25,6 +25,6 @@ const EditableSideBySideImage = (props: InteractivePropsFromElementInfo<SideBySi
 };
 
 export default {
-    EditableSideBySideImage : connectEditable()(EditableSideBySideImage),
-    EditableSingleImage : connectEditable()(EditableSingleImage),
+    EditableSideBySideImage : connectEditable(EditableSideBySideImage),
+    EditableSingleImage : connectEditable(EditableSingleImage),
 };

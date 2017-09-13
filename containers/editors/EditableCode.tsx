@@ -21,4 +21,4 @@ const EditableCode = (props: InteractivePropsFromElementInfo<Code>) => {
     />;
 };
 
-export default connectEditable()(EditableCode);
+export default connectEditable(EditableCode);

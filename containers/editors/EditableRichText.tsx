@@ -14,4 +14,4 @@ const EditableRichText = (props: InteractivePropsFromElementInfo<RichTextInfo>) 
     />;
 };
 
-export default connectEditable()(EditableRichText);
+export default connectEditable(EditableRichText);

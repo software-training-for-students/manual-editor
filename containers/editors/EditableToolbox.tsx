@@ -15,4 +15,4 @@ const EditableToolbox = (props: InteractivePropsFromElementInfo<ToolboxInfo>) =>
     />;
 };
 
-export default connectEditable()(EditableToolbox);
+export default connectEditable(EditableToolbox);

@@ -15,4 +15,4 @@ const EditableHtml = (props: InteractivePropsFromElementInfo<RawHtml>) => {
     />;
 };
 
-export default connectEditable()(EditableHtml);
+export default connectEditable(EditableHtml);

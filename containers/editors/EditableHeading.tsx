@@ -25,4 +25,4 @@ const EditableHeading: React.StatelessComponent<Props> = (props: Props) => {
     />;
 };
 
-export default connectEditable<Props>()(EditableHeading);
+export default connectEditable(EditableHeading);

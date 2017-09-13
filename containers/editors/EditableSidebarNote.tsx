@@ -15,4 +15,4 @@ const EditableSidebarNote = (props: InteractivePropsFromElementInfo<SidebarNoteI
     />;
 };
 
-export default connectEditable()(EditableSidebarNote);
+export default connectEditable(EditableSidebarNote);
