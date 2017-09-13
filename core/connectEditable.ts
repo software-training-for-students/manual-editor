@@ -10,7 +10,7 @@ type EditableComponentProps = EditableProps<any> & EditableCallbacks<any>;
 type RequiredProps = {itemId: number};
 
 function mapStateToProps <TProps extends EditableComponentProps>(state: Store, {itemId}: RequiredProps): MappedProps<TProps> {
-    return state.document[itemId] as TProps;
+    return {... state.document[itemId]} as TProps;
 };
 
 const mapBaseActionsToProps = {
