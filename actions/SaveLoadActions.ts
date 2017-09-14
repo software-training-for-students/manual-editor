@@ -31,7 +31,7 @@ export function saveAsThunkAction(): ThunkAction<void, Store, void> {
             }
         }
         let blob: Blob = await manualFile.generateAsync({type: "blob"});
-        saveAs(blob, manual[1].value.toString() + ".uwstsmanual");
+        saveAs(blob, manual[1].value.toString() + ".sts");
     };
 }
 

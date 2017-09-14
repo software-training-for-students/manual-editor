@@ -28,7 +28,7 @@ class LoadWizard extends React.Component<Props, {}> {
                 <div style={contentContainerStyle}>
                     <button onClick={this.props.onRequestClose}>Close</button>
                     <header>Load STS Manual File</header>
-                    <input type="file" accept=".uwstsmanual" onChange={this.fileChanged} />
+                    <input type="file" accept=".sts,.uwstsmanual" onChange={this.fileChanged} />
                     <button disabled={!this.props.fileToLoad} onClick={this.onLoad}>Load</button>
                 </div>
             );
