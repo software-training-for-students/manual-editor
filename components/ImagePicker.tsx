@@ -19,7 +19,7 @@ const ImagePicker = (props: Props) => {
                 <select onChange={props.onCurrentImageChange} defaultValue={defaultSelectorValue}>
                     <option value="" disabled hidden />
                     {
-                        props.uploadedImages.map((image) => (
+                        props.uploadedImages.sort().map((image) => (
                             <option key={image} value={image}>{image}</option>
                         ))
                     }
