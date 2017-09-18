@@ -85,30 +85,9 @@ function convertCurrentElement(currentElement: Element): ElementInfo[] {
                 ];
             }
             case "pre":
-            {
-                let codeLanguage: string = "";
-                let head = currentElement.ownerDocument.head;
-                for (let j = 0; j < head.children.length; ++j) {
-                    let headElement = head.children.item(j);
-                    if (headElement.tagName.toLowerCase() === "script") {
-                        let scriptTag = <HTMLScriptElement> headElement;
-                        let found = scriptTag.src.match(/([A-Za-z-]+)-highlight.js/);
-                        if (found) {
-                            codeLanguage = found[1];
-                            break;
-                        }
-                    }
-                }
-                return [
-                    {
-                        elementState: {
-                            language: codeLanguage,
-                            value: decode(currentElement.children[0].innerHTML),
-                        },
-                        elementType: "Code",
-                    },
-                ];
-            }
+            return [
+                generateCodeItem(<HTMLPreElement>currentElement),
+            ];
             case "div":
             return [
                 generateDivItem(<HTMLDivElement> currentElement),
@@ -155,6 +134,29 @@ function generateMetaItem(elementType: ElementTypes.MetaElementType, currentElem
     ];
     Array.prototype.splice.apply(listElements, (<any[]> [1, 0]).concat(extractElements(currentElement)));
     return listElements;
+}
+
+function generateCodeItem(element: HTMLPreElement): ElementInfo {
+    let codeLanguage: string = "";
+    let head = element.ownerDocument.head;
+    for (let j = 0; j < head.children.length; ++j) {
+        let headElement = head.children.item(j);
+        if (headElement.tagName.toLowerCase() === "script") {
+            let scriptTag = <HTMLScriptElement> headElement;
+            let found = scriptTag.src.match(/([A-Za-z-]+)-highlight.js/);
+            if (found) {
+                codeLanguage = found[1];
+                break;
+            }
+        }
+    }
+    return {
+        elementState: {
+            language: codeLanguage,
+            value: decode(element.children[0].innerHTML),
+        },
+        elementType: "Code",
+    };
 }
 
 function generateImageItem(element: HTMLDivElement | HTMLImageElement): ElementInfo {
@@ -207,100 +209,11 @@ function generateDivItem(element: HTMLDivElement): ElementInfo {
     if (classes.includes("image") || classes.includes("sidebar-icon")) {
         return generateImageItem(element);
     } else if (classList.contains("sidebar-note")) {
-        const titleElement = element.querySelector("h2");
-        const title = titleElement ? titleElement.innerText : "";
-        const parsedHtml = convertFromHTML(element.querySelector("p")!.outerHTML);
-        const content = convertToRaw(ContentState.createFromBlockArray(parsedHtml.contentBlocks, parsedHtml.entityMap));
-        const imageElement = element.querySelector("img");
-        const imgSource = imageElement ? imageElement.src : "";
-        return {
-            elementState: {
-                value: {
-                    title,
-                    content,
-                    imgSource,
-                },
-            },
-            elementType: "SidebarNote",
-        };
+        return generateSidebarNote(element);
     } else if (classList.contains("toolbox")) {
-        let items = [];
-        let children = extractToolboxChildren(element);
-        for (let item of children) {
-            let image = item.querySelector("img");
-            let imgSrc = image !== null ? importImagePath(image.getAttribute("src")!) : "";
-            let content = item.querySelector("p")!;
-            let name = content.querySelector("b")!.innerText;
-            content.removeChild(content.querySelector("b")!);
-            let description = content.innerText;
-            items.push({
-                imgSrc,
-                name,
-                description,
-            });
-        }
-        return {
-            elementState: {
-                value: items,
-            },
-            elementType: "Toolbox",
-        };
+        return generateToolbox(element);
     } else if (classList.contains("keyboard-shortcut")) {
-        const titleElement = element.querySelector("h2");
-        const title = titleElement ? titleElement.innerText : "";
-        const parsedHtml = convertFromHTML(element.querySelector("p")!.outerHTML);
-        const content = convertToRaw(ContentState.createFromBlockArray(parsedHtml.contentBlocks, parsedHtml.entityMap));
-        const labels = element.querySelectorAll("h3");
-        switch (labels.length) {
-            case 0:
-            case 1:
-            {
-                let keyImages = element.getElementsByTagName("img");
-                let keys: string[] = [];
-                for (let i = 0; i < keyImages.length; ++i) {
-                    let image = keyImages.item(i);
-                    let regexMatch = image.getAttribute("src")!.match(/icon-([a-z0-9]+).svg/i)!;
-                    keys.push(regexMatch[1]);
-                }
-                return {
-                    elementState: {
-                        value: {
-                            title,
-                            content,
-                            shortcuts: <ElementTypes.Keys[][]> [keys],
-                            type: keys.length ? "shortcut" : "no-shortcut",
-                        },
-                    },
-                    elementType: "KeyboardShortcut",
-                };
-            }
-            default:
-                console.warn("Unsupported number of labels. Only importing first 2 shortcuts");
-            case 2:
-                let firstLabel = labels.item(0);
-                let secondLabel = labels.item(1);
-                let firstKeys: string[] = [];
-                for (let image = firstLabel.nextElementSibling; image !== secondLabel; image = image!.nextElementSibling) {
-                    let regexMatch = image!.getAttribute("src")!.match(/icon-([a-z0-9]+).svg/i)!;
-                    firstKeys.push(regexMatch[1]);
-                }
-                let secondKeys: string[] = [];
-                for (let image = secondLabel.nextElementSibling; image && image !== labels.item(2); image = image.nextElementSibling) {
-                    let regexMatch = image.getAttribute("src")!.match(/icon-([a-z0-9]+).svg/i)!;
-                    secondKeys.push(regexMatch[1]);
-                }
-                return {
-                    elementState: {
-                        value: {
-                            title,
-                            content,
-                            shortcuts: <ElementTypes.Keys[][]> [firstKeys, secondKeys],
-                            type: "multi-shortcut",
-                        },
-                    },
-                    elementType: "KeyboardShortcut",
-                };
-        }
+        return createKeyboardShortcut(element);
     } else {
         console.warn(`Unsupported div classes: ${classes}. Imported into a Raw HTML element`);
         return {
@@ -310,6 +223,107 @@ function generateDivItem(element: HTMLDivElement): ElementInfo {
             elementType: "RawHtml",
         };
     }
+}
+
+function createKeyboardShortcut(element: HTMLDivElement): ElementInfo {
+    const titleElement = element.querySelector("h2");
+    const title = titleElement ? titleElement.innerText : "";
+    const parsedHtml = convertFromHTML(element.querySelector("p")!.outerHTML);
+    const content = convertToRaw(ContentState.createFromBlockArray(parsedHtml.contentBlocks, parsedHtml.entityMap));
+    const labels = element.querySelectorAll("h3");
+    switch (labels.length) {
+        case 0:
+        case 1:
+        {
+            let keyImages = element.getElementsByTagName("img");
+            let keys: string[] = [];
+            for (let i = 0; i < keyImages.length; ++i) {
+                let image = keyImages.item(i);
+                let regexMatch = image.getAttribute("src")!.match(/icon-([a-z0-9]+).svg/i)!;
+                keys.push(regexMatch[1]);
+            }
+            return {
+                elementState: {
+                    value: {
+                        title,
+                        content,
+                        shortcuts: <ElementTypes.Keys[][]> [keys],
+                        type: keys.length ? "shortcut" : "no-shortcut",
+                    },
+                },
+                elementType: "KeyboardShortcut",
+            };
+        }
+        default:
+            console.warn("Unsupported number of labels. Only importing first 2 shortcuts");
+        case 2:
+            let firstLabel = labels.item(0);
+            let secondLabel = labels.item(1);
+            let firstKeys: string[] = [];
+            for (let image = firstLabel.nextElementSibling; image !== secondLabel; image = image!.nextElementSibling) {
+                let regexMatch = image!.getAttribute("src")!.match(/icon-([a-z0-9]+).svg/i)!;
+                firstKeys.push(regexMatch[1]);
+            }
+            let secondKeys: string[] = [];
+            for (let image = secondLabel.nextElementSibling; image && image !== labels.item(2); image = image.nextElementSibling) {
+                let regexMatch = image.getAttribute("src")!.match(/icon-([a-z0-9]+).svg/i)!;
+                secondKeys.push(regexMatch[1]);
+            }
+            return {
+                elementState: {
+                    value: {
+                        title,
+                        content,
+                        shortcuts: <ElementTypes.Keys[][]> [firstKeys, secondKeys],
+                        type: "multi-shortcut",
+                    },
+                },
+                elementType: "KeyboardShortcut",
+            };
+    }
+}
+
+function generateSidebarNote(element: HTMLDivElement): ElementInfo {
+    const titleElement = element.querySelector("h2");
+    const title = titleElement ? titleElement.innerText : "";
+    const parsedHtml = convertFromHTML(element.querySelector("p") !.outerHTML);
+    const content = convertToRaw(ContentState.createFromBlockArray(parsedHtml.contentBlocks, parsedHtml.entityMap));
+    const imageElement = element.querySelector("img");
+    const imgSource = imageElement ? imageElement.src : "";
+    return {
+        elementState: {
+            value: {
+                title,
+                content,
+                imgSource,
+            },
+        },
+        elementType: "SidebarNote",
+    };
+}
+
+function generateToolbox(element: HTMLDivElement): ElementInfo {
+    let items = [];
+    let children = extractToolboxChildren(element);
+    for (let item of children) {
+        let image = item.querySelector("img");
+        let imgSrc = image !== null ? importImagePath(image.getAttribute("src") !) : "";
+        let content = item.querySelector("p") !;
+        let name = content.querySelector("b") !.innerText;
+        content.removeChild(content.querySelector("b") !);
+        let description = content.innerText;
+        items.push({
+            imgSrc,
+            name,
+            description,
+        });
+    }
+    return {
+        elementState: {
+            value: items,
+        },
+        elementType: "Toolbox",
+    };
 }
 
 function extractToolboxChildren(toolbox: HTMLDivElement) {
