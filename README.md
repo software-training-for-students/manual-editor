@@ -5,8 +5,8 @@ This editor works in Google Chrome and Microsoft Edge. It may work in Firefox, b
 The menu on top can be used to add elements. To edit an element, click on it. Some elements have some grey text that says `Click here to edit the *item* below`. For those elements, click on the text to edit them.
 ### Importing Old Manuals Written in Raw HTML
 Just click on the import button! The application will walk you through how to import the manuals.
-## The .uwstsmanual Format
-The `.uwstsmanual` format is actually just a zip file. The files within are as follows:
+## The .sts Format
+The `.sts` format is actually just a zip file. The files within are as follows:
 * `manual.json`: This file specifies all of the content within your manual.
 * `version`: This file contains a version number of the file format. This enables the application to easily upgrade manuals when there are breaking changes.
 * Other files: Any other files are image files that are used in the manual.

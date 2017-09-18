@@ -1,3 +1,5 @@
+import AboutPage from "components/AboutPage";
+import CoverPage from "components/CoverPage";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as ReactRedux from "react-redux";
@@ -26,7 +28,10 @@ ReactDOM.render(
 <ReactRedux.Provider store={store}>
     <div>
     <Menu />
-    <Manual />
+    <Manual>
+        <CoverPage date={new Date()} />
+        <AboutPage />
+    </Manual>
     </div>
 </ReactRedux.Provider>,
 document.getElementById("root"));

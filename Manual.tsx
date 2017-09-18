@@ -1,8 +1,6 @@
-import AboutPage from "components/AboutPage";
-import CoverPage from "components/CoverPage";
+import EditableHeading from "containers/editors/EditableHeading";
 import TableOfContents from "containers/TableOfContents";
 import createElement from "core/createElement";
-
 import {isItemTreeLeaf, isLegacyItemOrdering, isMetaItemOrdering, ItemOrdering, ItemTree} from "core/ItemTree";
 import * as React from "react";
 import {connect} from "react-redux";
@@ -33,8 +31,12 @@ class Manual extends React.Component<Props, State> {
     public render() {
         return (
             <div id="manual">
-                <CoverPage date={new Date()} />
-                <AboutPage />
+                <div id="coverpage-title">
+                    <EditableHeading itemId={1} />
+                    <EditableHeading itemId={2} />
+                    <h3><em>Classroom Course Material</em></h3>
+                </div>
+                {this.props.children}
                 <TableOfContents />
                 {createElement(this.state.tree)}
             </div>
